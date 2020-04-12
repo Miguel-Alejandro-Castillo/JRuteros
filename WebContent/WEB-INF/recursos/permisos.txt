@@ -1,0 +1,8 @@
+/jruteros/index.xhtml all
+/jruteros/alta_usuario.xhtml all
+/jruteros/home_user.xhtml administrador=false usuario=true
+/jruteros/home_admin.xhtml administrador=true usuario=false
+/jruteros/editar_usuario.xhtml administrador=false usuario=true
+/jruteros/usuarios.xhtml administrador=true usuario=false
+/jruteros/actividades.xhtml administrador=true usuario=false
+

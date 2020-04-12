@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          template="/WEB-INF/templates/template.xhtml"
+          xmlns:h="http://java.sun.com/jsf/html">
+<ui:define name="titulo">
+     Home Administrador
+</ui:define>
+
+<ui:define name="navegador">
+              <ol class="breadcrumb">
+                
+                <li class="active">HOME ADMINISTRADOR</li>
+             </ol>
+</ui:define>
+
+
+
+<ui:define name="contenido">
+    <div class="panel">
+                  <div class="header-panel">Administracion De 	Usuarios</div>
+                  <div class="body-panel"> 
+                     <a href="usuarios.xhtml">Listado de Usuarios</a><br/>
+                     
+                   </div>
+                   <div class="body-panel"> 
+                     
+                     <a href="">Estadisticas</a><br/>
+                   </div>
+                   
+                   <div class="header-panel">Administracion De Actividades</div>
+                  <div class="body-panel">     
+                     <a href="actividades.xhtml">Listado de actividades</a><br/>
+                  </div>
+                  <div class="body-panel">
+                    <a href="alta_actividad.xhtml">Nueva actividad</a><br/>
+                  </div>
+                  
+                   
+   </div><br/>
+
+</ui:define>
+</ui:composition>

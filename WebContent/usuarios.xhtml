@@ -1,0 +1,196 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          template="/WEB-INF/templates/template.xhtml"
+          	xmlns:h="http://java.sun.com/jsf/html" 
+	       xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:t="http://myfaces.apache.org/tomahawk">
+<ui:define name="titulo">
+    Listado De Usuarios
+</ui:define>
+
+<ui:define name="navegador">
+              <ol class="breadcrumb">
+                <li><a href="home_admin.xhtml">Home</a></li>
+                <li class="active">Listado De Usuarios </li>
+             </ol>
+</ui:define>      
+   
+<ui:define name="contenido">
+      <h:dataTable value="#{ListadosBean.listaUsuarios}" var="usuario" border="1">
+		<h:column>
+			<f:facet name="header">
+			   <h:outputText value="Usuario"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.usuario}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Nombre"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.nombre}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Apellido"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.apellido}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Dni"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.dni}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Domicilio"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.domicilio}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Email"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.email}"></h:outputText>
+	    </h:column>
+	    
+	    <h:column class="td td-usuarios ">
+			<f:facet name="header" >
+			   <h:outputText value="Habilitado"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{usuario.habilitado}"></h:outputText>
+	    </h:column>
+	    <h:column>
+			<f:facet name="header">
+			   <h:outputText value="Opciones"></h:outputText>
+			</f:facet>
+			<h:outputText value=""><h:form>
+    <h:commandLink value="" action="#{UsuarioBean.habilitarDeshabilitarUsuario}">
+        <f:setPropertyActionListener target="#{UsuarioBean.id}" value="#{usuario.id}" />
+        <img src="resources/img/enable-disable.png" alt="activar/desactivar usuario"/>
+    </h:commandLink>
+       </h:form> </h:outputText>	    
+	    </h:column>
+	 
+
+	    </h:dataTable>
+
+    
+
+
+</ui:define>
+</ui:composition>
+
+
+
+<!--  
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="UTF-8"> 
+	<meta name="viewport" content="width=divise-width, initial-scale=1, maximum-scale=1">
+     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"> 
+	  <link rel="stylesheet" type="text/css" href="hojasDeEstilos/estilo.css">  
+      <script  type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+<title>listado de usuarios</title>
+</head>
+<body>
+    <div id="contenedor" class="fondo_blanco " >
+     <main>
+
+   
+              <ol class="breadcrumb">
+                <li><a href="">Home</a></li>
+                <li class="active">Listado usuarios</li>
+              </ol>
+          <h2>Listado de usuarios</h2>
+          
+                <table class="table table-striped table-bordered table-hover" summary="Tabla listado de usuarios" >
+                <thead>
+                  <tr>
+                    <th>Nick</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th> 
+                    <th>Dni</th>                   
+                    <th>Domicilio</th>
+                    <th>Fecha nac</th>
+                    <th>Sexo</th>
+                    <th>Mail</th>
+                    <th>habilitado</th>
+                    <th>opciones</th>
+                   </tr>
+
+                </thead>
+                <tbody>
+              
+                  <tr>
+
+                 
+
+                        <td class="td td-usuarios ">Pepe</td>
+                        <td class=" td td-usuarios">carlo</td>
+                        <td class="td td-usuarios ">magno</td>
+                        <td class="td td-usuarios ">34999999</td>
+                        <td class="td td-usuarios ">1 y 60-la plata</td>
+                        <td class="td td-usuarios ">3/1/1990</td>
+                        <td class="td td-usuarios ">M</td>
+                        <td class="td td-usuarios ">mail@yahoo.com.ar</td>
+                        <td class="td td-usuarios ">si</td>
+                        <td class="td td-usuarios  ">
+                            <a href="" ><img src="imagenes/enable-disable.png" alt="activar/desactivar actividad"> </a>
+                             
+                        </td>
+
+                      </tr>
+                      <tr>
+
+                 
+
+                        <td class="td td-usuarios ">nacho</td>
+                        <td class=" td td-usuarios">juarez</td>
+                        <td class="td td-usuarios ">pancho</td>
+                        <td class="td td-usuarios ">34999993</td>
+                        <td class="td td-usuarios ">7 y 50-la plata</td>
+                        <td class="td td-usuarios ">3/1/1992</td>
+                        <td class="td td-usuarios ">M</td>
+                        <td class="td td-usuarios ">live_mail@yahoo.com.ar</td>
+                        <td class="td td-usuarios ">si</td>
+                        <td class="td td-usuarios  ">
+                             <a href="" ><img src="imagenes/enable-disable.png" alt="activar/desactivar actividad"> </a>
+                        </td>
+
+                      </tr>
+                      
+                
+           
+                
+
+                </tbody>
+                                       
+              </table>
+          
+       </main>
+   
+       <aside>  
+
+          <span class="subTitMen">SESI&Oacute;N</span>
+          <ul>
+              <li><a href="LogoutUser">root (Salir)</a> </li> 
+          </ul>
+       </aside>
+
+  </div>
+   <footer>
+   		<div id="contenedor_footer" >
+   		
+   			<strong>Correo Electr&oacute;nico: </strong> <br> 
+        
+
+   		</div>   		
+   </footer>
+   
+              
+
+</body>
+</html>
+-->

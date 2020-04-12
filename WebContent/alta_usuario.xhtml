@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          template="/WEB-INF/templates/template.xhtml"
+          	xmlns:h="http://java.sun.com/jsf/html" 
+	       xmlns:f="http://java.sun.com/jsf/core"
+	        xmlns:t="http://myfaces.apache.org/tomahawk"
+           >
+<ui:define name="titulo">
+     Alta Usuario
+</ui:define>
+
+<ui:define name="navegador">
+      <ol class="breadcrumb">
+                <li><a href="index.xhtml">Login</a></li>
+                <li class="active">Registrarse </li>
+             </ol>
+</ui:define>
+<ui:define name="menu_logout">
+     
+</ui:define>
+
+<ui:define name="navegacion">
+</ui:define>
+<ui:define name="contenido">
+  
+			 <section  class="formulario">
+			 	
+				<h2> Nuevo Usuario</h2>
+				
+               <h:form id="userAltaForm">
+                    <h:message for="userAltaForm" /> <br />
+   				<!--  <h:panelGrid columns="3" >-->
+   				<!-- <div class="panel">-->
+				<!--  <div class="body-panel">-->
+			 		<div class="grupo_form ">
+			 		    <h:outputLabel for="nick" value="Nick:"/>
+                           <h:inputText class="form-control" id="nick" value="#{UsuarioBean.usuario}" size="30" maxlength="30"
+                              required="true" validatorMessage="Minimo 1 caracter!"
+                              requiredMessage="El nick no puede estar vacio"
+                              placeholder="nick" >
+                             <f:validateLength minimum="1" />
+                          </h:inputText><br/>
+                           <h:message for="nick" styleClass="error"/>		   				
+	   				</div>
+	   			
+                   <div class="grupo_form ">
+                       <h:outputLabel for="dni" value="Dni:"/>
+                       <h:inputText id="dni" value="#{UsuarioBean.dni}"  maxlength="12"
+                         class="form-control"
+                         required="true" validatorMessage="Valor aceptados: de 1 hacia adelante"
+                         requiredMessage="El dni no puede estar vacio"
+                         converterMessage="Se espera un numero de dni  aqui" >
+                         <f:validateLongRange minimum="1"  />
+                       </h:inputText><br/>
+                       <h:message for="dni" styleClass="error"/>
+
+	   				  		   				
+	   				</div>
+	   				<div class="grupo_form ">
+	   				   <h:outputLabel for="apellido" value="Apellido:"/>
+                       <h:inputText id="apellido" value="#{UsuarioBean.apellido}" size="30" maxlength="30"
+                          class="form-control"
+                          placeholder="apellido"
+                         required="true" validatorMessage="Minimo 1 caracter"
+                         requiredMessage="El apellido no puede estar vacio" >
+                       <f:validateLength minimum="1" /></h:inputText><br/>
+                       <h:message for="apellido" styleClass="error"/>
+                       
+	   				  		
+	   				</div>
+	   				<div class="grupo_form ">
+	   				  <h:outputLabel for="nombre" value="Nombre:"/>
+                       <h:inputText id="nombre" value="#{UsuarioBean.nombre}" size="30" maxlength="30"
+                          class="form-control"
+                          placeholder="nombre"
+                         required="true" validatorMessage="Minimo 1 caracter"
+                         requiredMessage="El nombre no puede estar vacio" >
+                       <f:validateLength minimum="1" /></h:inputText><br/>
+                       <h:message for="nombre" styleClass="error"/>
+                       
+	   				  
+					  
+	   				</div>
+	   				<div class="grupo_form ">
+	   				  <h:outputLabel for="domicilio" value="Domicilio:"/>
+                       <h:inputText id="domicilio" value="#{UsuarioBean.domicilio}" 
+                          class="form-control"
+                          placeholder="domicilio"
+                         required="true" validatorMessage="Minimo 1 caracter"
+                         requiredMessage="El domicilio no puede estar vacio" >
+                       <f:validateLength minimum="1" /></h:inputText><br/>
+                       <h:message for="domicilio" styleClass="error"/>
+                       
+	   				 	   				
+	   				</div>
+	   				<div class="grupo_form ">
+	   				  <h:outputLabel for="fecha" value="Fecha de nacimiento:"/>
+	   				  <t:inputDate   id="fecha" value="#{UsuarioBean.fechaNacimiento}"
+	   				           requiredMessage="La fecha de nacimiento no puede estar vacia"
+	   				           required="true"
+                               popupCalendar="false"/><br/>
+                       <h:message for="fecha" styleClass="error"/>
+                             
+                             
+	   				   
+	   						
+	   				</div>
+	   				
+	   				<div class="grupo_form">
+	   				     <h:outputLabel for="sexo" value="Sexo:"/>
+                        <h:selectOneListbox id="sexo" title="Selecciona el sexo del usuario"
+                            value="#{UsuarioBean.sexo}" size="1" required="true" converterMessage="Se espera una fecha de la forma dd/mm/aaaa" >
+                            <f:selectItem itemValue="m" itemLabel="Masculino"/>
+                            <f:selectItem itemValue="f" itemLabel="Feminino"/>
+                         </h:selectOneListbox><br/>
+
+				 		
+				 	</div>
+				 	<div class="grupo_form ">
+				 	  <h:outputLabel for="email" value="Email:"/>
+                       <h:inputText id="email" value="#{UsuarioBean.email}" 
+                          class="form-control"
+                          requiredMessage="La email no puede estar vacio"
+                         required="true" >
+                         <t:validateEmail message="Invalid email address" /> 
+                       </h:inputText><br/>
+                       <h:message for="email" styleClass="error"/>
+	   				  		
+	   				</div>
+	   				
+				 	
+			 	<!-- </div>-->		 
+				 <div class="footer-panel">		
+				         <h:commandButton value="Enviar" class="btn  btn-primary"  type="submit" action="#{UsuarioBean.alta}" />		 		
+				 		
+				</div>
+			<!-- </div>-->
+
+
+                <!-- </h:panelGrid>-->
+			    </h:form>
+			 	</section>
+</ui:define>
+</ui:composition>
+  

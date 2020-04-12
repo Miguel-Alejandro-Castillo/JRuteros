@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+
+<head>
+
+<title>Login</title>
+      <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css" /> 
+	  <link rel="stylesheet" type="text/css" href="resources/css/estilo.css" />  
+      <script  type="text/javascript" src="resources/js/jquery.min.js"></script>
+</head>
+<body id="containerBody">
+ <div id="contenedorLogin" >
+     <f:view>
+     
+     <div  id="signIn" class="formWrapper" >
+       
+       <h:form id="loginForm" class="form-horizontal"  >
+         <h:outputLabel for="username" value="usuario:" />
+         <h:inputText class="form-control" id="username" value="#{UsuarioLogueadoBean.usuario}" required="true">
+        <f:validateLength minimum="1" />
+        </h:inputText>
+         <h:message for="username" /><br />
+        
+         <h:outputLabel for="password" value="contraseña:" />
+         <h:inputSecret  id="password" class="form-control" 
+         value="#{UsuarioLogueadoBean.password}" required="true">
+         <f:validateLength  minimum="1" />
+         </h:inputSecret>
+           <h:message for="password" /><br />
+           
+          <h:commandButton id="submit" class="btn btn-block" action="#{UsuarioLogueadoBean.login}" value="Login" />
+          </h:form><h:message for="loginForm" styleClass="error"  /> <br />
+          <h3><a href="alta_usuario.xhtml" >Registrarse</a></h3>
+       </div>
+       
+      </f:view>
+    </div>
+</body>
+
+</html>

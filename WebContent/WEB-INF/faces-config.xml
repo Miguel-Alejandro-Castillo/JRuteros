@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+    version="2.1">
+    
+    <navigation-rule>
+              <from-view-id>/index.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>home_usuario</from-outcome>
+                  <to-view-id>/home_user.xhtml</to-view-id>
+                  <redirect/>
+              </navigation-case>
+              <navigation-case>
+                  <from-outcome>home_administrador</from-outcome>
+                  <to-view-id>/home_admin.xhtml</to-view-id>
+                   <redirect/>
+              </navigation-case>
+              
+    </navigation-rule>
+    
+    <navigation-rule>
+              <from-view-id>/*</from-view-id>
+              <navigation-case>
+                  <from-outcome>login</from-outcome>
+                  <to-view-id>/index.xhtml</to-view-id>
+                  <redirect/>
+              </navigation-case>
+    </navigation-rule>
+  
+      <navigation-rule>
+              <from-view-id>/alta_usuario.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>formulario_alta_usuario</from-outcome>
+                  <to-view-id>/alta_usuario.xhtml</to-view-id>  
+              </navigation-case>    
+              <navigation-case>
+                  <from-outcome>success_alta_usuario</from-outcome>
+                  <to-view-id>/success_alta_usuario.xhtml</to-view-id>   
+              </navigation-case> 
+    </navigation-rule>
+    
+    <navigation-rule>
+              <from-view-id>/editar_usuario.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>editar_usuario</from-outcome>
+                  <to-view-id>/editar_usuario.xhtml</to-view-id>  
+              </navigation-case> 
+              
+              <navigation-case>
+                  <from-outcome>home_user</from-outcome>
+                  <to-view-id>/home_user.xhtml</to-view-id> 
+                   <redirect/> 
+              </navigation-case>    
+               
+    </navigation-rule>
+    
+     <navigation-rule>
+              <from-view-id>/editar_actividad.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>editar_actividad</from-outcome>
+                  <to-view-id>/editar_actividad.xhtml</to-view-id>  
+              </navigation-case> 
+              
+              <navigation-case>
+                  <from-outcome>actividades</from-outcome>
+                  <to-view-id>/actividades.xhtml</to-view-id> 
+                   <redirect/> 
+              </navigation-case>    
+               
+    </navigation-rule>
+    
+     <navigation-rule>
+              <from-view-id>/alta_actividad.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>alta_actividad</from-outcome>
+                  <to-view-id>/alta_actividad.xhtml</to-view-id>  
+              </navigation-case> 
+              
+              <navigation-case>
+                  <from-outcome>home_admin</from-outcome>
+                  <to-view-id>/home_admin.xhtml</to-view-id> 
+                   <redirect/> 
+              </navigation-case>    
+               
+    </navigation-rule>
+    
+      <navigation-rule>
+              <from-view-id>/home_admin.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>usuarios</from-outcome>
+                  <to-view-id>/usuarios.xhtml</to-view-id> 
+                  <redirect/> 
+              </navigation-case>         
+    </navigation-rule>
+    
+         <navigation-rule>
+              <from-view-id>/usuarios.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>usuarios</from-outcome>
+                  <to-view-id>/usuarios.xhtml</to-view-id> 
+                  <redirect/> 
+              </navigation-case>         
+    </navigation-rule>
+    <navigation-rule>
+              <from-view-id>/actividades.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>actividades</from-outcome>
+                  <to-view-id>/actividades.xhtml</to-view-id> 
+              </navigation-case>   
+              <navigation-case>
+                  <from-outcome>editar_actividad</from-outcome>
+                  <to-view-id>/editar_actividad.xhtml</to-view-id> 
+                   <redirect/> 
+              </navigation-case>      
+    </navigation-rule>
+    
+    <managed-bean>
+       <description>Login Bean </description>
+       <managed-bean-name>UsuarioLogueadoBean</managed-bean-name>
+       <managed-bean-class>misBeans.UsuarioLogueadoBean</managed-bean-class>
+       <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+     <managed-bean>
+       <description>Usuario Bean </description>
+       <managed-bean-name>UsuarioBean</managed-bean-name>
+       <managed-bean-class>misBeans.UsuarioBean</managed-bean-class>
+       <managed-bean-scope>session</managed-bean-scope>
+       </managed-bean>
+       
+       <managed-bean>
+       
+       <description>Actividad Bean </description>
+       <managed-bean-name>ActividadBean</managed-bean-name>
+       <managed-bean-class>misBeans.ActividadBean</managed-bean-class>
+       <managed-bean-scope>session</managed-bean-scope>
+       </managed-bean>
+       <managed-bean>
+       
+       <description>Listados Bean </description>
+       <managed-bean-name>ListadosBean</managed-bean-name>
+       <managed-bean-class>misBeans.ListadosBean</managed-bean-class>
+       <managed-bean-scope>session</managed-bean-scope>
+       </managed-bean>
+</faces-config>
