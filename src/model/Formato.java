@@ -1,5 +1,5 @@
 package model;
-import java.util.*;
+
 import javax.persistence.*;
 @Entity
 @Table(name="FORMATOS",uniqueConstraints=

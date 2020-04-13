@@ -144,8 +144,8 @@ public class ProviderTest {
 		 ruta.setPrivacidad(p);
 		 ruta.setTiempo(null);
 		
-		 ruta.agregarValoracion(val);
-		 ruta.agregarVisitante(usuario);
+		 //ruta.agregarValoracion(val);
+		 //ruta.agregarVisitante(usuario);
 		ruta.agregarFoto(fhotoa);
 		ruta.agregarFoto(fhotob);
 		ruta.agregarPunto(pa);

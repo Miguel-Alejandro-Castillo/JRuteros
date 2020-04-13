@@ -1,6 +1,7 @@
 package model;
-import java.util.*;
+
 import javax.persistence.*;
+
 @Entity
 @Table(name="FOTOS")
 public class Foto {
@@ -12,9 +13,7 @@ public class Foto {
     public Foto() {
     	super();
     }
-    
-   
-    
+      
     public Foto(String nombre, String path) {
 		super();
 		this.nombre = nombre;

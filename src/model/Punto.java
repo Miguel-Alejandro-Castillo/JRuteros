@@ -1,9 +1,7 @@
 package model;
-import java.util.*;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-
-
 
 @XmlRootElement
 @Entity
