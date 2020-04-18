@@ -1,5 +1,7 @@
 package model;
+
 import javax.persistence.*;
+
 @Entity
 @Table(name="ACTIVIDADES",uniqueConstraints=
 @UniqueConstraint(columnNames = {"nombre"}))
@@ -7,7 +9,10 @@ public class Actividad {
 	
 	@Id @GeneratedValue
 	private Long id;
+	
+	@Column(nullable = false, unique = true)
 	private String nombre;
+	
 	private boolean habilitado;
     
     public Actividad() {
@@ -15,15 +20,14 @@ public class Actividad {
     	this.habilitado = true;
     }
     public Actividad(String nombre) {
-		super();
+		this();
 		this.nombre = nombre;
-		this.habilitado = true;
 	}
-    public Actividad(Long id,String nombre,boolean habilitado) {
-	    this(nombre);
-	    this.id=id;
-	    this.habilitado=habilitado;
     
+    public Actividad(Long id, String nombre, boolean habilitado) {
+	    this(nombre);
+	    this.id = id;
+	    this.habilitado = habilitado;
     }
     
     public Long getId(){
@@ -66,6 +70,5 @@ public class Actividad {
 	public Actividad clone(){
 		return new Actividad(this.getId(),this.getNombre(),this.getHabilitado());
 	}
-	
 
 }

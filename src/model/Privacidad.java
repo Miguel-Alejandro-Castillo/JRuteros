@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name="PRIVACIDADES",uniqueConstraints=
 @UniqueConstraint(columnNames = {"nombre"}))
@@ -9,6 +10,7 @@ public class Privacidad {
 	@Id @GeneratedValue
 	private Long id;
 
+	@Column(nullable = false, unique = true)
 	private String nombre;
 	
 	public Privacidad(){
@@ -35,6 +37,5 @@ public class Privacidad {
 	public void setId(Long id) {
 		this.id = id;
 	}
-		
 
 }

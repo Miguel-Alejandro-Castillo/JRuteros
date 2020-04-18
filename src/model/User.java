@@ -1,22 +1,34 @@
 package model;
-//import java.util.*;
+
 import java.util.Date;
 import javax.persistence.*;
+
 @Entity
 @Table(name="USERS")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class User {
+	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
     private String usuario;
+    
     private Long dni;
+    
     private String apellido;
+    
     private String nombre;
+    
     private String domicilio;
+    
     private char sexo;
+    
     private String email;
-    private String password;
+    
+    private String contrasenia;
+    
     private Date fechaNacimiento;
+    
     private boolean habilitado;
 
     public User(){
@@ -25,7 +37,7 @@ public class User {
     }
     
     public User( String usuario, Long dni, String apellido, String nombre, String domicilio, char sexo,
-			String email, String password, Date fechaNacimiento) {
+			String email, String contrasenia, Date fechaNacimiento) {
 		this();
 		this.usuario = usuario;
 		this.dni = dni;
@@ -34,13 +46,13 @@ public class User {
 		this.domicilio = domicilio;
 		this.sexo = sexo;
 		this.email = email;
-		this.password = password;
+		this.contrasenia = contrasenia;
 		this.fechaNacimiento = fechaNacimiento;
 	}
     
     public User(Long id, String usuario, Long dni, String apellido, String nombre, String domicilio, char sexo,
-			String email, String password, Date fechaNacimiento) {
-		this(usuario, dni, apellido, nombre, domicilio, sexo, email, password, fechaNacimiento);
+			String email, String contrasenia, Date fechaNacimiento) {
+		this(usuario, dni, apellido, nombre, domicilio, sexo, email, contrasenia, fechaNacimiento);
 		this.id = id;
 	}
 
@@ -108,14 +120,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
@@ -129,6 +133,14 @@ public class User {
 	}
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+
+	public String getContrasenia() {
+		return contrasenia;
+	}
+
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
     
 }

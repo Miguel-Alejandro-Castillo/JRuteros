@@ -1,9 +1,8 @@
 package model;
+
 import java.util.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 @Table(name="RUTAS")
@@ -12,25 +11,27 @@ public class Ruta{
 	@Id @GeneratedValue
     private Long id;
 	
+	@Column(nullable = false)
     private String nombre;
     
+	@Column(nullable = false)
     private String descripcion;
     
-    @OneToOne(optional=false,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Actividad actividad;
     
-    @OneToOne(optional=false,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Privacidad privacidad;
     
-    @OneToOne(optional=false,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Formato formato;
 
     private BigDecimal distancia;
  
-    @OneToOne(optional=false,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Dificultad dificultad;
 
-    private Time tiempo;
+    private Date tiempoEstimado;
 
     private Date fechaRealizacion;
 
@@ -42,8 +43,7 @@ public class Ruta{
                })
     private List<Foto> fotos;
     
-    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-    //@OneToMany
+    @OneToMany(cascade={CascadeType.ALL})
     @JoinTable(name= "RUTAS_PUNTOS",
     joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
     inverseJoinColumns={@JoinColumn
@@ -51,7 +51,7 @@ public class Ruta{
     })
     private List<Punto> recorrido;
    
-    @OneToOne(optional=false,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Usuario propietario;
     
     /*
@@ -70,10 +70,10 @@ public class Ruta{
     */
     
     public Ruta() {
-           super();
-           fotos=new ArrayList<Foto>();
-           // valoraciones=new ArrayList<Valoracion>();
-           recorrido=new ArrayList<Punto>();          
+       super();
+       this.fotos = new ArrayList<Foto>();
+       // valoraciones=new ArrayList<Valoracion>();
+       this.recorrido = new ArrayList<Punto>();          
     }
 
 	public Long getId() {
@@ -140,12 +140,12 @@ public class Ruta{
 		this.dificultad = dificultad;
 	}
 
-	public Time getTiempo() {
-		return tiempo;
+	public Date getTiempoEstimado() {
+		return this.tiempoEstimado;
 	}
 
-	public void setTiempo(Time tiempo) {
-		this.tiempo = tiempo;
+	public void setTiempoEstimado(Date tiempoEstimado) {
+		this.tiempoEstimado = tiempoEstimado;
 	}
 
 	public Date getFechaRealizacion() {

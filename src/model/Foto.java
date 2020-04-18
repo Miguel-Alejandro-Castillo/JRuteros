@@ -5,20 +5,19 @@ import javax.persistence.*;
 @Entity
 @Table(name="FOTOS")
 public class Foto {
-	 @Id @GeneratedValue
+	@Id @GeneratedValue
 	private Long id;
 	private String nombre;
-    private String path;
+    private String contentType;
+    
+    //@Lob
+    @Transient
+    private byte[] value;
+    private Long size;
     
     public Foto() {
     	super();
     }
-      
-    public Foto(String nombre, String path) {
-		super();
-		this.nombre = nombre;
-		this.path = path;
-	}
     
     public void setId(Long id) {
 		this.id = id;
@@ -26,13 +25,6 @@ public class Foto {
 
 	public Long getId(){
     	return this.id;
-    }
-    public String getPath() {   
-        return this.path;
-    }
-    
-    public void setPath(String path) {
-        this.path=path;
     }
 
     public String getNombre() {
@@ -42,5 +34,32 @@ public class Foto {
     public void setNombre(String nombre) {
        this.nombre=nombre;
     }
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public byte[] getValue() {
+		return value;
+	}
+
+	public void setValue(byte[] value) {
+		this.value = value;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
+	
+    
+    
 
 }
