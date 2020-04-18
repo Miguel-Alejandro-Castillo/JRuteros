@@ -1,4 +1,4 @@
-use jruteros;
+USE jruteros;
 
 INSERT INTO USERS( usuario, dni, apellido, nombre, domicilio, sexo, email, contrasenia, fechaNacimiento, habilitado) 
 VALUES('admin', 23333333, 'Mike', 'Rourke', '2 y 60', 'm', 'sarasa@gmail.com.ar', 'admin', '1991-09-03 00:00:00', TRUE);
