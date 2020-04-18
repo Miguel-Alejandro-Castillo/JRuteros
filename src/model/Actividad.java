@@ -53,7 +53,6 @@ public class Actividad {
         this.habilitado=habilitado;
     }
 	
-	
 	public boolean equals(Object o){
 		Actividad act=(Actividad)o;
 		if (act instanceof Actividad) {
