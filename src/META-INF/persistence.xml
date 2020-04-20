@@ -2,7 +2,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
              http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">	
-	<persistence-unit name="pro" >
+	<persistence-unit name="pro" transaction-type="RESOURCE_LOCAL" >
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>model.Actividad</class>
 		<class>model.Administrador</class>
@@ -15,7 +15,7 @@
 		<class>model.User</class>
 		<class>model.Usuario</class>
 		<class>model.Valoracion</class>
-		
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<!--<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.password" value="jyaa_sala_pwd21" />
