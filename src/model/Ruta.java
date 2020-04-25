@@ -18,40 +18,46 @@ public class Ruta{
     private String descripcion;
     
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "actividad_id")
     private Actividad actividad;
     
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "privacidad_id")
     private Privacidad privacidad;
     
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "formato_id")
     private Formato formato;
 
     private BigDecimal distancia;
  
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "dificultad_id")
     private Dificultad dificultad;
 
     private Date tiempoEstimado;
 
     private Date fechaRealizacion;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(name= "RUTAS_FOTOS",
                joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
                inverseJoinColumns={@JoinColumn
             		 (name="foto_id" ,referencedColumnName="id")
                })
-    private List<Foto> fotos;
+    private Set<Foto> fotos = new HashSet<Foto>();
     
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(name= "RUTAS_PUNTOS",
     joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
     inverseJoinColumns={@JoinColumn
  		 (name="punto_id" ,referencedColumnName="id")
     })
-    private List<Punto> recorrido;
+    @OrderBy("id ASC")
+    private Set<Punto> recorrido = new LinkedHashSet<Punto>();
    
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "propietario_id")
     private Usuario propietario;
     
     /*
@@ -70,10 +76,7 @@ public class Ruta{
     */
     
     public Ruta() {
-       super();
-       this.fotos = new ArrayList<Foto>();
-       // valoraciones=new ArrayList<Valoracion>();
-       this.recorrido = new ArrayList<Punto>();          
+       super();        
     }
 
 	public Long getId() {
@@ -156,22 +159,6 @@ public class Ruta{
 		this.fechaRealizacion = fechaRealizacion;
 	}
 
-	public List<Foto> getFotos() {
-		return fotos;
-	}
-
-	public void setFotos(List<Foto> fotos) {
-		this.fotos = fotos;
-	}
-
-	public List<Punto> getRecorrido() {
-		return recorrido;
-	}
-
-	public void setRecorrido(List<Punto> recorrido) {
-		this.recorrido = recorrido;
-	}
-
 	public void agregarFoto(Foto foto){
 		this.getFotos().add(foto);
 	}
@@ -187,5 +174,23 @@ public class Ruta{
 	public void setPropietario(Usuario propietario) {
 		this.propietario = propietario;
 	}
+
+	public Set<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(Set<Foto> fotos) {
+		this.fotos = fotos;
+	}
+
+	public Set<Punto> getRecorrido() {
+		return recorrido;
+	}
+
+	public void setRecorrido(Set<Punto> recorrido) {
+		this.recorrido = recorrido;
+	}
+	
+	
 
 } 
