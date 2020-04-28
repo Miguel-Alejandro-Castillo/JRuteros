@@ -1,4 +1,4 @@
-package utilitarios;
+package utils;
 
 import daos.daosActividad.JPADaoActividad;
 import daos.daosUser.IDaoUser;
@@ -13,7 +13,6 @@ import daos.DaoFoto;
 import daos.DaoPrivacidad;
 import daos.DaoPunto;
 import daos.DaoRuta;
-import daos.DaoUsuario;
 import daos.DaoValoracion;
 
 public abstract  class Factory {
