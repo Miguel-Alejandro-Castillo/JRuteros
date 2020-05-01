@@ -9,16 +9,15 @@
     <navigation-rule>
               <from-view-id>/index.xhtml</from-view-id>
               <navigation-case>
-                  <from-outcome>home_usuario</from-outcome>
-                  <to-view-id>/home_user.xhtml</to-view-id>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>
                   <redirect/>
               </navigation-case>
               <navigation-case>
-                  <from-outcome>home_administrador</from-outcome>
-                  <to-view-id>/home_admin.xhtml</to-view-id>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>
                    <redirect/>
               </navigation-case>
-              
     </navigation-rule>
     
     <navigation-rule>
@@ -30,7 +29,7 @@
               </navigation-case>
     </navigation-rule>
   
-      <navigation-rule>
+    <navigation-rule>
               <from-view-id>/alta_usuario.xhtml</from-view-id>
               <navigation-case>
                   <from-outcome>formulario_alta_usuario</from-outcome>
@@ -48,13 +47,11 @@
                   <from-outcome>editar_usuario</from-outcome>
                   <to-view-id>/editar_usuario.xhtml</to-view-id>  
               </navigation-case> 
-              
               <navigation-case>
-                  <from-outcome>home_user</from-outcome>
-                  <to-view-id>/home_user.xhtml</to-view-id> 
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id> 
                    <redirect/> 
-              </navigation-case>    
-               
+              </navigation-case>           
     </navigation-rule>
     
      <navigation-rule>
@@ -62,48 +59,61 @@
               <navigation-case>
                   <from-outcome>editar_actividad</from-outcome>
                   <to-view-id>/editar_actividad.xhtml</to-view-id>  
-              </navigation-case> 
-              
+              </navigation-case>           
               <navigation-case>
                   <from-outcome>actividades</from-outcome>
                   <to-view-id>/actividades.xhtml</to-view-id> 
-                   <redirect/> 
-              </navigation-case>    
-               
+              </navigation-case>          
     </navigation-rule>
     
      <navigation-rule>
-              <from-view-id>/alta_actividad.xhtml</from-view-id>
+              <from-view-id>/nueva_actividad.xhtml</from-view-id> 
               <navigation-case>
-                  <from-outcome>alta_actividad</from-outcome>
-                  <to-view-id>/alta_actividad.xhtml</to-view-id>  
-              </navigation-case> 
-              
+                  <from-outcome>nueva_actividad</from-outcome>
+                  <to-view-id>/nueva_actividad.xhtml</to-view-id>  
+              </navigation-case>      
               <navigation-case>
-                  <from-outcome>home_admin</from-outcome>
-                  <to-view-id>/home_admin.xhtml</to-view-id> 
-                   <redirect/> 
-              </navigation-case>    
-               
+                  <from-outcome>actividades</from-outcome>
+                  <to-view-id>/actividades.xhtml</to-view-id>  
+              </navigation-case>         
     </navigation-rule>
     
-      <navigation-rule>
-              <from-view-id>/home_admin.xhtml</from-view-id>
+    <navigation-rule>
+              <from-view-id>/home.xhtml</from-view-id>
               <navigation-case>
                   <from-outcome>usuarios</from-outcome>
                   <to-view-id>/usuarios.xhtml</to-view-id> 
                   <redirect/> 
-              </navigation-case>         
+              </navigation-case>
+              <navigation-case>
+                  <from-outcome>nueva_actividad</from-outcome>
+                  <to-view-id>/nueva_actividad.xhtml</to-view-id> 
+                  <redirect/> 
+              </navigation-case>       
     </navigation-rule>
     
-         <navigation-rule>
-              <from-view-id>/usuarios.xhtml</from-view-id>
+    <navigation-rule>
+              <from-view-id>/home.xhtml</from-view-id>
               <navigation-case>
-                  <from-outcome>usuarios</from-outcome>
-                  <to-view-id>/usuarios.xhtml</to-view-id> 
-                  <redirect/> 
-              </navigation-case>         
+                  <from-outcome>nueva_ruta</from-outcome>
+                  <to-view-id>/nueva_ruta.xhtml</to-view-id>
+                  <redirect/>
+              </navigation-case>
+              <navigation-case>
+                  <from-outcome>mis_rutas</from-outcome>
+                  <to-view-id>/mis_rutas.xhtml</to-view-id>
+                  <redirect/>
+              </navigation-case>     
     </navigation-rule>
+    
+    <navigation-rule>
+         <from-view-id>/usuarios.xhtml</from-view-id>
+         <navigation-case>
+                  <from-outcome>usuarios</from-outcome>
+                  <to-view-id>/usuarios.xhtml</to-view-id>
+         </navigation-case>         
+    </navigation-rule>
+    
     <navigation-rule>
               <from-view-id>/actividades.xhtml</from-view-id>
               <navigation-case>
@@ -113,36 +123,77 @@
               <navigation-case>
                   <from-outcome>editar_actividad</from-outcome>
                   <to-view-id>/editar_actividad.xhtml</to-view-id> 
-                   <redirect/> 
               </navigation-case>      
     </navigation-rule>
     
-    <managed-bean>
-       <description>Login Bean </description>
-       <managed-bean-name>UsuarioLogueadoBean</managed-bean-name>
-       <managed-bean-class>misBeans.UsuarioLogueadoBean</managed-bean-class>
-       <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    <navigation-rule>
+              <from-view-id>/nueva_ruta.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>nueva_ruta</from-outcome>
+                  <to-view-id>/nueva_ruta.xhtml</to-view-id>  
+              </navigation-case>    
+              <navigation-case>
+                  <from-outcome>mis_rutas</from-outcome>
+                  <to-view-id>/mis_rutas.xhtml</to-view-id>   
+              </navigation-case> 
+              <navigation-case>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>   
+              </navigation-case> 
+    </navigation-rule>
     
-     <managed-bean>
-       <description>Usuario Bean </description>
-       <managed-bean-name>UsuarioBean</managed-bean-name>
-       <managed-bean-class>misBeans.UsuarioBean</managed-bean-class>
-       <managed-bean-scope>session</managed-bean-scope>
-       </managed-bean>
-       
-       <managed-bean>
-       
-       <description>Actividad Bean </description>
-       <managed-bean-name>ActividadBean</managed-bean-name>
-       <managed-bean-class>misBeans.ActividadBean</managed-bean-class>
-       <managed-bean-scope>session</managed-bean-scope>
-       </managed-bean>
-       <managed-bean>
-       
-       <description>Listados Bean </description>
-       <managed-bean-name>ListadosBean</managed-bean-name>
-       <managed-bean-class>misBeans.ListadosBean</managed-bean-class>
-       <managed-bean-scope>session</managed-bean-scope>
-       </managed-bean>
+    <navigation-rule>
+              <from-view-id>/mis_rutas.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>mis_rutas</from-outcome>
+                  <to-view-id>/mis_rutas.xhtml</to-view-id> 
+              </navigation-case>   
+              <navigation-case>
+                  <from-outcome>editar_ruta</from-outcome>
+                  <to-view-id>/editar_ruta.xhtml</to-view-id>
+              </navigation-case>  
+              <navigation-case>
+                  <from-outcome>detalle_ruta</from-outcome>
+                  <to-view-id>/detalle_ruta.xhtml</to-view-id>
+              </navigation-case>    
+              <navigation-case>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id> 
+                  <redirect/> 
+              </navigation-case>  
+    </navigation-rule>
+    
+     <navigation-rule>
+              <from-view-id>/editar_ruta.xhtml</from-view-id>
+              <navigation-case>
+                  <from-outcome>editar_ruta</from-outcome>
+                  <to-view-id>/editar_ruta.xhtml</to-view-id>  
+              </navigation-case>    
+              <navigation-case>
+                  <from-outcome>mis_rutas</from-outcome>
+                  <to-view-id>/mis_rutas.xhtml</to-view-id>   
+              </navigation-case> 
+              <navigation-case>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>   
+              </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<from-view-id>/editar_ruta.xhtml</from-view-id>
+    	      <navigation-case>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>   
+              </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<from-view-id>/detalle_ruta.xhtml</from-view-id>
+    	      <navigation-case>
+                  <from-outcome>home</from-outcome>
+                  <to-view-id>/home.xhtml</to-view-id>   
+                  <redirect/>
+              </navigation-case>
+    </navigation-rule> 
+     
 </faces-config>

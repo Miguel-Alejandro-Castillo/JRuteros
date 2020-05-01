@@ -17,9 +17,9 @@ import javax.servlet.http.HttpSession;
  */
 public class FiltroAcceso implements Filter {
 	
-	private HttpServletRequest reqActual=null;
+	private HttpServletRequest reqActual = null;
     public FiltroAcceso() {
-        // TODO Auto-generated constructor stub
+    	super();
     }
 
    private boolean isUsuarioNormal(){
@@ -71,14 +71,8 @@ public class FiltroAcceso implements Filter {
 	    System.out.println("--------------------------------");
 		if(this.esURIPublica()){
 			if(isURILogin() &&(this.estaLogueado())){
-				if(this.isUsuarioNormal()){
-					 res.sendRedirect(req.getContextPath() + "/home_user.xhtml");
-				}
-				else{
-					res.sendRedirect(req.getContextPath() + "/home_admin.xhtml");
-				}
-			}
-			else{
+				res.sendRedirect(req.getContextPath() + "/home.xhtml");
+			} else {
 			   System.out.println("la uri es publica");
 			   chain.doFilter(request,response);
 			}
