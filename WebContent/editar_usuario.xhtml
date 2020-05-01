@@ -10,15 +10,19 @@
 
 <ui:define name="navegador">
               <ol class="breadcrumb">
-                <li><a href="home_user.xhtml">Home</a></li>
-                <li class="active">Edicion datos  </li>
+				<li>
+					<h:form>
+						<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+					</h:form>
+				</li>
+                <li class="active">Edicion datos</li>
              </ol>
 </ui:define>      
    
 <ui:define name="contenido">
     <section  class="formulario">
 			 	
-				<h2> Editar Usuario</h2>
+				<h2>Editar Usuario</h2>
 				<h:message for="formEditUsuario" styleClass="error"/>	
                <h:form id="formEditUsuario">
                  

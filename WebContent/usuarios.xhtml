@@ -1,84 +1,118 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          template="/WEB-INF/templates/template.xhtml"
-          	xmlns:h="http://java.sun.com/jsf/html" 
-	       xmlns:f="http://java.sun.com/jsf/core"
-            xmlns:t="http://myfaces.apache.org/tomahawk">
-<ui:define name="titulo">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
     Listado De Usuarios
 </ui:define>
 
-<ui:define name="navegador">
-              <ol class="breadcrumb">
-                <li><a href="home_admin.xhtml">Home</a></li>
-                <li class="active">Listado De Usuarios </li>
-             </ol>
-</ui:define>      
-   
-<ui:define name="contenido">
-      <h:dataTable value="#{ListadosBean.listaUsuarios}" var="usuario" border="1">
-		<h:column>
-			<f:facet name="header">
-			   <h:outputText value="Usuario"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.usuario}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Nombre"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.nombre}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Apellido"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.apellido}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Dni"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.dni}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Domicilio"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.domicilio}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Email"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.email}"></h:outputText>
-	    </h:column>
-	    
-	    <h:column class="td td-usuarios ">
-			<f:facet name="header" >
-			   <h:outputText value="Habilitado"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{usuario.habilitado}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Opciones"></h:outputText>
-			</f:facet>
-			<h:outputText value=""><h:form>
-    <h:commandLink value="" action="#{UsuarioBean.habilitarDeshabilitarUsuario}">
-        <f:setPropertyActionListener target="#{UsuarioBean.id}" value="#{usuario.id}" />
-        <img src="resources/img/enable-disable.png" alt="activar/desactivar usuario"/>
-    </h:commandLink>
-       </h:form> </h:outputText>	    
-	    </h:column>
-	 
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li>
+				<h:form>
+					<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+				</h:form>
+			</li>
+			<li class="active">Listado De Usuarios</li>
+		</ol>
+	</ui:define>
 
-	    </h:dataTable>
+	<ui:define name="contenido">
+		<h:form>
+			<h:dataTable id="usuarios" value="#{ListadosBean.getUsuarios()}"
+				var="usuario" border="1">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Usuario"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.usuario}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Nombre"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.nombre}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Apellido"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.apellido}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Dni"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.dni}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Domicilio"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.domicilio}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Email"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.email}"></h:outputText>
+				</h:column>
 
-    
+				<h:column class="td td-usuarios">
+					<f:facet name="header">
+						<h:outputText value="Habilitado"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{usuario.habilitado ? 'si' : 'no'}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Opciones"></h:outputText>
+					</f:facet>
+					<h:outputText value="">
+						<h:commandLink value=""
+							onclick="onClickHabilitado(#{usuario.habilitado})"
+							action="#{UsuarioBean.habilitarDeshabilitarUsuario(usuario.id)}">
+							<f:ajax render="usuarios" event="action" onevent="onevent"
+								onerror="onerror" />
+							<img src="resources/img/enable-disable.png"
+								alt="activar/desactivar usuario" />
+						</h:commandLink>
+					</h:outputText>
+				</h:column>
+			</h:dataTable>
+		</h:form>
 
+		<script type="text/javascript">
 
-</ui:define>
+			var habilitado;
+			function onClickHabilitado(oldValue){
+				habilitado = oldValue;
+			}
+			
+			var hasError = false;
+			var onevent = function(event) {
+				if (event.status === "success"){
+					if (hasError)
+						alert("Ocurrio un error en el servidor");
+					else
+						if(habilitado)
+							alert("Usuario deshabilitado");
+						else
+							alert("Usuario habilitado");
+					hasError = false;
+				}	
+			};
+			var onerror = function(error) {
+				if (error.type === "error")
+					hasError = true;
+
+			};
+		</script>
+		<h:outputScript library="javax.faces" name="jsf.js" />
+
+	</ui:define>
 </ui:composition>
 
 

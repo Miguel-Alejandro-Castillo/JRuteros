@@ -1,3 +1,144 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="titulo">
+    Mis rutas
+</ui:define>
+
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li>
+				<h:form>
+					<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+				</h:form>
+			</li>
+			<li class="active">Mis rutas</li>
+		</ol>
+	</ui:define>
+
+	<ui:define name="contenido">
+
+		<h:form>
+		<h:dataTable id="misRutas" value="#{ListadosBean.getMisRutas()}" var="ruta"
+			border="2">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="nombre"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.nombre}"></h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="privacidad"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.privacidad.nombre}"></h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="formato"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.formato.nombre}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="dificultad"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.dificultad.nombre}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="actividad"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.actividad.nombre}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="distancia"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.distancia}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="fecha de realización"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{ruta.fechaRealizacion}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value=""></h:outputText>
+				</f:facet>
+
+				<h:outputText value="">
+					<!--  <h:form id="ruta_#{ruta.id}"> -->
+					
+						<h:commandLink value="" action="#{RutaBean.detalleRuta(ruta.id)}">	
+							<img src="resources/img/vermas.png" alt="detalle ruta" />
+						</h:commandLink>
+						<!--
+						<h:link value="" outcome="#{OutcomeBean.detalleRuta()}">
+							<f:param name="id" value="#{ruta.id}" />	
+							<img src="resources/img/vermas.png" alt="detalle ruta" />
+						</h:link>
+						-->
+						<h:commandLink value="" action="#{RutaBean.editarRuta(ruta.id)}">
+							<img src="resources/img/editar.png" alt="editar ruta" />
+						</h:commandLink>
+						<h:commandLink value="" action="#{RutaBean.borrarRuta(ruta.id)}" onclick="return confirmarBorrado()">
+							<!-- 
+							<f:setPropertyActionListener target="#{RutaBean.id}"
+								value="#{ruta.id}" />
+							-->	
+							<f:ajax render="misRutas" event="action"
+									onevent="net.javabeat.monitor" onerror="net.javabeat.handle" />
+							<img src="resources/img/borrar.png" alt="eliminar ruta" />
+						</h:commandLink>
+					<!-- </h:form> -->
+
+				</h:outputText>
+			</h:column>
+
+		</h:dataTable>
+		</h:form>
+		<script type="text/javascript">
+			function confirmarBorrado() {
+				return confirm("¿Desea eliminar la ruta?");
+			}
+
+			var hasError = false;
+			if (!net)
+				var net = {}
+			if (!net.javabeat) {
+				net.javabeat = {
+					monitor : function(event) {
+						if (event.status === "success"){
+							if (hasError)
+								alert("no se pudo eliminar la ruta");
+							else
+								alert("La ruta se elimino correctamente");
+							hasError = false;
+						}
+					},
+					handle : function(error) {
+						if (error.type === "error")
+							hasError = true;
+					}
+
+				}
+
+			}
+		</script>
+		<h:outputScript library="javax.faces" name="jsf.js"/>
+
+
+	</ui:define>
+</ui:composition>
+
+<!-- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,8 +196,7 @@
                             <a href="" ><img src="imagenes/editar.png" alt="editar ruta"> </a>
                             <a href="" ><img src=imagenes/vermas.png alt="ver detalle de ruta"> </a><br><br>
                             <a href="" ><img src=imagenes/multimedia.png alt="ver detalle de ruta"> </a>
-                            <a href="" ><img src=imagenes/mapa-de-rutas.png alt="ver mapa del recorrido"> </a>
-                             
+                            <a href="" ><img src=imagenes/mapa-de-rutas.png alt="ver mapa del recorrido"> </a>         
                         </td>
 
                  </tr>
@@ -101,7 +241,8 @@
        </aside>
 
   </div>
-  <!--  <footer>
+-->
+<!--  <footer>
    		<div id="contenedor_footer" >
    		
    			<strong>Correo Electr&oacute;nico: </strong> <br> 
@@ -110,7 +251,8 @@
    		</div>   		
    </footer>
    -->
-              
+<!--               
 
 </body>
 </html>
+-->

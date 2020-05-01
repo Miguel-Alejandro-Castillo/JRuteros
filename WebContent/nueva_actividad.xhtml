@@ -13,7 +13,11 @@
 
 <ui:define name="navegador">
               <ol class="breadcrumb">
-                <li><a href="home_admin.xhtml">Home</a></li>
+				<li>
+					<h:form>
+						<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+					</h:form>
+				</li>
                 <li class="active">Alta Actividad  </li>
              </ol>
 </ui:define> 
@@ -25,7 +29,7 @@
 				<h:form id="formAltaActividad">
 				  <div class="grupo_form ">
 			 		    <h:outputLabel for="actividad" value="Actividad:"/>
-                           <h:inputText class="form-control"  id="actividad" value="#{ActividadBean.actividad}" 
+                           <h:inputText class="form-control"  id="actividad" value="#{ActividadBean.nombre}" 
                               required="true" validatorMessage="Minimo 1 caracter!"
                               requiredMessage="La actividad no puede estar vacia"
                               >
@@ -34,7 +38,8 @@
                            <h:message for="actividad" styleClass="error"/>		   				
 	   				</div>
 	   				<div class="footer-panel">		
-				         <h:commandButton value="Enviar datos" class="btn  btn-primary"  type="submit" action="#{ActividadBean.alta}" />		 		
+				         <h:commandButton value="Enviar datos" class="btn  btn-primary"  type="submit" action="#{ActividadBean.alta}">
+				         </h:commandButton>		 		
 				 		
 				</div>
 		

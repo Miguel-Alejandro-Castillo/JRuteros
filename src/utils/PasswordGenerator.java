@@ -1,4 +1,4 @@
-package utilitarios;
+package utils;
 
 public class PasswordGenerator {
 	public static String NUMEROS = "0123456789";
