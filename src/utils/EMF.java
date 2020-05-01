@@ -1,4 +1,4 @@
-package utilitarios;
+package utils;
 
 import javax.persistence.*;
 

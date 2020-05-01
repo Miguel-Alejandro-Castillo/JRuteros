@@ -1,7 +1,8 @@
 package daos.daosUsuario;
 import javax.persistence.*;
 import model.Usuario;
-import utilitarios.EMF;
+import utils.EMF;
+
 import java.util.*;
 public class JPADaoUsuario implements IDaoUsuario {
 	
@@ -108,7 +109,7 @@ public class JPADaoUsuario implements IDaoUsuario {
 		EntityManager ent=EMF.getEntityManager();
 		Usuario user=null;
 	  try {
-		Query q = ent.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password");
+		Query q = ent.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.contrasenia = :password");
 	    q.setParameter("usuario", username);
 	    q.setParameter("password", password);
 	    user=(Usuario)q.getSingleResult();

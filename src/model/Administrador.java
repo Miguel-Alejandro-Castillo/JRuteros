@@ -1,6 +1,8 @@
 package model;
+
 import java.util.Date;
 import javax.persistence.*;
+
 @Entity
 @Table(name="ADMINISTRADORES")
 @PrimaryKeyJoinColumn(referencedColumnName="id")

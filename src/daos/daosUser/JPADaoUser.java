@@ -3,15 +3,16 @@ import javax.persistence.*;
 
 import daos.JpaDaoGenerico;
 import model.User;
-import utilitarios.EMF;
+import utils.EMF;
+
 import java.util.*;
 public class JPADaoUser implements IDaoUser {
 	
 	
 	
-	public boolean alta(User dato){
-		boolean ok=true;
-		EntityManager ent=EMF.getEntityManager();
+	public boolean alta(User dato) throws Exception{
+		boolean ok = true;
+		EntityManager ent = EMF.getEntityManager();
 	    EntityTransaction etx=ent.getTransaction();
 		etx.begin();
 	    try {
@@ -19,9 +20,9 @@ public class JPADaoUser implements IDaoUser {
 	         etx.commit();
 	    } catch (Exception e) {
 		     etx.rollback();
-		     System.out.println("ocurrio un error al guardar");
 		     e.printStackTrace();
-		     ok=false;
+		     ok = false;
+		     throw e;
 	    }
 	    finally{
 	    	ent.close();
@@ -45,7 +46,7 @@ public class JPADaoUser implements IDaoUser {
 		}
 	}
 	
-	public boolean modificacion(User dato){
+	public boolean modificacion(User dato) throws Exception{
 		EntityManager ent=EMF.getEntityManager();
 	    EntityTransaction etx=ent.getTransaction();
 	    boolean ok=true;
@@ -57,8 +58,8 @@ public class JPADaoUser implements IDaoUser {
 		catch(Exception e){
 			 etx.rollback();
 			 ok=false;
-		     System.out.println("ocurrio un error al modificar");
 		     e.printStackTrace();
+		     throw e;
 		}
 		finally{
              ent.close();
@@ -79,7 +80,6 @@ public class JPADaoUser implements IDaoUser {
 	     try {
 		     dato=(User)ent.find(Class.forName("model.User"), id);
 	     } catch ( Exception e) {
-	    	 System.out.println("ocurrio un error en la busqueda");
 		     e.printStackTrace();
 	     }	
 	     finally{
@@ -110,7 +110,7 @@ public class JPADaoUser implements IDaoUser {
 		EntityManager ent=EMF.getEntityManager();
 		User user=null;
 	  try {
-		Query q = ent.createQuery("SELECT u FROM User u WHERE u.usuario = :usuario AND u.password = :password");
+		Query q = ent.createQuery("SELECT u FROM User u WHERE u.usuario = :usuario AND u.contrasenia = :password");
 	    q.setParameter("usuario", username);
 	    q.setParameter("password", password);
 	    user=(User)q.getSingleResult();
