@@ -1,89 +1,72 @@
-
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:ui= "http://java.sun.com/jsf/facelets"
-xmlns:t="http://myfaces.apache.org/tomahawk" >
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
 
 
 
- <head>
-	
-  <meta name="description" content="J ruteros" />
-	<meta name="viewport" content="width=divise-width, initial-scale=1, maximum-scale=1"/>
-	<title><ui:insert name="titulo">
+<head>
+
+<meta name="description" content="J ruteros" />
+<meta name="viewport"
+	content="width=divise-width, initial-scale=1, maximum-scale=1" />
+<title><ui:insert name="titulo">
                JRuteros
-            </ui:insert>
-   </title>
-  
-  
-         <link media="all" type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css"/>
-
-     <link media="all" type="text/css" rel="stylesheet" href="resources/css/estilo.css"/>
-     
+            </ui:insert></title>
 
 
+<link media="all" type="text/css" rel="stylesheet"
+	href="resources/css/bootstrap.min.css" />
+<link media="all" type="text/css" rel="stylesheet"
+href="resources/css/estilo.css" />
+<link media="all" type="text/css" rel="stylesheet"
+href="resources/css/jquery.dataTables.min.css" />
 
-       
-         <script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/jquery.min.js"></script>
+<!--   <script src="js/funciones.js"></script>-->
+<script src="resources/js/funciones.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<!--  <script src="js/bootbox.min.js"></script>-->
+<script src="resources/js/jquery.dataTables.min.js"></script>
 
-        <!--   <script src="js/funciones.js"></script>-->
-       <script src="resources/js/funciones.js"></script>
-         <script src="resources/js/bootstrap.min.js"></script>
 
-         <!--  <script src="js/bootbox.min.js"></script>-->
-         
 
-       
-         
-	</head>
+
+
+</head>
 <body>
 
-    <header class="fondo_blanco" > 
-   		
-   		<ui:insert name="encabezado">
-		    <ui:include src="/WEB-INF/templates/encabezado.xhtml"/>
+	<header class="fondo_blanco"> <ui:insert name="encabezado">
+		<ui:include src="/WEB-INF/templates/encabezado.xhtml" />
+	</ui:insert> </header>
+	<nav> <ui:insert name="navegacion">
+		<ui:include src="/WEB-INF/templates/navegacion.xhtml" />
+	</ui:insert> </nav>
+	<div id="contenedor" class="fondo_blanco ">
+		<ui:insert name="navegador">
+
 		</ui:insert>
+		<main> <ui:insert name="contenido">
 
-   </header>
-   <nav >    
-       <ui:insert name="navegacion">
-           <ui:include src="/WEB-INF/templates/navegacion.xhtml"/>
-       </ui:insert>
-   			
+		</ui:insert> </main>
 
-   </nav> 
-   <div id="contenedor" class="fondo_blanco ">
-        <ui:insert name="navegador">
-           
-        </ui:insert>
-        <main>
-           <ui:insert name="contenido">
-           
-           </ui:insert>
-        
-        </main>
-          	
-	 	       <aside id="menu_lateral" >
-      	 			   <ui:insert name="menu_logout">
-      	 			      <ui:include src="/WEB-INF/templates/logout.xhtml"/>
-                       </ui:insert>
+		<aside id="menu_lateral"> <ui:insert name="menu_logout">
+			<ui:include src="/WEB-INF/templates/logout.xhtml" />
+		</ui:insert> </aside>
 
-          
-	        	</aside>		
-       
- </div>    
+	</div>
 
-     <footer>
-           <ui:insert name="pie"/>
-   		<div id="contenedor_footer">
-   		   <ui:insert name="pie">
-   			   <ui:include src="/WEB-INF/templates/pie.xhtml"/>
-           </ui:insert>
-   		</div>   		
-   </footer>
+	<footer> <ui:insert name="pie" />
+	<div id="contenedor_footer">
+		<ui:insert name="pie">
+			<ui:include src="/WEB-INF/templates/pie.xhtml" />
+		</ui:insert>
+	</div>
+	</footer>
 
-         </body>
+</body>
 </html>
