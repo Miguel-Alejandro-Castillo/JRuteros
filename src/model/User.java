@@ -11,24 +11,33 @@ public class User {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable = false, unique = true)
     private String usuario;
     
+	@Column(nullable = false)
     private Long dni;
     
+	@Column(nullable = false)
     private String apellido;
     
+	@Column(nullable = false)
     private String nombre;
     
+	@Column(nullable = false)
     private String domicilio;
     
+	@Column(nullable = false)
     private char sexo;
     
+	@Column(nullable = false)
     private String email;
     
+	@Column(nullable = false)
     private String contrasenia;
     
+	@Column(nullable = false)
     private Date fechaNacimiento;
-    
+
     private boolean habilitado;
 
     public User(){

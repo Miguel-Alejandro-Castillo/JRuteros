@@ -9,17 +9,25 @@ public class Foto {
 	private Long id;
 	private String nombre;
     private String contentType;
-    
     //@Lob
     @Transient
     private byte[] value;
     private Long size;
+    private String uuid;
     
     public Foto() {
     	super();
     }
-    
-    public void setId(Long id) {
+
+    public Foto(String nombre, String contentType, Long size, String uuid) {
+		this();
+		this.nombre = nombre;
+		this.contentType = contentType;
+		this.size = size;
+		this.uuid = uuid;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -59,6 +67,14 @@ public class Foto {
 		this.size = size;
 	}
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,6 +83,7 @@ public class Foto {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		return result;
 	}
 
@@ -99,7 +116,13 @@ public class Foto {
 				return false;
 		} else if (!size.equals(other.size))
 			return false;
+		if (uuid == null) {
+			if (other.uuid != null)
+				return false;
+		} else if (!uuid.equals(other.uuid))
+			return false;
 		return true;
 	}
+
 	
 }

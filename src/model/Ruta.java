@@ -18,7 +18,7 @@ public class Ruta{
     private String descripcion;
     
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "actividad_id")
+    @JoinColumn(name = "actividad_id", referencedColumnName="id")
     private Actividad actividad;
     
     @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
