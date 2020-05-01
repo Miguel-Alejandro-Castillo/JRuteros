@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
+    Listado De Actividades
+</ui:define>
+
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li>
+				<h:form>
+					<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+				</h:form>
+			</li>
+			<li class="active">Listado De Actividades</li>
+		</ol>
+	</ui:define>
+
+	<ui:define name="contenido">
+		<h:form id="formActividades">
+			<h:dataTable id="actividades"
+				value="#{ListadosBean.getActividades()}" var="actividad" border="2">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Actividad"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{actividad.nombre}"></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Habilitado"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{actividad.habilitado ? 'si' : 'no'}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value=""></h:outputText>
+					</f:facet>
+
+					<h:outputText value="">
+						<h:commandLink value=""
+							action="#{ActividadBean.habilitarDeshabilitarActividad(actividad.id)}">
+							<f:ajax render="@form" onevent="onToggleHabilitado" />
+							<img src="resources/img/enable-disable.png"
+								alt="activar/desactivar actividad" />
+						</h:commandLink>
+						<h:commandLink value=""
+							action="#{ActividadBean.editarActividad(actividad.id)}">
+							<img src="resources/img/editar.png" alt="editar actividad" />
+						</h:commandLink>
+						<h:commandLink value=""
+							action="#{ActividadBean.borrarActividad(actividad.id)}"
+							onclick="return confirmarBorrado()">
+							<f:ajax render="actividades" event="action"
+								onevent="net.javabeat.monitor" onerror="net.javabeat.handle" />
+							<img src="resources/img/borrar.png" alt="borrar actividad" />
+						</h:commandLink>
+
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value=""></h:outputText>
+					</f:facet>
+					<h:outputText value=""></h:outputText>
+				</h:column>
+
+			</h:dataTable>
+		</h:form>
+
+		<script type="text/javascript">
+			
+		    var onToggleHabilitado = function(event){
+				if (event.status === "success") {
+					$(document.getElementById('formActividades:actividades')).DataTable();
+				}
+			}
+			
+			function confirmarBorrado() {
+				return confirm("¿Desea eliminar la actividad?");
+			}
+
+			var hasError = false;
+			if (!net)
+				var net = {}
+			if (!net.javabeat) {
+				net.javabeat = {
+					monitor : function(event) {
+						if (event.status === "success") {
+							if (hasError)
+								alert("no se pudo eliminar la actividad");
+							else
+								alert("La actividad se elimino correctamente");
+								
+							hasError = false;
+						}
+					},
+					handle : function(error) {
+						if (error.type === "error")
+							hasError = true;
+					}
+
+				}
+
+			}
+			
+			$(document).ready( function () {
+			    $(document.getElementById('formActividades:actividades')).DataTable();
+			} );
+		</script>
+
+
+	</ui:define>
+</ui:composition>
+
+

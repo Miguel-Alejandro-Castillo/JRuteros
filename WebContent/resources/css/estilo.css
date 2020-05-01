@@ -1,0 +1,477 @@
+
+
+		header,nav,footer { 
+				/* border-radius: 0.5em; */
+				
+				margin:0em auto; /*para centarlo*/
+				max-width: 980px;
+				padding: 0em;
+				
+				}
+
+        nav,footer{
+        	color:white;
+		/*	font-size: 0.45em;*/
+			padding-top: 0.90em;
+			padding-bottom: 0.50em;
+        	background-color: #003333;
+
+        }
+
+        #barra_superior{
+        	text-align: right;
+        }
+		body{ margin:0.2em;
+			 /*border-radius: 0.5em;*/
+			 /*background: url(../img/fondo2.jpg) repeat left top ;*/
+			 font-family: helvetica;
+			text-align: left;
+
+			}
+
+		footer{
+			text-align: left;
+			font-size: 1em;			
+			border-radius: 00em 0em .25em 0.25em ;
+		}
+		
+
+		#contenedor_footer{
+			padding: 1em;
+		}
+		header{
+			border-radius: 0.25em 0.25em 0em 0em;
+		}
+	/*	button {
+				 background-color: black;
+				 border-radius: 0.5em;
+				 
+				 display: inline;
+				 height:29px;
+				 width:100px;
+				 border: none;
+				 font-weight:400;
+				 color:#FFFFFF;
+				}	*/
+		.texto{
+			text-align: left;
+			padding-top: 0.5em;
+			padding-bottom: 0.25em;
+		}
+		#imagen_header{ 
+		/*	max-width: 100%;*/
+		}
+
+		
+	
+
+		#contenedor{
+			box-shadow: 9px 0px  9px 5px rgba(0.20,0.20,0.20,0.25); 
+			margin:0em auto;
+			max-width: 980px;
+			padding: 0px 10px;		
+			text-align: center;
+			/*font-size: 0.5em;	*/		
+			
+			
+		}
+		
+		main{
+			padding-top: 1em;
+			padding-bottom: 1em;
+		}
+		main, aside {
+		   /* border-radius: 0.5em;*/
+		   display: inline-block;
+		   margin: 0em auto;		   
+		   max-width: 980px;		  
+		   min-height: 200px;
+		  
+		   vertical-align: top;
+		   width: 65%;
+		   word-wrap:break-word;
+		
+		  
+		}
+		aside{ 
+			width: 28%; 
+			text-align: left;
+		}
+					
+		
+
+		hr {
+			margin: 0px;
+			margin-bottom: 12px;
+		}
+
+
+		input[type="radio"]{
+
+			width: 1.2em;
+			margin: 0em;
+
+		}
+		#logo img {
+			width: 6em;
+			height: 6em;
+			float: left;
+			border-radius: 9em;
+		}
+        /*titulo-----------------*/
+		#caja_titulo {
+			
+			border-radius: 0.25em 0.25em 0em 0em;
+			border: 1px solid black;
+			padding: 1em;
+			text-align: left;
+		}
+		#caja_titulo >h1 {
+			font-size:2em;
+			margin:0.25em 0em;
+		}
+
+		#caja_titulo >h2{
+			font-size:1.5em;
+			color: gray;
+			margin: 0px;
+
+		}
+		/*fin titulo-------------*/
+	
+	
+		nav {
+			width: 100%;
+			max-width: 980px;
+			margin: 0em auto;
+
+
+		}
+		.menu_bar{
+			display: none;
+		}
+
+		 nav ul {
+			overflow: hidden;
+			list-style: none;
+
+		}
+		 nav ul li {
+			float: left;
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+			
+
+		}
+		nav ul li a{
+			color: white;
+			text-decoration: none;
+		}
+
+		
+		.subTitMen{
+			font-size:0.85em;
+			color: white;
+			background-color: #003333;
+			display: block;
+			padding: 0.5em;
+		}
+
+		@media screen and (max-width: 480px){
+
+			nav ul li{
+				width: 100%;
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+				text-align: left;
+				
+			}
+
+			
+
+			.menu_bar{
+				display:inline;
+				text-align: left;
+			}
+		}
+		/*-----------------fin nav-----------*/
+
+		/*menu lateral*/
+		#menu_lateral{			
+			padding-top: 1.5em;
+			
+		}
+		#menu_lateral ul{
+			list-style: square;
+		}
+		#menu_lateral li a{
+			text-decoration: none;
+
+		}
+		#menu_lateral li a {
+			color:#003399}
+		#menu_lateral li a:hover{
+			color: #066;
+		}
+
+		/*--------------*/
+		
+
+		/*---------*/
+
+		.fondo_blanco{
+		 background-color: #fff;
+		
+		}
+
+		/*formulario alta alumno*/
+		.derecho{
+			float: right;			
+			width: 50%;
+		}
+
+
+		 .formulario{
+
+				 width: 95%;
+				 height: auto;
+				 margin: 0 auto;
+				 padding: 0 3%;
+				 text-align: left;
+				 
+		}
+		.formulario label {
+			font-weight: bold; /*labels en negrita*/
+			
+		}
+		
+		.grupo_form{
+			margin: 1em;
+		}
+
+		.footer_form{
+			text-align:center;
+			padding: 0.5em;
+
+		}
+
+		@media screen and (max-width: 700px){
+
+			.derecho{
+				float: none;
+			}
+			input{
+				/*width: 200px;*/
+			}
+			aside ,main{
+				width: 100%;
+				
+			}
+
+			#logo{
+				display: none;
+			}
+			#navegacion{
+				padding-top: 0em;
+			}
+
+
+		}
+		/*----------------------
+		estilo generico  de tablas----------*/
+		#info {
+				text-align: left;
+			}
+			.titulo-t{
+				
+				font-weight: bold;
+			}
+		@media only screen and (max-width: 800px) {
+		/*	.unseen table td:nth-child(1), 
+			.unseen table th:nth-child(1) {display: none;}*/
+
+			table{font-size: 0.9em;}
+			#caja_titulo >h1 {
+				font-size:1.5em;
+				margin:0.25em 0em;
+			}
+			
+
+			#caja_titulo >h2{
+			font-size:1em;
+			}
+		
+
+
+			/*table img{ display: block;}*/
+		}
+ 
+		@media only screen and (max-width: 640px) {
+			.unseen table td:nth-child(4),
+			.unseen table th:nth-child(4),
+			.unseen table td:nth-child(7),
+			.unseen table th:nth-child(7),
+			.unseen table td:nth-child(8),
+			.unseen table th:nth-child(8){display: none;}
+		}
+
+
+	
+		
+		.opciones{
+			text-align: left;
+		}
+		
+	
+
+
+
+		/*estilo login*/
+		.formWrapper {
+			padding: 2em 0em; 
+			width: 50%;
+			height: 100%;
+			margin: 0em auto;			
+		}
+		/*.formWrapper {
+			padding: 2em 0em; 
+			width: 50%;
+			margin: 0em auto;			
+		}
+         */
+		.formTitle{
+			color:#50362d;
+			font-weight: bold;
+			font-size: 155%;
+			text-align:left;
+		}
+	
+/*-----fin --estilo login*/
+		.panel{
+
+			border: 1px solid #F5F5F5;
+			border-radius: 0.40em 0.40em 0.40em 0.40em ;
+		}
+		.header-panel,.footer-panel{
+		    border-radius: 0.40em 0.40em 0em 0em ;
+			background-color: 	#333;
+			padding: 0.5em;
+			text-align: left;
+			color: white;
+		}
+
+		.footer-panel{
+			text-align: right;
+			border-radius: 0.0em 0.0em 0.4em 0.4em ;
+			background-color: #F5F5F5;
+		}
+		a  .footer-panel {
+			text-decoration: none;
+		}
+		.body-panel{
+			text-align: left;
+			padding: 0.5em;
+		}
+
+		.option {
+			border-radius: 0.50em 0.50em 0.5em 0.5em ;
+			padding: 0.25em;
+			text-decoration: none;
+			background-color: #F5F5F5;
+			height: 4em;
+			width: 4em;
+			display: inline-block;
+		}
+
+		.oculto{
+			display: none;
+		}
+
+#wait{
+	 position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://sampsonresume.com/labs/pIkfp.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+#containerBody {
+margin: 13px auto;
+/*width: 600px;*/
+padding: 20px;
+background: transparent url(../img/montana.jpg) center center fixed no-repeat;
+/*background: rgba(0, 0, 0, 0.5) none;*/
+-moz-border-radius: 12px;
+-webkit-border-radius: 12px;
+background-size: cover;
+border-radius: 0.5em;
+}
+ #contenedorLogin{
+        box-shadow: 9px 0px  9px 5px rgba(0.20,0.20,0.20,0.25); 
+			margin:0em auto;
+			max-width: 900px;
+			padding: 0px 10px;		
+			text-align: center;
+        }
+        #signIn{
+      position:relative;
+      top:100px;
+      height:5px;
+      margin:0 auto;
+  }
+  
+  
+  
+  
+  <!-- ----------------------------------------------------------------------------------->
+  /*
+style.css
+Created by Murad R. Imanbayli <muradimanbayli at gmail.com> on Oct 1, 2016  5:36:26 PM
+Copyright www.imanbayli.net 2016.All rights reserved
+*/
+/* 
+    Created on : Oct 1, 2016, 5:36:26 PM
+    Author     : Murad R. Imanbayli <muradimanbayli at gmail.com>
+*/
+#upload-panel{
+    border-radius: 5px;
+    border:1px solid #DDD;
+    position: relative;
+    width: 400px;
+    height: 200px;
+    line-height: 150px;
+    color: #909090;
+    font-size: 26px;
+    font-family: "Tahoma";
+    text-align: center;
+    margin: 50px auto;
+}
+#upload-panel input[type='file']{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+}
+.upload-progress{
+    width: 600px;
+    margin: 50px auto;
+}
+
+.upload-progress .progress{
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 5px;
+    font-family: "Tahoma";
+    color: #909090;
+
+}
+  
+  <!-- ----------------------------------------------------------------------------------->
