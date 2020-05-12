@@ -35,14 +35,77 @@ public class UsuarioBean {
 	
 	@PostConstruct
 	public void init() {
-		/*
-		String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-		if(viewId.equals("/usuarios.xhtml")){
-			this.usuarios = Factory.daoUsuario().listar();
-		}
-		*/
+	}
+	
+	public void initialize(){
+		this.id = null;
+		this.usuario = null;
+		this.dni = null;
+		this.apellido = null;
+		this.nombre = null;
+		this.domicilio = null;
+		this.sexo = '\0';
+		this.email = null;
+		this.password = null;
+		this.fechaNacimiento = null;
 	}
 
+	
+
+	public String habilitarDeshabilitarUsuario(Long idUsuario) {
+		try{
+			User user = Factory.daoUser().buscarPorId(idUsuario);
+			user.setHabilitado(!user.isHabilitado());
+			Factory.daoUser().modificacion(user);
+		}
+		catch(Exception e){
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		return this.getOutcome().usuarios();
+	}
+
+	public String alta() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String mensaje = "";
+		IDaoUser daoUser = Factory.daoUser();
+		User user = daoUser.buscar(this.getUsuario());
+		if (user == null) {
+			try {
+				// GENERAR LA PASSWORD DE FORMA ALEATORIA
+				String passwordGenerada = PasswordGenerator.getPassword(8);
+				Usuario nuevoUser = new Usuario(this.getUsuario(), this.getDni(), this.getApellido(), this.getNombre(),
+						this.getDomicilio(), this.getSexo(), this.getEmail(), passwordGenerada, this.getFechaNacimiento());
+				
+				daoUser.alta(nuevoUser);
+				this.setPassword(passwordGenerada);
+				String subject = "Alta de usuario exitosa";
+				String body = "Hola señor/a " + nuevoUser.getNombre() + " " + nuevoUser.getApellido() + "\n" +
+						"Le informamos que su usuario " + nuevoUser.getUsuario() + " ha sido dado de alta exitosamente en JRuteros\n" +
+						"Su contraseña es: " + nuevoUser.getContrasenia() + "\n" +
+						"Saludos, que tenga un buen dia";
+				MailerApp.sendMail(subject, body, nuevoUser.getEmail());
+				mensaje = "success_alta_usuario";
+			} catch (Exception e) {
+				FacesMessage message = new FacesMessage("sucedio un error inesperado en el alta, reintente nuevamente");
+				context.addMessage("userAltaForm", message);
+				mensaje = "formulario_alta_usuario";
+			}			
+
+		} else {
+			FacesMessage message = new FacesMessage("nombre de usuario utilizado, intente con otro nombre de usuario");
+			context.addMessage("userAltaForm", message);
+			mensaje = "formulario_alta_usuario";
+		}
+
+		return mensaje;
+
+	}
+	
+	public String nuevoUsuario(){
+		this.initialize();
+		return this.getOutcome().nuevoUsuario();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -121,49 +184,6 @@ public class UsuarioBean {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public String habilitarDeshabilitarUsuario(Long idUsuario) {
-		try{
-			User user = Factory.daoUser().buscarPorId(idUsuario);
-			user.setHabilitado(!user.isHabilitado());
-			Factory.daoUser().modificacion(user);
-		}
-		catch(Exception e){
-			throw new RuntimeException(e.getMessage(), e);
-		}
-		return this.getOutcome().usuarios();
-	}
-
-	public String alta() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String mensaje = "";
-		IDaoUser daoUser = Factory.daoUser();
-		User user = daoUser.buscar(this.getUsuario());
-		if (user == null) {
-			try {
-				// GENERAR LA PASSWORD DE FORMA ALEATORIA
-				String passwordGenerada = PasswordGenerator.getPassword();
-				Usuario nuevoUser = new Usuario(this.getUsuario(), this.getDni(), this.getApellido(), this.getNombre(),
-						this.getDomicilio(), this.getSexo(), this.getEmail(), passwordGenerada, this.getFechaNacimiento());
-				
-				daoUser.alta(nuevoUser);
-				this.setPassword(passwordGenerada);
-				mensaje = "success_alta_usuario";
-			} catch (Exception e) {
-				FacesMessage message = new FacesMessage("sucedio un error inesperado en el alta, reintente nuevamente");
-				context.addMessage("userAltaForm", message);
-				mensaje = "formulario_alta_usuario";
-			}			
-
-		} else {
-			FacesMessage message = new FacesMessage("nombre de usuario utilizado, intente con otro nombre de usuario");
-			context.addMessage("userAltaForm", message);
-			mensaje = "formulario_alta_usuario";
-		}
-
-		return mensaje;
-
 	}
 
 	public OutcomeBean getOutcome() {

@@ -19,7 +19,7 @@ public class MisRutasBean {
 
 	@PostConstruct
 	public void init() {
-		this.rutas = Factory.daoRuta().listar();
+		
 	}
 
 	public List<Ruta> getRutas() {

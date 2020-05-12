@@ -39,8 +39,8 @@ public class ListadosBean {
 	   return Factory.daoPrivacidad().listar();
    }
    
-   public List<Ruta> getMisRutas(){
-	   return Factory.daoRuta().listar();
+   public List<Ruta> getMisRutas(Long usuarioId){
+	   return Factory.daoRuta().buscarPorPropietarioId(usuarioId);
    }
    
    public List<Usuario> getUsuarios(){

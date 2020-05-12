@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -20,7 +21,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.convert.ConverterException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,14 +35,21 @@ import model.Privacidad;
 import model.Punto;
 import model.Ruta;
 import model.Usuario;
+import model.Valoracion;
 import java.util.UUID;
 import utils.Factory;
 import org.apache.commons.lang.StringUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.commons.io.FilenameUtils;
 
 @ManagedBean(name = "RutaBean")
 @SessionScoped
 public class RutaBean {
+
+	private static String URL_REPOSITORY = "E:/images";
 
 	@ManagedProperty(value = "#{OutcomeBean}")
 	private OutcomeBean outcome;
@@ -72,16 +80,19 @@ public class RutaBean {
 
 	private Set<Foto> fotos;
 
-	private Set<Punto> recorrido;
-
-	// private UploadedFile uploadedFile;
-	private Object file;
+	private List<Punto> recorrido;
 
 	private Ruta ruta;
 
 	private List<UploadFileBean> uploadFiles;
 
 	private boolean uploading = false;
+
+	private BigDecimal puntajePromedio;
+
+	private Long cantidadVisitas;
+
+	private String recorridoJSON;
 
 	public RutaBean() {
 		super();
@@ -214,6 +225,8 @@ public class RutaBean {
 			} else {
 				outcome = this.getOutcome().nuevaRuta();
 				daoRuta.alta(ruta);
+				Valoracion valoracion = new Valoracion(propietario, ruta, null, true);
+				Factory.daoValoracion().alta(valoracion);
 			}
 			this.guardarImagenes(this.getUploadFiles());
 
@@ -233,9 +246,10 @@ public class RutaBean {
 		String urlRepository = repository.getAbsolutePath();
 
 		for (UploadFileBean uf : uploadFiles) {
-			File targetFile = new File(urlRepository + File.separator + uf.getUuid()+ "." + FilenameUtils.getExtension(uf.getFileName()));
-			
-			if(!targetFile.exists()){
+			File targetFile = new File(URL_REPOSITORY + File.separator + uf.getUuid() + "."
+					+ FilenameUtils.getExtension(uf.getFileName()));
+
+			if (!targetFile.exists()) {
 				Part part = uf.getFilePart();
 				byte[] value = new byte[(int) part.getSize()];
 				InputStream inputStream = part.getInputStream();
@@ -254,7 +268,8 @@ public class RutaBean {
 		File repository = (File) servletRequest.getServletContext().getAttribute(ServletContext.TEMPDIR);
 		String urlRepository = repository.getAbsolutePath();
 		for (Foto foto : fotos) {
-			File targetFile = new File(urlRepository + File.separator + foto.getUuid()+ "." + FilenameUtils.getExtension(foto.getNombre()));
+			File targetFile = new File(URL_REPOSITORY + File.separator + foto.getUuid() + "."
+					+ FilenameUtils.getExtension(foto.getNombre()));
 			targetFile.delete();
 		}
 	}
@@ -281,7 +296,7 @@ public class RutaBean {
 	}
 
 	private Set<Foto> obtenerImagenes(List<UploadFileBean> uploadFiles) {
-		return uploadFiles.stream().filter(uf-> uf.getFilePart() != null).map(uf -> {
+		return uploadFiles.stream().filter(uf -> uf.getFilePart() != null).map(uf -> {
 			Part part = uf.getFilePart();
 			return new Foto(part.getSubmittedFileName(), part.getContentType(), part.getSize(), uf.getUuid());
 		}).collect(Collectors.toSet());
@@ -306,8 +321,7 @@ public class RutaBean {
 		this.tiempoEstimado = null;
 		this.fechaRealizacion = null;
 		this.fotos = new HashSet<Foto>();
-		this.recorrido = new LinkedHashSet<Punto>();
-		this.file = null;
+		this.recorrido = new ArrayList<Punto>();
 		this.uploadFiles = new ArrayList<UploadFileBean>();
 		return this.getOutcome().nuevaRuta();
 	}
@@ -345,14 +359,27 @@ public class RutaBean {
 		if (idRuta != null) {
 			Ruta ruta = Factory.daoRuta().buscarPorId(idRuta);
 			this.setRuta(ruta);
+			Map<String, Object> result = Factory.daoValoracion().getPromedioPuntajeYCantidadVisitas(idRuta);
+			this.setCantidadVisitas((Long) result.get("cantidadVisitas"));
+			this.setPuntajePromedio((BigDecimal) result.get("puntajePromedio"));
+			
+			this.recorridoJSON = "";
+			ObjectMapper objectMapper = new ObjectMapper();
+			try {
+				this.recorridoJSON = objectMapper.writeValueAsString(ruta.getRecorrido());
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
-		return this.getOutcome().detalleRuta();
+		// return this.getOutcome().detalleRuta();
+		return this.getOutcome().misRutas();
 	}
 
-	public String borrarRuta(Long idRuta) {
+	public String borrarRuta(Long rutaId) {
 		DaoRuta daoRuta = Factory.daoRuta();
 		try {
-			Ruta ruta = daoRuta.buscarPorId(idRuta);
+			Factory.daoValoracion().borrarPorRutaId(rutaId);
+			Ruta ruta = daoRuta.buscarPorId(rutaId);
 			daoRuta.baja(ruta);
 			this.eliminarImagenes(ruta.getFotos());
 		} catch (Exception e) {
@@ -360,18 +387,6 @@ public class RutaBean {
 		}
 		return this.getOutcome().misRutas();
 
-	}
-
-	public void updatedFile(ValueChangeEvent event) {
-		this.setFile(event.getNewValue());
-	}
-
-	public Object getFile() {
-		return file;
-	}
-
-	public void setFile(Object file) {
-		this.file = file;
 	}
 
 	public Long getId() {
@@ -470,11 +485,11 @@ public class RutaBean {
 		this.fotos = fotos;
 	}
 
-	public Set<Punto> getRecorrido() {
+	public List<Punto> getRecorrido() {
 		return recorrido;
 	}
 
-	public void setRecorrido(Set<Punto> recorrido) {
+	public void setRecorrido(List<Punto> recorrido) {
 		this.recorrido = recorrido;
 	}
 
@@ -500,6 +515,30 @@ public class RutaBean {
 
 	public void setUploading(boolean uploading) {
 		this.uploading = uploading;
+	}
+
+	public BigDecimal getPuntajePromedio() {
+		return puntajePromedio;
+	}
+
+	public void setPuntajePromedio(BigDecimal puntajePromedio) {
+		this.puntajePromedio = puntajePromedio;
+	}
+
+	public Long getCantidadVisitas() {
+		return cantidadVisitas;
+	}
+
+	public void setCantidadVisitas(Long cantidadVisitas) {
+		this.cantidadVisitas = cantidadVisitas;
+	}
+
+	public String getRecorridoJSON() {
+		return recorridoJSON;
+	}
+
+	public void setRecorridoJSON(String recorridoJSON) {
+		this.recorridoJSON = recorridoJSON;
 	}
 
 	public OutcomeBean getOutcome() {

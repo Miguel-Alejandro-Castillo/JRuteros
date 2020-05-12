@@ -43,9 +43,9 @@ public class PuntosResource {
 	@GET
 	@Path("/ruta/{rutaId}")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Set<Punto> getPuntosByRutaId(@PathParam("rutaId") Long rutaId) {
+	public Collection<Punto> getPuntosByRutaId(@PathParam("rutaId") Long rutaId) {
 		 Ruta ruta = Factory.daoRuta().buscarPorId(rutaId);
-		 return ruta != null ? ruta.getRecorrido() : new HashSet<Punto>();
+		 return ruta != null ? ruta.getRecorrido() : new ArrayList<Punto>();
 	}
 
 	@POST

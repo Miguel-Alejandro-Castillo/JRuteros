@@ -1,10 +1,7 @@
 package converters;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,9 +19,9 @@ public class PuntosConverter implements Converter{
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) throws ConverterException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		Set<Punto> puntos;
+		List<Punto> puntos;
 		try {
-			puntos = objectMapper.readValue(arg2, new TypeReference<Set<Punto>>(){});
+			puntos = objectMapper.readValue(arg2, new TypeReference<List<Punto>>(){});
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ConverterException(e);
@@ -32,6 +29,7 @@ public class PuntosConverter implements Converter{
 		return puntos;
 	}
 
+	
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) throws ConverterException {
 		String jsonPuntos;

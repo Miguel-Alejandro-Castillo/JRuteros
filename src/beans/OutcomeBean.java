@@ -21,6 +21,10 @@ public class OutcomeBean {
 	public String misRutas(){
 		return "mis_rutas";
 	}
+	
+	public String buscadorRutas(){
+		return "buscador_de_rutas";
+	}
 
 	public String nuevaRuta(){
 		return "nueva_ruta";
@@ -42,6 +46,10 @@ public class OutcomeBean {
 	
 	public String editarUsuario() {
 		return "editar_usuario";
+	}
+	
+	public String nuevoUsuario() {
+		return "nuevo_usuario";
 	}
 	
 	/* ACTIVIDADES */

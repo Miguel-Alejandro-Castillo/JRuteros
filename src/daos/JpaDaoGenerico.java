@@ -14,7 +14,6 @@ public abstract class JpaDaoGenerico<T> implements IDaoGenerico<T>{
 		EntityManager ent=EMF.getEntityManager();
 	    EntityTransaction etx=ent.getTransaction();
 		etx.begin();
-		
 	    try {
 	    	ent.persist(dato);
 	        etx.commit();
@@ -45,7 +44,7 @@ public abstract class JpaDaoGenerico<T> implements IDaoGenerico<T>{
 		}
 	}
 	
-	public void modificar(T dato){
+	public void modificar(T dato) throws Exception{
 		EntityManager ent=EMF.getEntityManager();
 	    EntityTransaction etx=ent.getTransaction();
 		etx.begin();
@@ -54,8 +53,9 @@ public abstract class JpaDaoGenerico<T> implements IDaoGenerico<T>{
              etx.commit();
 		}
 		catch(Exception e){
-			 etx.rollback();
-		     e.printStackTrace();
+			e.printStackTrace();
+			etx.rollback();
+		    throw e;
 		}
 		finally{
              ent.close();
@@ -74,12 +74,11 @@ public abstract class JpaDaoGenerico<T> implements IDaoGenerico<T>{
 	     T dato=null;
 	     try {
 		     dato=(T)ent.find(Class.forName("model."+model), id);
-	     } catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-	     finally{
-	    	 ent.close();
-	     }
+		} finally {
+			ent.close();
+		}
 	     return dato;
      }
 	public void borrarPorId(Long id){

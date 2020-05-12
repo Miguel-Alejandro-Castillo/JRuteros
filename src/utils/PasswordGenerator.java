@@ -8,14 +8,9 @@ public class PasswordGenerator {
 	public static String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
  
 	public static String ESPECIALES = "Ò—";
- 
 	
 	public static String getPinNumber() {
 		return getPassword(NUMEROS, 4);
-	}
- 
-	public static String getPassword() {
-		return getPassword(4);
 	}
  
 	public static String getPassword(int length) {
