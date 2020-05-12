@@ -5,79 +5,98 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="RUTAS")
-public class Ruta{
+@Table(name = "RUTAS")
+public class Ruta {
 
-	@Id @GeneratedValue
-    private Long id;
-	
+	@Id
+	@GeneratedValue
+	private Long id;
+
 	@Column(nullable = false)
-    private String nombre;
-    
+	private String nombre;
+
 	@Column(nullable = false)
-    private String descripcion;
-    
-    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "actividad_id", referencedColumnName="id")
-    private Actividad actividad;
-    
-    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "privacidad_id")
-    private Privacidad privacidad;
-    
-    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "formato_id")
-    private Formato formato;
+	private String descripcion;
 
-    private BigDecimal distancia;
- 
-    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "dificultad_id")
-    private Dificultad dificultad;
+	@ManyToOne(optional = false, cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "actividad_id", referencedColumnName = "id")
+	private Actividad actividad;
 
-    private Date tiempoEstimado;
+	@ManyToOne(optional = false, cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "privacidad_id")
+	private Privacidad privacidad;
 
-    private Date fechaRealizacion;
+	@ManyToOne(optional = false, cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "formato_id")
+	private Formato formato;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinTable(name= "RUTAS_FOTOS",
-               joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
-               inverseJoinColumns={@JoinColumn
-            		 (name="foto_id" ,referencedColumnName="id")
-               })
-    private Set<Foto> fotos = new HashSet<Foto>();
-    
-    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinTable(name= "RUTAS_PUNTOS",
-    joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
-    inverseJoinColumns={@JoinColumn
- 		 (name="punto_id" ,referencedColumnName="id")
-    })
-    @OrderBy("id ASC")
-    private Set<Punto> recorrido = new LinkedHashSet<Punto>();
-   
-    @ManyToOne(optional=false, cascade={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "propietario_id")
-    private Usuario propietario;
-    
-    /*
-    @ManyToMany(mappedBy="misRutas",cascade={CascadeType.MERGE})
-    private Set<Usuario> visitantes;
-    */
-    
-    /*
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinTable(name= "RUTAS_VALORACIONES",
-    joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
-    inverseJoinColumns={@JoinColumn
- 		 (name="valoracion_id" ,referencedColumnName="id")
-    })
-    private List<Valoracion> valoraciones;
-    */
-    
-    public Ruta() {
-       super();        
-    }
+	@Column(nullable = false)
+	private BigDecimal distancia;
+
+	@ManyToOne(optional = false, cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "dificultad_id")
+	private Dificultad dificultad;
+
+	@Column(nullable = false)
+	private Date tiempoEstimado;
+
+	@Column(nullable = false)
+	private Date fechaRealizacion;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "ruta_id")
+	private Set<Foto> fotos = new HashSet<Foto>();
+
+	/*
+	 * @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+	 * orphanRemoval = true)
+	 * 
+	 * @JoinTable(name = "RUTAS_FOTOS", joinColumns = {
+	 * 
+	 * @JoinColumn(name = "ruta_id", referencedColumnName = "id") },
+	 * inverseJoinColumns = {
+	 * 
+	 * @JoinColumn(name = "foto_id", referencedColumnName = "id") }) private
+	 * Set<Foto> fotos = new HashSet<Foto>();
+	 */
+
+	/*
+	 * @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER,
+	 * orphanRemoval = true)
+	 * 
+	 * @JoinTable(name= "RUTAS_PUNTOS", joinColumns={@JoinColumn(name="ruta_id"
+	 * ,referencedColumnName="id")}, inverseJoinColumns={@JoinColumn
+	 * (name="punto_id" ,referencedColumnName="id") })
+	 * 
+	 * @OrderBy("id ASC") private Set<Punto> recorrido = new
+	 * LinkedHashSet<Punto>();
+	 */
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "ruta_id")
+	private List<Punto> recorrido = new ArrayList<Punto>();
+
+	@ManyToOne(optional = false, cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "propietario_id")
+	private Usuario propietario;
+
+	/*
+	 * @ManyToMany(mappedBy="misRutas",cascade={CascadeType.MERGE}) private
+	 * Set<Usuario> visitantes;
+	 */
+
+	/*
+	 * @OneToMany(cascade=CascadeType.ALL)
+	 * 
+	 * @JoinTable(name= "RUTAS_VALORACIONES",
+	 * joinColumns={@JoinColumn(name="ruta_id" ,referencedColumnName="id")},
+	 * inverseJoinColumns={@JoinColumn (name="valoracion_id"
+	 * ,referencedColumnName="id") }) private List<Valoracion> valoraciones;
+	 */
+
+	public Ruta() {
+		super();
+	}
 
 	public Long getId() {
 		return id;
@@ -159,14 +178,6 @@ public class Ruta{
 		this.fechaRealizacion = fechaRealizacion;
 	}
 
-	public void agregarFoto(Foto foto){
-		this.getFotos().add(foto);
-	}
-	
-	public void agregarPunto(Punto punto){
-		this.getRecorrido().add(punto);
-	}
-	
 	public Usuario getPropietario() {
 		return propietario;
 	}
@@ -174,23 +185,24 @@ public class Ruta{
 	public void setPropietario(Usuario propietario) {
 		this.propietario = propietario;
 	}
+	
+	public Set<Foto> getFotos() { return fotos; }
+	
+	public void setFotos(Set<Foto> fotos) { this.fotos = fotos; }
 
-	public Set<Foto> getFotos() {
-		return fotos;
-	}
-
-	public void setFotos(Set<Foto> fotos) {
-		this.fotos = fotos;
-	}
-
-	public Set<Punto> getRecorrido() {
+	public List<Punto> getRecorrido() {
 		return recorrido;
 	}
 
-	public void setRecorrido(Set<Punto> recorrido) {
+	public void setRecorrido(List<Punto> recorrido) {
 		this.recorrido = recorrido;
 	}
-	
-	
 
-} 
+	/*
+	 * public Set<Punto> getRecorrido() { return recorrido; }
+	 * 
+	 * public void setRecorrido(Set<Punto> recorrido) { this.recorrido =
+	 * recorrido; }
+	 */
+
+}

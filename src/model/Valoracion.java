@@ -6,36 +6,44 @@ import javax.persistence.*;
 @Entity
 @Table(name="VALORACIONES")
 public class Valoracion implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -8117902343840943934L;
 
 	@Id
-    @OneToOne(optional=false,cascade={CascadeType.MERGE})
+	@ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     
 	@Id
-    @OneToOne(optional=false,cascade={CascadeType.MERGE})
+	@ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "ruta_id")
     private Ruta ruta;
 	
     private Integer puntaje;
     
-    private Boolean hiceLaRuta;
+    private Boolean hizoLaRuta;
     
     public Valoracion() {
     	super();
     }
 
-	public Valoracion(int puntaje, Usuario usuario) {
-		super();
-		this.puntaje = puntaje;
+	public Valoracion(Usuario usuario, Ruta ruta) {
+		this();
 		this.usuario = usuario;
+		this.ruta = ruta;
 	}
 
-	public int getPuntaje() {
+	public Valoracion(Usuario usuario, Ruta ruta, Integer puntaje, Boolean hizoLaRuta) {
+		this(usuario, ruta);
+		this.puntaje = puntaje;
+		this.hizoLaRuta = hizoLaRuta;
+	}
+
+	public Integer getPuntaje() {
 		return puntaje;
 	}
 
-	public void setPuntaje(int puntaje) {
+	public void setPuntaje(Integer puntaje) {
 		this.puntaje = puntaje;
 	}
 
@@ -55,17 +63,12 @@ public class Valoracion implements Serializable{
 		this.ruta = ruta;
 	}
 
-	public Boolean getHiceLaRuta() {
-		return hiceLaRuta;
+	public Boolean getHizoLaRuta() {
+		return hizoLaRuta;
 	}
 
-	public void setHiceLaRuta(Boolean hiceLaRuta) {
-		this.hiceLaRuta = hiceLaRuta;
+	public void setHizoLaRuta(Boolean hizoLaRuta) {
+		this.hizoLaRuta = hizoLaRuta;
 	}
-
-	public void setPuntaje(Integer puntaje) {
-		this.puntaje = puntaje;
-	}
-
 
 }
