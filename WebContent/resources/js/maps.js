@@ -9,76 +9,123 @@ var mapProp = {
 var puntos = [];
 
 // Evento
-//google.maps.event.addDomListener(window, 'load', initialize);
+// google.maps.event.addDomListener(window, 'load', initialize);
 
 /**
  * Inicializa el mapa
  */
 var positions = [];
 
-function initialize1(puntos){
-	
+var markerAct;
+var cityCircleAct;
+function initMap(radioDistancia) {
+	markerAct = null;
+	cityCircleAct = null;
+	map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	map.addListener('click',
+			function(e) {
+				if (markerAct)
+					markerAct.setMap(null);
+				if (cityCircleAct)
+					cityCircleAct.setMap(null);
+				markerAct = new google.maps.Marker({
+					position : e.latLng,
+					icon : {
+						path : google.maps.SymbolPath.CIRCLE,
+						scale : 3
+					}
+				});
+				markerAct.setMap(map);
+
+				var sunCircle = {
+					strokeColor : "#c3fc49",
+					strokeOpacity : 0.8,
+					strokeWeight : 2,
+					fillColor : "#c3fc49",
+					fillOpacity : 0.35,
+					map : map,
+					center : markerAct.position,
+					radius : (isNaN(radioDistancia) ? 0
+							: Number(radioDistancia)) * 1000
+				// in meters
+				};
+				cityCircleAct = new google.maps.Circle(sunCircle);
+				cityCircleAct.bindTo('center', markerAct, 'position');
+			});
+}
+
+function getMarkerAct() {
+	return markerAct;
+}
+
+function initialize1(puntos, readOnly) {
+
 	positions = [];
 	map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-	map.addListener('click', function(e) {
+
+	if (!readOnly) {
+		map.addListener('click', function(e) {
 			var position = e.latLng;
 			position.id = null;
 			positions.push(position);
-			dibujarMarker1(position);
+			dibujarMarker1(position, readOnly);
 			dibujarRecorrido1();
-			//redibujar todo el recorrido!!!
-    
-	});
-	
-	puntos.forEach(function(punto){
+			// redibujar todo el recorrido!!!
+		});
+	}
+
+	puntos.forEach(function(punto) {
 		var position = new google.maps.LatLng(punto.latitud, punto.longitud);
 		positions.id = punto.id;
 		positions.push(position);
-		dibujarMarker1(position);
+		dibujarMarker1(position, readOnly);
 	});
 	dibujarRecorrido1();
 }
 
-function dibujarMarker1(position) {
+function dibujarMarker1(position, readOnly) {
 
 	var marker = new google.maps.Marker({
-		position: position,
-		icon: {
-		      path: google.maps.SymbolPath.CIRCLE,
-		      scale: 3
+		position : position,
+		icon : {
+			path : google.maps.SymbolPath.CIRCLE,
+			scale : 3
 		}
 	});
 
-	marker.addListener("rightclick", function(e) {
-		var position = e.latLng;
-		positions = positions.filter(function(p){
-			return p.lat() != position.lat() && p.lng() != position.lng();
-		});
-		marker.setMap(null);
-		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-		map.addListener('click', function(e) {
+	if (!readOnly) {
+		marker.addListener("rightclick", function(e) {
+			var position = e.latLng;
+			positions = positions.filter(function(p) {
+				return p.lat() != position.lat() && p.lng() != position.lng();
+			});
+			marker.setMap(null);
+			map = new google.maps.Map(document.getElementById("googleMap"),
+					mapProp);
+			map.addListener('click', function(e) {
 				var position = e.latLng;
 				position.id = null;
 				positions.push(position);
-				dibujarMarker1(position);
+				dibujarMarker1(position, readOnly);
 				dibujarRecorrido1();
+			});
+			positions.forEach(function(p) {
+				dibujarMarker1(p, readOnly);
+			});
+			dibujarRecorrido1();
 		});
-		positions.forEach(function(p){
-			dibujarMarker1(p);
-		});
-	    dibujarRecorrido1();
-	});
+	}
 
 	marker.setMap(map);
 }
 
 function borrarMarker1(id) {
 	punto = {
-		id: id
+		id : id
 	};
 	$.ajax({
 		data : punto,
-		url : myURI+"/"+id ,
+		url : myURI + "/" + id,
 		type : "DELETE",
 		success : function(result) {
 			initialize();
@@ -104,14 +151,20 @@ function initialize() {
 
 	map.addListener('click', function(e) {
 		agregarMarker(e.latLng, map);
-    
+
 	});
-	
+
 	obtenerMarkers();
 }
 
-function getPuntos(){
-	return positions.map( function(punto){ return {id: punto.id, latitud: punto.lat(), longitud: punto.lng() };});
+function getPuntos() {
+	return positions.map(function(punto) {
+		return {
+			id : punto.id,
+			latitud : punto.lat(),
+			longitud : punto.lng()
+		};
+	});
 }
 
 // Obtiene markers y los dibuja
@@ -136,10 +189,10 @@ function dibujarMarker(dato) {
 
 	var marker = new google.maps.Marker({
 		position : position,
-		icon: {
-		      path: google.maps.SymbolPath.CIRCLE,
-		      scale: 3
-		    },
+		icon : {
+			path : google.maps.SymbolPath.CIRCLE,
+			scale : 3
+		},
 		id : dato.id
 	});
 
@@ -154,17 +207,17 @@ function dibujarMarker(dato) {
 }
 
 function agregarMarker(latLng) {
-	
+
 	var punto = {
-		latitud: latLng.lat(),
-		longitud: latLng.lng()
+		latitud : latLng.lat(),
+		longitud : latLng.lng()
 	};
 
 	$.ajax({
 		data : JSON.stringify(punto),
 		url : myURI,
 		type : "POST",
-		contentType: "application/json",
+		contentType : "application/json",
 		success : function(result) {
 			obtenerMarkers();
 
@@ -200,7 +253,7 @@ function dibujarRecorridoCircular() {
 
 function limpiarMapa() {
 	punto = {
-		id: null
+		id : null
 	};
 	$.ajax({
 		data : punto,
@@ -218,16 +271,14 @@ function limpiarMapa1() {
 
 function borrarMarker(id) {
 	punto = {
-		id: id
+		id : id
 	};
 	$.ajax({
 		data : punto,
-		url : myURI+"/"+id ,
+		url : myURI + "/" + id,
 		type : "DELETE",
 		success : function(result) {
 			initialize();
 		}
 	});
 }
-
-

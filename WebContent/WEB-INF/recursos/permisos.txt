@@ -1,5 +1,5 @@
 /jruteros/index.xhtml all
-/jruteros/alta_usuario.xhtml all
+/jruteros/nuevo_usuario.xhtml all
 /jruteros/mapa.html all
 /jruteros/home.xhtml administrador=true usuario=true
 /jruteros/editar_usuario.xhtml administrador=false usuario=true
