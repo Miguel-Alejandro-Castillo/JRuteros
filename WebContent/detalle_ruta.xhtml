@@ -17,12 +17,10 @@
 					</h:commandLink>
 				</h:form>
 			</li>
-			<li class="active">Editar ruta</li>
+			<li class="active">Detalle ruta</li>
 		</ol>
 	</ui:define>
 
-	<ui:define name="navegacion">
-	</ui:define>
 	<ui:define name="contenido">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4"></script>
@@ -32,70 +30,72 @@
 
 			<h2>Detalle Ruta</h2>
 
-				<br />
-
-				<div class="grupo_form ">
-					<h:outputLabel for="nombre" value="Nombre:" />
+				<div class="">
+					<h:outputLabel for="nombre" value="Nombre: " />
 					<h:outputText id="nombre" value="#{RutaBean.ruta.nombre}" />
-					<br />
 				</div>
 
-				<div class="grupo_form ">
-					<h:outputLabel for="descripcion" value="Descripción:" />
+				<div class="">
+					<h:outputLabel for="descripcion" value="Descripción: " />
 					<h:outputText id="descripcion" value="#{RutaBean.ruta.descripcion}" />
-					<br />
 				</div>
 
-				<div class="grupo_form">
+				<div class="">
 					<h:outputLabel for="privacidad" value="Privacidad:" />
 					<h:outputText id="privacidad" value="#{RutaBean.ruta.privacidad.nombre}" />
-					<br />
 				</div>
 
-				<div class="grupo_form">
+				<div class="">
 					<h:outputLabel for="formato" value="Formato:" />
 					<h:outputText id="formato" value="#{RutaBean.ruta.formato.nombre}" />
-					<br />
 				</div>
 
-				<div class="grupo_form ">
-					<h:outputLabel for="distancia" value="Distancia:" />
-					<h:outputText id="distancia" value="#{RutaBean.ruta.distancia}"/>
-					<br />
+				<div class="">
+					<h:outputLabel for="distancia" value="Distancia: " />
+					<h:outputText id="distancia" value="#{RutaBean.ruta.distancia}">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" locale="es-AR"/>
+					</h:outputText>
+					<h:outputText value=" km">
+					</h:outputText>
 				</div>
 
-				<div class="grupo_form">
+				<div class="">
 					<h:outputLabel for="dificultad" value="Dificultad:" />
 					<h:outputText id="dificultad" value="#{RutaBean.ruta.dificultad.nombre}"/>
-					<br />
 				</div>
 
-				<div class="grupo_form">
+				<div class="">
 					<h:outputLabel for="actividad" value="Actividad:" />
 					<h:outputText id="actividad" value="#{RutaBean.ruta.actividad.nombre}"/>
-					<br />
 				</div>
 
-				<div class="grupo_form ">
+				<div class="">
 					<h:outputLabel for="tiempoEstimado" value="Tiempo estimado:" />
-					<h:outputText id="tiempoEstimado" value="#{RutaBean.ruta.tiempoEstimado}"/>
-					<br />
+					<h:outputText id="tiempoEstimado" value="#{RutaBean.ruta.tiempoEstimado}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+					<h:outputText value=" hs">
+					</h:outputText>
 				</div>
 
-				<div class="grupo_form ">
+				<div class="">
 					<h:outputLabel for="fechaRealizacion" value="Fecha de realizacion:" />
-					<h:outputText id="fechaRealizacion" value="#{RutaBean.ruta.fechaRealizacion}" />
-					<br />
+					<h:outputText id="fechaRealizacion" value="#{RutaBean.ruta.fechaRealizacion}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</div>
 				
-				<!-- 
-				<div class="grupo_form ">
-					<h:inputFile value="#{RutaBean.file}" id="inputFile">
-					</h:inputFile>
-					<img id="preview" src="" height="100" alt="Image preview..." />
+				<div class="">
+					<h:outputLabel for="puntajePromedio" value="Puntaje promedio:" />
+					<h:outputText id="puntajePromedio" value="#{RutaBean.puntajePromedio}" >
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" locale="es-AR"/>
+					</h:outputText>
 				</div>
 				
-				-->
+				<div class="">
+					<h:outputLabel for="cantidadVisitas" value="Cantidad de visitas:" />
+					<h:outputText id="cantidadVisitas" value="#{RutaBean.cantidadVisitas}" />
+				</div>
 
 				<!--  
 				<div class="grupo_form ">

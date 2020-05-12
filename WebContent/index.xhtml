@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/estilo.css" />
-<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+
 </head>
 <body id="containerBody">
 	<div id="contenedorLogin">
@@ -19,30 +19,38 @@
 			<div id="signIn" class="formWrapper">
 
 				<h:form id="loginForm" class="form-horizontal">
-					<h:outputLabel for="username" value="usuario:" />
-					<h:inputText class="form-control" id="username"
-						value="#{UsuarioLogueadoBean.usuario}" required="true">
-						<f:validateLength minimum="1" />
-					</h:inputText>
-					<h:message for="username" />
-					<br />
 
-					<h:outputLabel for="password" value="contraseña:" />
-					<h:inputSecret id="password" class="form-control"
-						value="#{UsuarioLogueadoBean.password}" required="true">
-						<f:validateLength minimum="1" />
-					</h:inputSecret>
-					<h:message for="password" />
-					<br />
+					<div class="form-group">
+						<h:outputLabel for="username" value="usuario:" />
+						<h:inputText class="form-control" id="username"
+							value="#{UsuarioLogueadoBean.usuario}" required="true"
+							requiredMessage="Este campo es obligatorio">
+						</h:inputText>
+						<h:message for="username" styleClass="error" />
+					</div>
 
-					<h:commandButton id="submit" class="btn btn-block"
-						action="#{UsuarioLogueadoBean.login}" value="Login" />
+					<div class="form-group">
+						<h:outputLabel for="password" value="contraseña:" />
+						<h:inputSecret id="password" class="form-control"
+							value="#{UsuarioLogueadoBean.password}" required="true"
+							requiredMessage="Este campo es obligatorio">
+						</h:inputSecret>
+						<h:message for="password" styleClass="error" />
+					</div>
+					<div class="form-group">
+						<h:commandButton id="submit" class="btn btn-primary " style="width: 60%;"
+							action="#{UsuarioLogueadoBean.login}" value="Login" />
+					</div>
 				</h:form>
 				<h:message for="loginForm" styleClass="error" />
-				<br />
-				<h3>
-					<a href="alta_usuario.xhtml">Registrarse</a>
-				</h3>
+				<h4>
+					<h:form>
+						<h:commandLink value="Registrarse"
+							action="#{UsuarioBean.nuevoUsuario}">
+						</h:commandLink>
+						<br />
+					</h:form>
+				</h4>
 			</div>
 
 		</f:view>

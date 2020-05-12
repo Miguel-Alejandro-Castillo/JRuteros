@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml"
@@ -20,15 +21,10 @@
 		</ol>
 	</ui:define>
 
-	<ui:define name="menu_logout">
-
-	</ui:define>
-
-	<ui:define name="navegacion">
-	</ui:define>
 	<ui:define name="contenido">
+		<!-- 
 		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
 		<script
 			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4">
 		</script>
@@ -40,7 +36,6 @@
 		<section class="formulario">
 
 			<h2>Nueva Ruta</h2>
-
 			<h:form id="rutaAltaForm" enctype="multipart/form-data">
 				<h:message for="rutaAltaForm" />
 				<br />
@@ -48,7 +43,7 @@
 				<!-- <div class="panel">-->
 				<!--  <div class="body-panel">-->
 
-				<div class="grupo_form ">
+				<div class="grupo_form">
 					<h:outputLabel for="nombre" value="Nombre:" />
 					<h:inputText id="nombre" value="#{RutaBean.nombre}" size="30"
 						maxlength="30" class="form-control" placeholder="nombre"
@@ -63,7 +58,7 @@
 				<div class="grupo_form ">
 					<h:outputLabel for="descripcion" value="Descripción:" />
 					<h:inputTextarea id="descripcion" value="#{RutaBean.descripcion}"
-						cols="50" rows="2" required="true"
+						cols="50" rows="2" required="true" class="form-control"
 						requiredMessage="Este campo es obligatorio" />
 					<br />
 					<h:message for="descripcion" styleClass="error" />
@@ -166,7 +161,7 @@
 						<f:passThroughAttribute name="multiple" value="true" />
 						<f:ajax event="change"
 							listener="#{RutaBean.uploadFilesAction()}"
-							onevent="ajaxProcess" execute="@this" render="rutaAltaForm:upload-progress" />
+							onevent="ajaxProcess" onerror="onError" execute="@this" render="rutaAltaForm:upload-progress" />
 					</h:inputFile>
 				</div>
 				<h:commandButton value="update progres" style="display: none;" id="update-status">
@@ -181,7 +176,7 @@
 				</h:panelGroup>
 
 				<div class="grupo_form ">
-					<h:outputLabel for="googleMap" value="Recorrido:" />
+					<h:outputText  value="Recorrido:" />
 					<h:inputHidden id="recorrido" value="#{RutaBean.recorrido}"
 						converter="converters.PuntosConverter" />
 					<div>
@@ -205,6 +200,7 @@
 						document.getElementById("upload-text").innerHTML = "uploading...";
 						document.getElementById("rutaAltaForm:inputFile").disabled = true;
 					} else if (status == "success") {
+						console.log(data);
 						intervalID = setInterval(function() {
 							document.getElementById("rutaAltaForm:update-status").click();
 						    var uploading =  document.getElementById("rutaAltaForm:uploading").value;
@@ -216,6 +212,10 @@
 						}, 1000);
 						//document.getElementById("upload-panel").style.display = "none";
 					}
+				}
+				
+				function onError(error){
+					console.log(error);
 				}
 
 				function getRecorrido() {
@@ -241,8 +241,7 @@
 						preview.src = "";
 					}
 				}
-				$(window)
-						.load(
+				$(document).ready(
 								function() {
 									//dom not only ready, but everything is loaded
 								

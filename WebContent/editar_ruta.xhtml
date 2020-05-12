@@ -20,10 +20,6 @@
 		</ol>
 	</ui:define>
 
-	<ui:define name="menu_logout">
-
-	</ui:define>
-
 	<ui:define name="navegacion">
 	</ui:define>
 	<ui:define name="contenido">
@@ -64,7 +60,7 @@
 				<div class="grupo_form ">
 					<h:outputLabel for="descripcion" value="Descripción:" />
 					<h:inputTextarea id="descripcion" value="#{RutaBean.descripcion}"
-						cols="50" rows="2" required="true"
+						cols="50" rows="2" required="true" class="form-control"
 						requiredMessage="Este campo es obligatorio" />
 					<br />
 					<h:message for="descripcion" styleClass="error" />

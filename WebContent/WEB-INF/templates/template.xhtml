@@ -19,17 +19,14 @@
             </ui:insert></title>
 
 
-<link media="all" type="text/css" rel="stylesheet"
-	href="resources/css/bootstrap.min.css" />
-<link media="all" type="text/css" rel="stylesheet"
-href="resources/css/estilo.css" />
-<link media="all" type="text/css" rel="stylesheet"
-href="resources/css/jquery.dataTables.min.css" />
+<link media="all" type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css" />
+<link media="all" type="text/css" rel="stylesheet" href="resources/css/estilo.css" />
+<link media="all" type="text/css" rel="stylesheet" href="resources/css/jquery.dataTables.min.css" />
 
-<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/jquery-3.3.1.min.js"></script>
 <!--   <script src="js/funciones.js"></script>-->
 <script src="resources/js/funciones.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/bootstrap-3.3.7.min.js"></script>
 <!--  <script src="js/bootbox.min.js"></script>-->
 <script src="resources/js/jquery.dataTables.min.js"></script>
 
@@ -48,24 +45,29 @@ href="resources/css/jquery.dataTables.min.css" />
 	</ui:insert> </nav>
 	<div id="contenedor" class="fondo_blanco ">
 		<ui:insert name="navegador">
-
 		</ui:insert>
-		<main> <ui:insert name="contenido">
-
-		</ui:insert> </main>
-
-		<aside id="menu_lateral"> <ui:insert name="menu_logout">
-			<ui:include src="/WEB-INF/templates/logout.xhtml" />
-		</ui:insert> </aside>
+		
+		<div> 
+			<ui:insert name="menu_logout">
+		 		 <ui:include src="/WEB-INF/templates/logout.xhtml" />
+			</ui:insert>
+	 	</div>
+		
+		<main> 
+			<ui:insert name="contenido">
+	
+			</ui:insert> 
+		</main>
 
 	</div>
 
-	<footer> <ui:insert name="pie" />
-	<div id="contenedor_footer">
-		<ui:insert name="pie">
-			<ui:include src="/WEB-INF/templates/pie.xhtml" />
-		</ui:insert>
-	</div>
+	<footer> 
+		<ui:insert name="pie" />
+		<div id="contenedor_footer">
+			<ui:insert name="pie">
+				<ui:include src="/WEB-INF/templates/pie.xhtml" />
+			</ui:insert>
+		</div>
 	</footer>
 
 </body>
