@@ -15,32 +15,30 @@
               <ol class="breadcrumb">
 				<li>
 					<h:form>
-						<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+						<h:link value="Home" outcome="#{OutcomeBean.home()}" />
 					</h:form>
 				</li>
-                <li class="active">Alta Actividad  </li>
+                <li class="active">Nueva actividad</li>
              </ol>
 </ui:define> 
 
 <ui:define name="contenido">
+	<h2>Nueva actividad</h2>
     <section  class="formulario">
-    <h2> Alta Actividad</h2>
 				<h:message for="formAltaActividad" styleClass="error"/>
 				<h:form id="formAltaActividad">
-				  <div class="grupo_form ">
-			 		    <h:outputLabel for="actividad" value="Actividad:"/>
-                           <h:inputText class="form-control"  id="actividad" value="#{ActividadBean.nombre}" 
+				  <div class="grupo_form">
+			 		    <h:outputLabel for="actividad" value="Nombre:"/>
+                           <h:inputText class="form-control" id="actividad" value="#{ActividadBean.nombre}" 
                               required="true" validatorMessage="Minimo 1 caracter!"
-                              requiredMessage="La actividad no puede estar vacia"
-                              >
+                              requiredMessage="Este campo es obligatorio">
                              <f:validateLength minimum="1" />
-                          </h:inputText><br/>
+                          </h:inputText>
                            <h:message for="actividad" styleClass="error"/>		   				
 	   				</div>
 	   				<div class="footer-panel">		
-				         <h:commandButton value="Enviar datos" class="btn  btn-primary"  type="submit" action="#{ActividadBean.alta}">
-				         </h:commandButton>		 		
-				 		
+				         <h:commandButton value="Crear actividad" class="btn  btn-primary"  type="submit" action="#{ActividadBean.alta}">
+				         </h:commandButton> 		
 				</div>
 		
 			    </h:form>

@@ -32,10 +32,8 @@
 		</script>
 		
 		<link rel="stylesheet" type="text/css" href="style.css"/>
-
+		<h2>Editar Ruta</h2>
 		<section class="formulario">
-
-			<h2>Editar Ruta</h2>
 
 			<h:form id="rutaAltaForm" enctype="multipart/form-data">
 				<h:message for="rutaAltaForm" />
@@ -53,7 +51,6 @@
 						requiredMessage="Este campo es obligatorio">
 						<f:validateLength minimum="1" />
 					</h:inputText>
-					<br />
 					<h:message for="nombre" styleClass="error" />
 				</div>
 
@@ -62,7 +59,6 @@
 					<h:inputTextarea id="descripcion" value="#{RutaBean.descripcion}"
 						cols="50" rows="2" required="true" class="form-control"
 						requiredMessage="Este campo es obligatorio" />
-					<br />
 					<h:message for="descripcion" styleClass="error" />
 				</div>
 
@@ -103,7 +99,6 @@
 						converterMessage="Se espera un numero aqui">
 						<f:validateLongRange minimum="0" />
 					</h:inputText>
-					<br />
 					<h:message for="distancia" styleClass="error" />
 				</div>
 
@@ -187,7 +182,7 @@
 					<div id="googleMap" style="width: 800px; height: 500px;"></div>
 				</div>
 				<div class="footer-panel">
-					<h:commandButton value="Enviar" class="btn  btn-primary"
+					<h:commandButton value="Editar ruta" class="btn  btn-primary"
 						action="#{RutaBean.crearRuta}" onclick="getRecorrido()" />
 				</div>
 

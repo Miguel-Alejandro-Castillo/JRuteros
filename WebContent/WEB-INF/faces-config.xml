@@ -32,12 +32,12 @@
     <navigation-rule>
               <from-view-id>/nuevo_usuario.xhtml</from-view-id>
               <navigation-case>
-                  <from-outcome>formulario_alta_usuario</from-outcome>
+                  <from-outcome>nuevo_usuario</from-outcome>
                   <to-view-id>/nuevo_usuario.xhtml</to-view-id>  
               </navigation-case>    
               <navigation-case>
-                  <from-outcome>success_alta_usuario</from-outcome>
-                  <to-view-id>/success_alta_usuario.xhtml</to-view-id>   
+                  <from-outcome>login</from-outcome>
+                  <to-view-id>/index.xhtml</to-view-id> 
               </navigation-case> 
     </navigation-rule>
     
@@ -83,7 +83,7 @@
               <navigation-case>
                   <from-outcome>usuarios</from-outcome>
                   <to-view-id>/usuarios.xhtml</to-view-id> 
-                  <redirect/> 
+                  <redirect/>
               </navigation-case>
               <navigation-case>
                   <from-outcome>nueva_actividad</from-outcome>

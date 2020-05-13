@@ -19,9 +19,12 @@
             </ui:insert></title>
 
 
-<link media="all" type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css" />
-<link media="all" type="text/css" rel="stylesheet" href="resources/css/estilo.css" />
-<link media="all" type="text/css" rel="stylesheet" href="resources/css/jquery.dataTables.min.css" />
+<link media="all" type="text/css" rel="stylesheet"
+	href="resources/css/bootstrap.min.css" />
+<link media="all" type="text/css" rel="stylesheet"
+	href="resources/css/estilo.css" />
+<link media="all" type="text/css" rel="stylesheet"
+	href="resources/css/jquery.dataTables.min.css" />
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <!--   <script src="js/funciones.js"></script>-->
@@ -36,7 +39,11 @@
 
 </head>
 <body>
-
+	<div id="overlay">
+		<div class="cv-spinner">
+			<span class="spinner"></span>
+		</div>
+	</div>
 	<header class="fondo_blanco"> <ui:insert name="encabezado">
 		<ui:include src="/WEB-INF/templates/encabezado.xhtml" />
 	</ui:insert> </header>
@@ -46,28 +53,25 @@
 	<div id="contenedor" class="fondo_blanco ">
 		<ui:insert name="navegador">
 		</ui:insert>
-		
-		<div> 
+
+		<div>
 			<ui:insert name="menu_logout">
-		 		 <ui:include src="/WEB-INF/templates/logout.xhtml" />
+				<ui:include src="/WEB-INF/templates/logout.xhtml" />
 			</ui:insert>
-	 	</div>
-		
-		<main> 
-			<ui:insert name="contenido">
-	
-			</ui:insert> 
-		</main>
+		</div>
+
+		<main> <ui:insert name="contenido">
+
+		</ui:insert> </main>
 
 	</div>
 
-	<footer> 
-		<ui:insert name="pie" />
-		<div id="contenedor_footer">
-			<ui:insert name="pie">
-				<ui:include src="/WEB-INF/templates/pie.xhtml" />
-			</ui:insert>
-		</div>
+	<footer> <ui:insert name="pie" />
+	<div id="contenedor_footer">
+		<ui:insert name="pie">
+			<ui:include src="/WEB-INF/templates/pie.xhtml" />
+		</ui:insert>
+	</div>
 	</footer>
 
 </body>

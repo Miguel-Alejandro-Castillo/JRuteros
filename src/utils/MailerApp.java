@@ -5,21 +5,23 @@ import java.util.Properties;
 
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailerApp {
 
 	public synchronized static void sendMail(String subject, String body,
-			String recipients) throws Exception {
+			String recipients) throws AddressException, MessagingException {
 		sendMail(subject, body, "jruteros.lp@gmail.com", recipients);
 	}
 
 	public synchronized static void sendMail(String subject, String body,
-			String sender, String recipients) throws Exception {
+			String sender, String recipients) throws AddressException, MessagingException {
 
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 

@@ -17,7 +17,7 @@
 	<ui:define name="navegador">
 		<ol class="breadcrumb">
 			<li><h:form>
-					<h:commandLink value="Home" action="#{OutcomeBean.home}" />
+					<h:link value="Home" outcome="#{OutcomeBean.home()}" />
 				</h:form></li>
 			<li class="active">Buscador de rutas</li>
 		</ol>
@@ -108,8 +108,7 @@
 			<h2>Resultado</h2>
 
 			<h:dataTable id="resultado" value="#{BuscadorRutasBean.resultado}"
-				var="item"
-				class="table table-striped table-bordered table-hover  tabla_mis_rutas">
+				var="item" class="table table-striped  table-hover table-responsive">
 
 				<h:column>
 					<f:facet name="header">
@@ -120,9 +119,15 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="distancia"></h:outputText>
+						<h:outputText value="distancia">
+						</h:outputText>
 					</f:facet>
-					<h:outputText value="#{item.distancia}" class="td td-usuarios "></h:outputText>
+					<h:outputText value="#{item.distancia}" class="td td-usuarios ">
+							<f:convertNumber groupingUsed="true" minFractionDigits="2"
+									locale="es-AR" />
+					</h:outputText>
+					<h:outputText value=" km">
+					</h:outputText>
 				</h:column>
 
 				<h:column>
@@ -136,8 +141,10 @@
 					<f:facet name="header">
 						<h:outputText value="puntaje promedio"></h:outputText>
 					</f:facet>
-					<h:outputText value="#{item.puntajePromedio}"
-						class="td td-usuarios "></h:outputText>
+					<h:outputText value="#{item.puntajePromedio}" class="td td-usuarios ">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2"
+									locale="es-AR" />
+					</h:outputText>
 				</h:column>
 
 				<h:column>
@@ -375,7 +382,7 @@
 					if (hasError1)
 						alert("Ocurrio un error en el servidor");
 					else {
-						loadDatableResultado();
+						loadDataTables("formBuscadorRutas:resultado");
 					}
 					hasError1 = false;
 				}
@@ -444,18 +451,8 @@
 					hasError4 = true;
 			};
 
-			function loadDatableResultado() {
-				length = jQuery("#formBuscadorRutas\\:resultado tbody tr")
-						.first().children().length;
-				if (length === 1) {
-					jQuery("#formBuscadorRutas\\:resultado tbody").html("");
-				}
-				$(document.getElementById('formBuscadorRutas:resultado'))
-						.DataTable();
-			}
-
 			$(document).ready(function() {
-				loadDatableResultado();
+				loadDataTables("formBuscadorRutas:resultado");
 			});
 		</script>
 

@@ -11,9 +11,13 @@ public class OutcomeBean {
 		super();
 	}
 	
+	/* LOGIN */
+	public String login(){
+		return "login";
+	}
+	
 	/* HOME */
 	public String home(){
-		// agregar logica para que redireccione al home que corresponda al tipo de usuario
 		return "home";
 	}
 	
