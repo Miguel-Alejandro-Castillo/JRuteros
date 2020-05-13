@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	<ui:define name="titulo">
+     Buscador de rutas
+</ui:define>
+
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li><h:form>
+					<h:link value="Home" outcome="#{OutcomeBean.home()}" />
+				</h:form></li>
+			<li class="active">Buscador de rutas</li>
+		</ol>
+	</ui:define>
+
+	<ui:define name="contenido">
+		<!--  
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+		<script
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4">
+			
+		</script>
+		<script src="resources/js/maps.js">
+			
+		</script>
+
+		<h2>Buscador de rutas</h2>
+		<h:form id="formBuscadorRutas" class="form-inline">
+			<section class="">
+
+			<div class="panel">
+				<div class="body-panel">
+
+					<div class="grupo_form ">
+	
+						<h:outputLabel for="radioDistancia" value="radio de distancia:"  />
+						<h:inputText id="radioDistancia" size="8"
+							value="#{BuscadorRutasBean.filtros.radioDistancia}">
+						</h:inputText>
+						
+						<img src="resources/img/select-point-map.png"
+							title="Seleccione un punto del mapa" alt="punto en el mapa"
+							onclick="openMap()" />
+
+
+						<h:outputLabel for="latitud" value="latitud:" />
+						<h:inputText id="latitud"
+							value="#{BuscadorRutasBean.filtros.latitud}">
+						</h:inputText>
+
+						<h:outputLabel for="longitud" value="longitud:" />
+						<h:inputText id="longitud"
+							value="#{BuscadorRutasBean.filtros.longitud}">
+						</h:inputText>
+
+					</div>
+					<div class="grupo_form">
+						<h:outputLabel for="distancia" value="distancia:" />
+						<h:inputText id="distancia"
+							value="#{BuscadorRutasBean.filtros.distancia}">
+						</h:inputText>
+
+						<h:outputLabel for="actividad" value="actividad:" />
+						<h:selectOneListbox id="actividad"
+							value="#{BuscadorRutasBean.filtros.actividadId}" size="1">
+							<f:selectItem itemValue="" itemLabel="Todas" />
+							<f:selectItems
+								value="#{ListadosBean.getActividadesHabilitadas()}" var="a"
+								itemValue="#{a.id}" itemLabel="#{a.nombre}" />
+						</h:selectOneListbox>
+						<h:outputLabel for="formato" value="formato:" />
+						<h:selectOneListbox id="formato"
+							value="#{BuscadorRutasBean.filtros.formatoId}" size="1">
+							<f:selectItem itemValue="" itemLabel="Todas" />
+							<f:selectItems value="#{ListadosBean.getFormatos()}" var="f"
+								itemValue="#{f.id}" itemLabel="#{f.nombre}" />
+						</h:selectOneListbox>
+						<h:outputLabel for="dificultad" value="dificultad:" />
+						<h:selectOneListbox id="dificultad"
+							value="#{BuscadorRutasBean.filtros.dificultadId}" size="1">
+							<f:selectItem itemValue="" itemLabel="Todas" />
+							<f:selectItems value="#{ListadosBean.getDificultades()}" var="d"
+								itemValue="#{d.id}" itemLabel="#{d.nombre}" />
+						</h:selectOneListbox>
+					</div>
+
+				</div>
+				<div class="footer-panel">
+					<h:commandButton class="btn  btn-primary" value="buscar"
+						action="#{BuscadorRutasBean.buscarRutas()}">
+						<f:ajax execute="@form" render="@form" event="action"
+							onevent="onevent" onerror="onerror" />
+					</h:commandButton>
+				</div>
+			</div>
+			</section>
+			<h2>Resultado</h2>
+
+			<h:dataTable id="resultado" value="#{BuscadorRutasBean.resultado}"
+				var="item" class="table table-striped  table-hover table-responsive">
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="nombre"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.nombre}" class="td td-usuarios "></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="distancia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.distancia}" class="td td-usuarios ">
+							<f:convertNumber groupingUsed="true" minFractionDigits="2"
+									locale="es-AR" />
+					</h:outputText>
+					<h:outputText value=" km">
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="dificultad"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.dificultad}" class="td td-usuarios "></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="puntaje promedio"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.puntajePromedio}" class="td td-usuarios ">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2"
+									locale="es-AR" />
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="cantidad visitas"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.cantidadVisitas}"
+						class="td td-usuarios "></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value=""></h:outputText>
+					</f:facet>
+					<h:outputText value="" class="td td-usuarios ">
+						<h:commandLink value=""
+							action="#{BuscadorRutasBean.detalleRuta(item.id)}">
+							<f:ajax render="container-images" event="action"
+								onevent="onventdetail" onerror="onerrordetail" />
+							<img src="resources/img/vermas.png" alt="detalle ruta" />
+						</h:commandLink>
+						<h:commandLink value=""
+							action="#{BuscadorRutasBean.valoracionRuta(UsuarioLogueadoBean.id, item.id)}">
+							<f:ajax render="formValoration:container-valoration"
+								event="action" onevent="onventvaloration"
+								onerror="onerrorvaloration" />
+							<img src="resources/img/star.png" alt="detalle ruta" />
+						</h:commandLink>
+					</h:outputText>
+				</h:column>
+
+			</h:dataTable>
+		</h:form>
+
+		<!-- Button trigger modal -->
+
+		<!--   <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button> -->
+
+		<!-- BEGIN MODAL MAP -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">x</button>
+						<h4 class="modal-title" id="myModalLabel">Seleccione punto</h4>
+					</div>
+					<div class="modal-body" id="googleMap"
+						style="width: 100%; height: 400px;"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary"
+							onClick="closeModal()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MODAL MAP -->
+
+		<!-- BEGIN MODAL VALORACION -->
+		<div class="modal fade" id="myModalValoracion" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<h:form id="formValoration">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">x</button>
+							<h4 class="modal-title" id="myModalLabel">Valoracion</h4>
+						</div>
+
+						<!-- 
+					<div class="modal-body" id="" style="width: 100%; height: 400px;">
+					</div>
+					-->
+						<h:panelGroup layout="block" id="container-valoration"
+							class="modal-body" style="width: 100%; height: 100%;">
+
+							<div>
+								<span>¿Hiciste esta ruta?</span> 
+								<h:outputLabel for="si" value="Si" /> 
+								<input type="radio" jsf:id="si" a:name="#{hiddenItem1.clientId}"
+									value="true"
+									a:checked="#{true eq BuscadorRutasBean.valoracion.hizoLaRuta ? 'checked' : null}" /> 
+								<h:outputLabel for="no" value="No" />
+								<input type="radio" jsf:id="no"
+									value="false" a:name="#{hiddenItem1.clientId}"
+									a:checked="#{false eq BuscadorRutasBean.valoracion.hizoLaRuta ? 'checked' : null}" />
+								<h:inputHidden id="selectedItem1" binding="#{hiddenItem1}"
+									value="#{BuscadorRutasBean.valoracion.hizoLaRuta}"
+									rendered="#{facesContext.currentPhaseId.ordinal ne 6}" />
+							</div>
+							<div>
+								<div class="rate">
+									<span>Calificacion: </span> 
+									<input type="radio" jsf:id="star5" a:name="#{hiddenItem2.clientId}" 
+									value="5" a:checked="#{5 eq BuscadorRutasBean.valoracion.puntaje ? 'checked' : null}"/> 
+									<h:outputLabel for="star5"/>
+									<input type="radio" jsf:id="star4" a:name="#{hiddenItem2.clientId}" 
+									value="4" a:checked="#{4 eq BuscadorRutasBean.valoracion.puntaje ? 'checked' : null}"/> 
+									<h:outputLabel for="star4"/>
+									<input type="radio" jsf:id="star3" a:name="#{hiddenItem2.clientId}" 
+									value="3" a:checked="#{3 eq BuscadorRutasBean.valoracion.puntaje ? 'checked' : null}"/> 
+									<h:outputLabel for="star3"/>
+									<input type="radio" jsf:id="star2" a:name="#{hiddenItem2.clientId}" 
+									value="2" a:checked="#{2 eq BuscadorRutasBean.valoracion.puntaje ? 'checked' : null}"/> 
+									<h:outputLabel for="star2"/>
+									<input type="radio" jsf:id="star1" a:name="#{hiddenItem2.clientId}" 
+									value="1" a:checked="#{1 eq BuscadorRutasBean.valoracion.puntaje ? 'checked' : null}"/> 
+									<h:outputLabel for="star1" />
+									
+									<h:inputHidden id="selectedItem2" binding="#{hiddenItem2}"
+									value="#{BuscadorRutasBean.valoracion.puntaje}"
+									rendered="#{facesContext.currentPhaseId.ordinal ne 6}" />
+								</div>
+							</div>
+
+
+
+						</h:panelGroup>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancelar</button>
+							<h:commandButton class="btn  btn-primary" value="Guardar"
+								action="#{BuscadorRutasBean.guardarValoracion()}">
+								<f:ajax execute="@form" render="@form" event="action"
+									onevent="oneventsavevaloration" onerror="onerrorsavevaloration" />
+							</h:commandButton>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+		<!-- END MODAL VALORACION -->
+
+		<!-- Modal Carrousel -->
+		<div class="modal fade" id="myModalCarrousel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">x</button>
+						<h4 class="modal-title" id="myModalLabel">Detalle ruta</h4>
+					</div>
+					<div class="modal-body" id="googleMap"
+						style="width: 100%; height: 100%;">
+						<div id="myCarousel" class="carousel slide" data-ride="carousel">
+							<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<c:forEach var="formato" items="#{BuscadorRutasBean.ruta.fotos}"
+									varStatus="myVarStatus">
+									<li data-target="#myCarousel"
+										data-slide-to="#{myVarStatus.index}"
+										class="#{myVarStatus.first ? 'active' : ''}"></li>
+								</c:forEach>
+							</ol>
+
+							<!-- Wrapper for slides -->
+							<h:panelGroup layout="block" id="container-images"
+								class="carousel-inner">
+
+								<ui:repeat value="#{BuscadorRutasBean.ruta.fotos}" var="foto"
+									varStatus="myVarStatus">
+									<h:panelGroup layout="block"
+										class="item #{myVarStatus.first ? 'active' : ''}">
+										<h:graphicImage value="/ImageServlet/?fotoId=#{foto.id}"
+											alt="imagen de recorrido" style="width: 100%;">
+										</h:graphicImage>
+									</h:panelGroup>
+								</ui:repeat>
+								<!-- 
+								<div class="item active">
+									<img src="la.jpg" alt="Los Angeles" style="width: 100%;"/>
+								</div>
+
+								<div class="item">
+									<img src="chicago.jpg" alt="Chicago" style="width: 100%;"/>
+								</div>
+
+								<div class="item">
+									<img src="ny.jpg" alt="New york" style="width: 100%;"/>
+								</div>
+								-->
+							</h:panelGroup>
+							<!-- Left and right controls -->
+							<a class="left carousel-control" href="#myCarousel"
+								data-slide="prev"> <span
+								class="glyphicon glyphicon-chevron-left"></span> <span
+								class="sr-only">Previous</span>
+							</a> <a class="right carousel-control" href="#myCarousel"
+								data-slide="next"> <span
+								class="glyphicon glyphicon-chevron-right"></span> <span
+								class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary"
+							onClick="closeModal()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			function openMap() {
+				$('#myModal').modal({
+					backdrop : 'static',
+					keyboard : false
+				});
+				initMap($(
+						document
+								.getElementById('formBuscadorRutas:radioDistancia'))
+						.val());
+			}
+			function closeModal() {
+				var markerAct = getMarkerAct();
+				var latitud = markerAct.position.lat();
+				var longitud = markerAct.position.lng();
+				$(document.getElementById('formBuscadorRutas:latitud')).val(
+						latitud);
+				$(document.getElementById('formBuscadorRutas:longitud')).val(
+						longitud);
+				$('#myModal').modal('hide');
+			}
+
+			var hasError1 = false;
+			var onevent = function(event) {
+				if (event.status === "success") {
+					if (hasError1)
+						alert("Ocurrio un error en el servidor");
+					else {
+						loadDataTables("formBuscadorRutas:resultado");
+					}
+					hasError1 = false;
+				}
+			};
+			var onerror1 = function(error) {
+				if (error.type === "error")
+					hasError1 = true;
+
+			};
+
+			var hasError2 = false;
+			var onventdetail = function(event) {
+				if (event.status === "success") {
+					if (hasError2)
+						alert("Ocurrio un error en el servidor");
+					else {
+						$('#myModalCarrousel').modal({
+							backdrop : 'static',
+							keyboard : false
+						});
+					}
+					hasError2 = false;
+				}
+			}
+
+			var onerrordetail = function(error) {
+				if (error.type === "error")
+					hasError2 = true;
+
+			};
+
+			var hasError3 = false;
+			var onventvaloration = function(event) {
+				if (event.status === "success") {
+					if (hasError3)
+						alert("Ocurrio un error en el servidor");
+					else {
+						$('#myModalValoracion').modal({
+							backdrop : 'static',
+							keyboard : false
+						});
+					}
+					hasError3 = false;
+				}
+			}
+
+			var onerrorvaloration = function(error) {
+				if (error.type === "error")
+					hasError3 = true;
+			};
+			
+			var hasError4 = false;
+			var onventsavevaloration = function(event) {
+				if (event.status === "success") {
+					if (hasError4)
+						alert("Ocurrio un error en el servidor");
+					else {
+						$('#myModalValoracion').modal('hide');
+					}
+					hasError4 = false;
+				}
+			}
+
+			var onerrorsavevaloration = function(error) {
+				if (error.type === "error")
+					hasError4 = true;
+			};
+
+			$(document).ready(function() {
+				loadDataTables("formBuscadorRutas:resultado");
+			});
+		</script>
+
+	</ui:define>
+
+</ui:composition>
+
+<!-- 
+		<table
+			class="table table-striped table-bordered table-hover  tabla_mis_rutas"
+			summary="Tabla listado de rutas">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Distancia</th>
+					<th>Dificultad</th>
+					<th>Puntuacion Promedio</th>
+					<th>lo hicieron</th>
+					<th>+ info</th>
+				</tr>
+
+			</thead>
+			<tbody>
+
+				<tr>
+					<td class="td td-usuarios ">Ruta del diablo</td>
+					<td class=" td td-usuarios">666 km</td>
+					<td class="td td-usuarios ">muy dificil</td>
+					<td class="td td-usuarios ">5.0</td>
+					<td class="td td-usuarios ">666 personas</td>
+					<td class="td td-usuarios opciones "><a href="info_ruta.html"><img
+							src="imagenes/vermas.png" alt="borrar ruta" /> </a></td>
+
+				</tr>
+				<tr>
+
+					<td class="td td-usuarios ">Ruta del caballo</td>
+					<td class=" td td-usuarios">1 km</td>
+					<td class="td td-usuarios ">easy</td>
+					<td class="td td-usuarios ">2.0</td>
+					<td class="td td-usuarios ">22 personas</td>
+					<td class="td td-usuarios opciones "><a href="info_ruta.html"><img
+							src="imagenes/vermas.png" alt="borrar ruta" /> </a></td>
+				</tr>
+
+
+
+
+			</tbody>
+
+		</table>
+		
+
+ -->

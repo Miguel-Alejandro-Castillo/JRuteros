@@ -2,45 +2,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          template="/WEB-INF/templates/template.xhtml"
-          	xmlns:h="http://java.sun.com/jsf/html" 
-	       xmlns:f="http://java.sun.com/jsf/core"
-            xmlns:t="http://myfaces.apache.org/tomahawk">
-<ui:define name="titulo">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
      Editar Actividad
 </ui:define>
 
-<ui:define name="navegador">
-              <ol class="breadcrumb">
-                <li><a href="home_admin.xhtml">Home</a></li>
-                <li class="active">Editar Actividad  </li>
-             </ol>
-</ui:define> 
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li>
+				<h:form>
+					<h:link value="Home" outcome="#{OutcomeBean.home()}" />
+				</h:form>
+			</li>
+			<li class="active">Editar actividad</li>
+		</ol>
+	</ui:define>
 
-<ui:define name="contenido">
-    <section  class="formulario">
-    <h2> Editar Actividad</h2>
-				<h:message for="formEditActividad" styleClass="error"/>
-				<h:form id="formEditActividad">
-				  <div class="grupo_form ">
-			 		    <h:outputLabel for="actividad" value="Actividad:"/>
-                           <h:inputText class="form-control"  id="actividad" value="#{ActividadBean.actividad}" 
-                              required="true" validatorMessage="Minimo 1 caracter!"
-                              requiredMessage="La actividad no puede estar vacia"
-                              >
-                             <f:validateLength minimum="1" />
-                          </h:inputText><br/>
-                           <h:message for="actividad" styleClass="error"/>		   				
-	   				</div>
-	   				<div class="footer-panel">		
-				         <h:commandButton value="Modificar datos" class="btn  btn-primary"  type="submit" action="#{ActividadBean.modificacion}" />		 		
-				 		
-				</div>
-		
-			    </h:form>
-			 	</section>
-</ui:define>
+	<ui:define name="contenido">
+		<h2>Editar actividad</h2>
+		<section class="formulario">
+		<h:message for="formEditActividad" styleClass="error" /> 
+		<h:form id="formEditActividad">
+			<div class="grupo_form ">
+				<h:outputLabel for="actividad" value="Nombre:" />
+				<h:inputText class="form-control" id="actividad"
+					value="#{ActividadBean.nombre}" required="true"
+					validatorMessage="Minimo 1 caracter!"
+					requiredMessage="Este campo es obligatorio">
+					<f:validateLength minimum="1" />
+				</h:inputText>
+				<h:message for="actividad" styleClass="error" />
+			</div>
+			<div class="footer-panel">
+				<h:commandButton value="Modificar actividad" class="btn  btn-primary"
+					action="#{ActividadBean.modificacion}">
+				</h:commandButton>
+
+			</div>
+
+		</h:form> </section>
+	</ui:define>
 </ui:composition>
-				
-				
+
+

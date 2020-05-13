@@ -1,7 +1,7 @@
 package model;
-import java.util.*;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name="PRIVACIDADES",uniqueConstraints=
 @UniqueConstraint(columnNames = {"nombre"}))
@@ -9,7 +9,9 @@ public class Privacidad {
 
 	@Id @GeneratedValue
 	private Long id;
-	private String Nombre;
+
+	@Column(nullable = false, unique = true)
+	private String nombre;
 	
 	public Privacidad(){
 		super();
@@ -17,7 +19,7 @@ public class Privacidad {
 
 	public Privacidad(String nombre) {
 		this();
-		Nombre = nombre;
+		this.nombre = nombre;
 	}
 
 	public Long getId() {
@@ -25,18 +27,15 @@ public class Privacidad {
 	}
 
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		this.nombre = nombre;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	
-	
+	}	
 
 }

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="titulo">
+	     Detalle ruta
+	</ui:define>
+
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li><h:form>
+					<h:commandLink value="Home" action="#{OutcomeBean.home}">
+					</h:commandLink>
+				</h:form>
+			</li>
+			<li class="active">Detalle ruta</li>
+		</ol>
+	</ui:define>
+
+	<ui:define name="contenido">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4"></script>
+		<script src="resources/js/maps.js"></script>
+
+		<section class="formulario">
+
+			<h2>Detalle Ruta</h2>
+
+				<div class="">
+					<h:outputLabel for="nombre" value="Nombre: " />
+					<h:outputText id="nombre" value="#{RutaBean.ruta.nombre}" />
+				</div>
+
+				<div class="">
+					<h:outputLabel for="descripcion" value="Descripción: " />
+					<h:outputText id="descripcion" value="#{RutaBean.ruta.descripcion}" />
+				</div>
+
+				<div class="">
+					<h:outputLabel for="privacidad" value="Privacidad:" />
+					<h:outputText id="privacidad" value="#{RutaBean.ruta.privacidad.nombre}" />
+				</div>
+
+				<div class="">
+					<h:outputLabel for="formato" value="Formato:" />
+					<h:outputText id="formato" value="#{RutaBean.ruta.formato.nombre}" />
+				</div>
+
+				<div class="">
+					<h:outputLabel for="distancia" value="Distancia: " />
+					<h:outputText id="distancia" value="#{RutaBean.ruta.distancia}">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" locale="es-AR"/>
+					</h:outputText>
+					<h:outputText value=" km">
+					</h:outputText>
+				</div>
+
+				<div class="">
+					<h:outputLabel for="dificultad" value="Dificultad:" />
+					<h:outputText id="dificultad" value="#{RutaBean.ruta.dificultad.nombre}"/>
+				</div>
+
+				<div class="">
+					<h:outputLabel for="actividad" value="Actividad:" />
+					<h:outputText id="actividad" value="#{RutaBean.ruta.actividad.nombre}"/>
+				</div>
+
+				<div class="">
+					<h:outputLabel for="tiempoEstimado" value="Tiempo estimado:" />
+					<h:outputText id="tiempoEstimado" value="#{RutaBean.ruta.tiempoEstimado}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+					<h:outputText value=" hs">
+					</h:outputText>
+				</div>
+
+				<div class="">
+					<h:outputLabel for="fechaRealizacion" value="Fecha de realizacion:" />
+					<h:outputText id="fechaRealizacion" value="#{RutaBean.ruta.fechaRealizacion}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</div>
+				
+				<div class="">
+					<h:outputLabel for="puntajePromedio" value="Puntaje promedio:" />
+					<h:outputText id="puntajePromedio" value="#{RutaBean.puntajePromedio}" >
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" locale="es-AR"/>
+					</h:outputText>
+				</div>
+				
+				<div class="">
+					<h:outputLabel for="cantidadVisitas" value="Cantidad de visitas:" />
+					<h:outputText id="cantidadVisitas" value="#{RutaBean.cantidadVisitas}" />
+				</div>
+
+				<!--  
+				<div class="grupo_form ">
+					<h:outputLabel for="googleMap" value="Recorrido:" />
+					<h:inputHidden id="recorrido" value="#{RutaBean.recorrido}" converter="converters.PuntosConverter"/>
+					<div>
+						<button onclick="limpiarMapa()">Limpiar mapa</button>
+					</div>
+					<div id="googleMap" style="width: 800px; height: 500px;"></div>
+				</div>
+				-->
+
+				<!-- </h:panelGrid>-->
+
+			<script type="text/javascript">
+				function getRecorrido(){
+					var recorrido = document.getElementById('rutaAltaForm:recorrido');
+					var puntos = getPuntos()
+					recorrido.value = JSON.stringify(puntos);	
+				}
+				
+				function previewFile() {
+					var preview = document.getElementById('preview');
+					var file = document.getElementById('inputFile').files[0];
+					var reader = new FileReader();
+
+					reader.onloadend = function() {
+						preview.src = reader.result;
+						///document.getElementById('rutaAltaForm:hdnBtn').click();
+					}
+
+					if (file) {
+						reader.readAsDataURL(file);
+					} else {
+						preview.src = "";
+					}
+				}
+				$(window)
+						.load(
+								function() {
+									//dom not only ready, but everything is loaded
+									//document.getElementById("rutaAltaForm:inputFile").multiple = true;
+									//var puntos = document.getElementById("rutaAltaForm:recorrido").value;
+									//var puntos = JSON.parse(puntos);
+									//initialize1(puntos);	
+								});
+			</script>
+		</section>
+	</ui:define>
+</ui:composition>

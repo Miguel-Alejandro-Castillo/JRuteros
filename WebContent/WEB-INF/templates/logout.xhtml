@@ -2,11 +2,10 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html">
   
-     <span class="subTitMen">CERRAR SESSI0N</span>
-          <ul>
-                 <h:form>
-		           <h:commandLink action="#{UsuarioLogueadoBean.logout()}" value="#{UsuarioLogueadoBean.usuario}(salir)"></h:commandLink>		
-	            </h:form> 
-          </ul>
+     <span>
+        <h:form id="link_logout" style="text-align: right;">
+        	<h:commandLink action="#{UsuarioLogueadoBean.logout()}"> <h:outputText value="#{'usuario '.concat(UsuarioLogueadoBean.usuario)}"/><img src="resources/img/logout.png" alt="logout" /></h:commandLink>		
+        </h:form> 
+     </span>
           
 </ui:composition>

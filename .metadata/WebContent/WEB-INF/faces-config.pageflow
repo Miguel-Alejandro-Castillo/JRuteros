@@ -1,2 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14678383283590" configfile="/JRuteros/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14678383283590" configfile="/JRuteros/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="554" y="562" id="pf15892438369000" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15892438369011 pf15892438369012" inlinks="pf15892438369013" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" x="770" y="988" id="pf15892438369014" referenceLink="//@navigationRule.13/@navigationCase.0/@toViewId|" outlinks="pf15892438369015 pf15892438369016 pf15892438369017 pf15892438369018 pf15892438369019" inlinks="pf15892438369011 pf15892438369012 pf158924383690110 pf158924383690111 pf158924383690112 pf158924383690113 pf158924383690114 pf158924383690115" path="/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="338" y="562" id="pf158924383690116" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15892438369013" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="alta_usuario.xhtml" x="122" y="178" id="pf158924383690117" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf158924383690118 pf158924383690119" inlinks="pf158924383690118" path="/nuevo_usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="success_alta_usuario.xhtml" x="338" y="178" id="pf158924383690120" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf158924383690119" path="/success_alta_usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="editar_usuario.xhtml" x="554" y="178" id="pf158924383690121" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf158924383690122 pf158924383690110" inlinks="pf158924383690122" path="/editar_usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="editar_actividad.xhtml" x="1418" y="604" id="pf158924383690123" referenceLink="//@navigationRule.8/@navigationCase.1/@toViewId|" outlinks="pf158924383690124 pf158924383690125" inlinks="pf158924383690124 pf158924383690126" path="/editar_actividad.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="actividades.xhtml" x="1202" y="604" id="pf158924383690127" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf158924383690128 pf158924383690126" inlinks="pf158924383690125 pf158924383690129 pf158924383690128" path="/actividades.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="nueva_actividad.xhtml" x="986" y="604" id="pf158924383690130" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" outlinks="pf158924383690131 pf158924383690129" inlinks="pf158924383690131 pf15892438369016" path="/nueva_actividad.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="usuarios.xhtml" x="986" y="988" id="pf158924383690132" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf158924383690133" inlinks="pf15892438369015 pf158924383690133" path="/usuarios.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="nueva_ruta.xhtml" x="122" y="785" id="pf158924383690234" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf158924383690235 pf158924383690236 pf158924383690111" inlinks="pf15892438369017 pf158924383690235" path="/nueva_ruta.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="mis_rutas.xhtml" x="338" y="1030" id="pf158924383690237" referenceLink="//@navigationRule.11/@navigationCase.1/@toViewId|" outlinks="pf158924383690238 pf158924383690239 pf158924383690240 pf158924383690112" inlinks="pf15892438369018 pf158924383690236 pf158924383690238 pf158924383690241" path="/mis_rutas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="buscador_de_rutas.xhtml" x="986" y="1372" id="pf158924383690242" referenceLink="//@navigationRule.6/@navigationCase.4/@toViewId|" inlinks="pf15892438369019" path="/buscador_de_rutas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="editar_ruta.xhtml" x="122" y="1232" id="pf158924383690243" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf158924383690244 pf158924383690241 pf158924383690113 pf158924383690114" inlinks="pf158924383690239 pf158924383690244" path="/editar_ruta.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="detalle_ruta.xhtml" x="554" y="988" id="pf158924383690245" referenceLink="//@navigationRule.13/@fromViewId|" outlinks="pf158924383690115" inlinks="pf158924383690240" path="/detalle_ruta.xhtml"/>
+  <links id="pf15892438369011" target="pf15892438369014" source="pf15892438369000" outcome="home" redirect="true"/>
+  <links id="pf15892438369012" target="pf15892438369014" source="pf15892438369000" outcome="nuevo_usuario" redirect="true"/>
+  <links id="pf15892438369013" target="pf15892438369000" source="pf158924383690116" outcome="login" redirect="true"/>
+  <links id="pf158924383690119" target="pf158924383690120" source="pf158924383690117" outcome="success_alta_usuario"/>
+  <links id="pf158924383690110" target="pf15892438369014" source="pf158924383690121" outcome="home" redirect="true"/>
+  <links id="pf158924383690125" target="pf158924383690127" source="pf158924383690123" outcome="actividades"/>
+  <links id="pf158924383690129" target="pf158924383690127" source="pf158924383690130" outcome="actividades"/>
+  <links id="pf15892438369015" target="pf158924383690132" source="pf15892438369014" outcome="usuarios" redirect="true"/>
+  <links id="pf15892438369016" target="pf158924383690130" source="pf15892438369014" outcome="nueva_actividad" redirect="true"/>
+  <links id="pf15892438369017" target="pf158924383690234" source="pf15892438369014" outcome="nueva_ruta" redirect="true"/>
+  <links id="pf15892438369018" target="pf158924383690237" source="pf15892438369014" outcome="mis_rutas" redirect="true"/>
+  <links id="pf15892438369019" target="pf158924383690242" source="pf15892438369014" outcome="buscador_de_rutas" redirect="true"/>
+  <links id="pf158924383690126" target="pf158924383690123" source="pf158924383690127" outcome="editar_actividad"/>
+  <links id="pf158924383690236" target="pf158924383690237" source="pf158924383690234" outcome="mis_rutas"/>
+  <links id="pf158924383690111" target="pf15892438369014" source="pf158924383690234" outcome="home"/>
+  <links id="pf158924383690239" target="pf158924383690243" source="pf158924383690237" outcome="editar_ruta"/>
+  <links id="pf158924383690240" target="pf158924383690245" source="pf158924383690237" outcome="detalle_ruta"/>
+  <links id="pf158924383690112" target="pf15892438369014" source="pf158924383690237" outcome="home" redirect="true"/>
+  <links id="pf158924383690241" target="pf158924383690237" source="pf158924383690243" outcome="mis_rutas"/>
+  <links id="pf158924383690113" target="pf15892438369014" source="pf158924383690243" outcome="home"/>
+  <links id="pf158924383690114" target="pf15892438369014" source="pf158924383690243" outcome="home"/>
+  <links id="pf158924383690115" target="pf15892438369014" source="pf158924383690245" outcome="home" redirect="true"/>
+  <links id="pf158924383690118" target="pf158924383690117" source="pf158924383690117" outcome="formulario_alta_usuario">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690122" target="pf158924383690121" source="pf158924383690121" outcome="editar_usuario">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690124" target="pf158924383690123" source="pf158924383690123" outcome="editar_actividad">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690131" target="pf158924383690130" source="pf158924383690130" outcome="nueva_actividad">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690133" target="pf158924383690132" source="pf158924383690132" outcome="usuarios">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690128" target="pf158924383690127" source="pf158924383690127" outcome="actividades">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690235" target="pf158924383690234" source="pf158924383690234" outcome="nueva_ruta">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690238" target="pf158924383690237" source="pf158924383690237" outcome="mis_rutas">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf158924383690244" target="pf158924383690243" source="pf158924383690243" outcome="editar_ruta">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

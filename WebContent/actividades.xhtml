@@ -1,77 +1,123 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          template="/WEB-INF/templates/template.xhtml"
-          	xmlns:h="http://java.sun.com/jsf/html" 
-	       xmlns:f="http://java.sun.com/jsf/core"
-            xmlns:t="http://myfaces.apache.org/tomahawk">
-<ui:define name="titulo">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
     Listado De Actividades
 </ui:define>
 
-<ui:define name="navegador">
-              <ol class="breadcrumb">
-                <li><a href="home_admin.xhtml">Home</a></li>
-                <li class="active">Listado De Actividades </li>
-             </ol>
-</ui:define>      
-   
-<ui:define name="contenido">
-      
-      <h:dataTable id="actividades" value="#{ListadosBean.listaActividades}" var="actividad" border="2">
-		<h:column>
-			<f:facet name="header">
-			   <h:outputText value="Actividad"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{actividad.nombre}"></h:outputText>
-	    </h:column>
-	    
-	    <h:column>
-			<f:facet name="header" >
-			   <h:outputText value="Habilitado"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{actividad.habilitado}"></h:outputText>
-	    </h:column>
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value="Opciones"></h:outputText>
-			</f:facet>
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li>
+				<h:form>
+					<h:link value="Home" outcome="#{OutcomeBean.home()}" />
+				</h:form>
+			</li>
+			<li class="active">Lista de actividades</li>
+		</ol>
+	</ui:define>
+
+	<ui:define name="contenido">
+		<h2>Lista de actividades</h2>
+		<h:form id="formActividades">
+			<h:dataTable id="actividades" class="table table-striped  table-hover table-responsive"
+				value="#{ListadosBean.getActividades()}" var="actividad">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Actividad"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{actividad.nombre}"></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Habilitado"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{actividad.habilitado ? 'si' : 'no'}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value=""></h:outputText>
+					</f:facet>
+
+					<h:outputText value="">
+						<h:commandLink value="" onclick="onClickHabilitado(#{actividad.habilitado})"
+							action="#{ActividadBean.habilitarDeshabilitarActividad(actividad.id)}">
+							<f:ajax render="@form" onevent="oneventHabilitado" onerror="onerrorHabilitado" />
+							<img src="resources/img/enable-disable.png" alt="activar/desactivar actividad" />
+						</h:commandLink>
+						<h:commandLink value=""
+							action="#{ActividadBean.editarActividad(actividad.id)}">
+							<img src="resources/img/editar.png" alt="editar actividad" />
+						</h:commandLink>
+						<h:commandLink value=""
+							action="#{ActividadBean.borrarActividad(actividad.id)}"
+							onclick="return confirmarBorrado()">
+							<f:ajax render="actividades" event="action"
+								onevent="oneventBorrado" onerror="onerrorBorrado" />
+							<img src="resources/img/borrar.png" alt="borrar actividad" />
+						</h:commandLink>
+
+					</h:outputText>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+
+		<script type="text/javascript">
+		
+			var habilitado;
+			function onClickHabilitado(oldValue){
+				habilitado = oldValue;
+			}
+		
+			var hasError1 = false;
+		    var oneventHabilitado = function(event){
+				if (event.status === "success") {
+					if(hasError1)
+						alert("Ocurrio un error en el servidor");
+					else{
+						if(habilitado)
+							alert("Actividad deshabilitada");
+						else
+							alert("Actividad habilitada");
+						loadDataTables("formActividades:actividades");
+					}	
+					hasError1 = false;
+				}
+			};
+		    var onerrorHabilitado = function(error){
+				if (error.type === "error")
+					hasError1 = true;
+		    };
+		    
+			function confirmarBorrado() {
+				return confirm("¿Desea eliminar la actividad?");
+			}
+
+			var hasError2 = false;
+			var oneventBorrado = function(event) {
+				if (event.status === "success") {
+					if (hasError2)
+						alert("Ocurrio un error en el servidor");
+					else
+						alert("La actividad se elimino correctamente");		
+					hasError2 = false;
+				}
+			};
+
+			var onerrorBorrado = function(error) {
+				if (error.type === "error")
+					hasError2 = true;
+			};
 			
-			<h:outputText value=""><h:form id="actividad#{ActividadBean.id}">
-    <h:commandLink value="" action="#{ActividadBean.habilitarDeshabilitarActividad}">
-        <f:setPropertyActionListener target="#{ActividadBean.id}" value="#{actividad.id}" />
-        <img src="resources/img/enable-disable.png" alt="activar/desactivar actividad"/>
-    </h:commandLink>
-      <h:commandLink value="" action="#{ActividadBean.editarActividad}">
-        <f:setPropertyActionListener target="#{ActividadBean.id}" value="#{actividad.id}" />
-        <img src="resources/img/editar.png" alt="editar actividad"/>
-    </h:commandLink>
-      <h:commandLink  value="" action="#{ActividadBean.borrarActividad}">
-        <f:setPropertyActionListener target="#{ActividadBean.id}" value="#{actividad.id}" />
-        <img src="resources/img/borrar.png" alt="borrar actividad"/>
-    </h:commandLink>
-       </h:form> 
-           
-           <h:message for="actividad#{ActividadBean.id}" styleClass="error"/>
-           
-       </h:outputText>	    
-	    </h:column>
-	    
-	    <h:column>
-			<f:facet name="header">
-			   <h:outputText value=""></h:outputText>
-			</f:facet>
-			<h:outputText value=""></h:outputText>
-	    </h:column>
-	    
+			$(document).ready( function () {
+				loadDataTables("formActividades:actividades");
+			} );
+		</script>
 
-	    </h:dataTable>
-	    
-	    
-
-    
-
-
-</ui:define>
+	</ui:define>
 </ui:composition>
 
 

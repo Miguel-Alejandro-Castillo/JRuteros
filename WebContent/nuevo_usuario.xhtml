@@ -1,0 +1,173 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
+	     Alta Usuario
+	</ui:define>
+
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li><h:link id="linkIndex" value="Login"
+					outcome="#{OutcomeBean.login()}" /></li>
+			<li class="active">Registrarse</li>
+		</ol>
+	</ui:define>
+	<ui:define name="menu_logout">
+	</ui:define>
+	<ui:define name="contenido">
+		<section class="formulario">
+
+			<h2>Nuevo Usuario</h2>
+
+			<h:form id="userAltaForm">
+				<!--  <h:panelGrid columns="3" >-->
+				<!-- <div class="panel">-->
+				<!--  <div class="body-panel">-->
+				<div class="grupo_form ">
+					<h:outputLabel for="usuario" value="Usuario:" />
+					<h:inputText class="form-control" id="usuario"
+						value="#{UsuarioBean.usuario}" size="30" maxlength="30"
+						required="true" validatorMessage="Minimo 1 caracter!"
+						requiredMessage="Este campo es obligatorio" placeholder="usuario">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="usuario" styleClass="error" />
+				</div>
+
+				<div class="grupo_form ">
+					<h:outputLabel for="dni" value="Dni:" />
+					<h:inputText id="dni" value="#{UsuarioBean.dni}" maxlength="12"
+						class="form-control" required="true"
+						validatorMessage="Valor aceptados: de 1 hacia adelante"
+						requiredMessage="Este campo es obligatorio"
+						converterMessage="Se espera un numero de dni  aqui">
+						<f:validateLongRange minimum="1" />
+					</h:inputText>
+
+					<h:message for="dni" styleClass="error" />
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="apellido" value="Apellido:" />
+					<h:inputText id="apellido" value="#{UsuarioBean.apellido}"
+						size="30" maxlength="30" class="form-control"
+						placeholder="apellido" required="true"
+						validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+
+					<h:message for="apellido" styleClass="error" />
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="nombre" value="Nombre:" />
+					<h:inputText id="nombre" value="#{UsuarioBean.nombre}" size="30"
+						maxlength="30" class="form-control" placeholder="nombre"
+						required="true" validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="nombre" styleClass="error" />
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="domicilio" value="Domicilio:" />
+					<h:inputText id="domicilio" value="#{UsuarioBean.domicilio}"
+						class="form-control" placeholder="domicilio" required="true"
+						validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+
+					<h:message for="domicilio" styleClass="error" />
+
+
+				</div>
+				<div class="grupo_form">
+					<h:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:" />
+					<t:inputDate id="fechaNacimiento"
+						value="#{UsuarioBean.fechaNacimiento}" required="true"
+						requiredMessage="Este campo es obligatorio" popupCalendar="false" />
+					<br />
+					<h:message for="fechaNacimiento" styleClass="error" />
+				</div>
+
+				<div class="grupo_form">
+					<h:outputLabel for="sexo" value="Sexo:" />
+					<h:selectOneListbox id="sexo"
+						title="Selecciona el sexo del usuario" value="#{UsuarioBean.sexo}"
+						size="1" required="true"
+						requiredMessage="Este campo es obligatorio">
+						<f:selectItem itemValue="m" itemLabel="Masculino" />
+						<f:selectItem itemValue="f" itemLabel="Feminino" />
+					</h:selectOneListbox>
+					<h:message for="sexo" styleClass="error" />
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="email" value="Email:" />
+					<h:inputText id="email" value="#{UsuarioBean.email}"
+						class="form-control" required="true"
+						requiredMessage="Este campo es obligatorio">
+						<t:validateEmail message="email invalido" />
+					</h:inputText>
+					<h:message for="email" styleClass="error" />
+				</div>
+
+
+				<!-- </div>-->
+				<div class="footer-panel">
+					<h:commandButton value="Enviar" class="btn  btn-primary"
+						action="#{UsuarioBean.crearUsuario}">
+						<f:ajax execute="@form" render="@form" event="action"
+							onevent="onevent" onerror="onerror" />
+					</h:commandButton>
+				</div>
+				<!-- </div>-->
+				<!-- </h:panelGrid>-->
+				<h:inputHidden id="summary"
+					value="#{UsuarioBean.facesMessage.summary}" />
+				<h:inputHidden id="detail"
+					value="#{UsuarioBean.facesMessage.detail}" />
+			</h:form>
+		</section>
+		<script type="text/javascript">
+			var hasError = false;
+			var onevent = function(event) {
+				var ajaxloader = document.getElementById("ajaxloader");
+				var ajaxstatus = event.status;
+				if(ajaxstatus === "begin"){
+	               //ajaxloader.style.display = 'block';
+					$("#overlay").fadeIn(300);
+				}
+				if(ajaxstatus === "complete"){
+					$("#overlay").fadeOut(300);
+				}
+				if (ajaxstatus === "success") {
+					//ajaxloader.style.display = 'none';
+					var summary = $(document.getElementById('userAltaForm:summary')).val();
+					var detail = $(document.getElementById('userAltaForm:detail')).val();
+					if (hasError){
+						var messageError = detail ? detail : "Ocurrio un error en el servidor";
+						alert(messageError);	
+					} else {
+						if(summary &amp;&amp; detail){
+							alert(detail);
+							if(summary == "usuario.successSendMail"){
+							      var href = $('#linkIndex').attr('href');
+							      window.location.href = href; 
+							}
+						}
+					}
+					hasError = false;
+				}
+			};
+			var onerror = function(error) {
+				if (error.type === "error")
+					hasError = true;
+			};
+		</script>
+	</ui:define>
+</ui:composition>

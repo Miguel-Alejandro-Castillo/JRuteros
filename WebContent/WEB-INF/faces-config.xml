@@ -3,8 +3,8 @@
 <faces-config
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
-    version="2.1">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
     
     <navigation-rule>
               <from-view-id>/index.xhtml</from-view-id>
@@ -14,8 +14,8 @@
                   <redirect/>
               </navigation-case>
               <navigation-case>
-                  <from-outcome>home</from-outcome>
-                  <to-view-id>/home.xhtml</to-view-id>
+                  <from-outcome>nuevo_usuario</from-outcome>
+                  <to-view-id>/nuevo_usuario.xhtml</to-view-id>
                    <redirect/>
               </navigation-case>
     </navigation-rule>
@@ -30,14 +30,14 @@
     </navigation-rule>
   
     <navigation-rule>
-              <from-view-id>/alta_usuario.xhtml</from-view-id>
+              <from-view-id>/nuevo_usuario.xhtml</from-view-id>
               <navigation-case>
-                  <from-outcome>formulario_alta_usuario</from-outcome>
-                  <to-view-id>/alta_usuario.xhtml</to-view-id>  
+                  <from-outcome>nuevo_usuario</from-outcome>
+                  <to-view-id>/nuevo_usuario.xhtml</to-view-id>  
               </navigation-case>    
               <navigation-case>
-                  <from-outcome>success_alta_usuario</from-outcome>
-                  <to-view-id>/success_alta_usuario.xhtml</to-view-id>   
+                  <from-outcome>login</from-outcome>
+                  <to-view-id>/index.xhtml</to-view-id> 
               </navigation-case> 
     </navigation-rule>
     
@@ -83,17 +83,13 @@
               <navigation-case>
                   <from-outcome>usuarios</from-outcome>
                   <to-view-id>/usuarios.xhtml</to-view-id> 
-                  <redirect/> 
+                  <redirect/>
               </navigation-case>
               <navigation-case>
                   <from-outcome>nueva_actividad</from-outcome>
                   <to-view-id>/nueva_actividad.xhtml</to-view-id> 
                   <redirect/> 
-              </navigation-case>       
-    </navigation-rule>
-    
-    <navigation-rule>
-              <from-view-id>/home.xhtml</from-view-id>
+              </navigation-case>
               <navigation-case>
                   <from-outcome>nueva_ruta</from-outcome>
                   <to-view-id>/nueva_ruta.xhtml</to-view-id>
@@ -103,7 +99,12 @@
                   <from-outcome>mis_rutas</from-outcome>
                   <to-view-id>/mis_rutas.xhtml</to-view-id>
                   <redirect/>
-              </navigation-case>     
+              </navigation-case>
+              <navigation-case>
+                  <from-outcome>buscador_de_rutas</from-outcome>
+                  <to-view-id>/buscador_de_rutas.xhtml</to-view-id>
+                  <redirect/>
+              </navigation-case>      
     </navigation-rule>
     
     <navigation-rule>
