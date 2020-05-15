@@ -335,9 +335,11 @@ public class RutaBean {
 			Ruta ruta = Factory.daoRuta().buscarPorId(idRuta);
 			this.setRuta(ruta);
 			Map<String, Object> result = Factory.daoValoracion().getPromedioPuntajeYCantidadVisitas(idRuta);
-			this.setCantidadVisitas((Long) result.get("cantidadVisitas"));
-			this.setPuntajePromedio((BigDecimal) result.get("puntajePromedio"));
-			
+			if(result!=null){
+				this.setCantidadVisitas((Long) result.get("cantidadVisitas"));
+				this.setPuntajePromedio((BigDecimal) result.get("puntajePromedio"));				
+			}
+
 			this.recorridoJSON = "";
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
