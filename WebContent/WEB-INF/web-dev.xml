@@ -21,7 +21,6 @@
     <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
     <param-value>true</param-value>
   </context-param>
-
 	<!-- Time in seconds that facelets should be checked for changes since last request.
 	A value of -1 disables refresh checking. -->
 

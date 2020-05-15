@@ -330,7 +330,7 @@ public class RutaBean {
 		return this.getOutcome().editarRuta();
 	}
 
-	public void detalleRutaByAjax(Long idRuta) {
+	public String detalleRutaByAjax(Long idRuta) {
 		if (idRuta != null) {
 			Ruta ruta = Factory.daoRuta().buscarPorId(idRuta);
 			this.setRuta(ruta);
@@ -346,8 +346,7 @@ public class RutaBean {
 				e.printStackTrace();
 			}
 		}
-		// return this.getOutcome().detalleRuta();
-		//return this.getOutcome().misRutas();
+		return this.getOutcome().misRutas();
 	}
 
 	public String borrarRuta(Long rutaId) {
