@@ -1,12 +1,18 @@
 package beans;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.commons.io.FilenameUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import model.Ruta;
 import model.Usuario;
 import model.Valoracion;
@@ -21,7 +27,7 @@ public class BuscadorRutasBean {
 
 	@ManagedProperty(value = "#{OutcomeBean}")
 	private OutcomeBean outcome;
-	
+
 	@ManagedProperty(value = "#{UsuarioLogueadoBean}")
 	private UsuarioLogueadoBean usuarioLogueado;
 
@@ -37,6 +43,8 @@ public class BuscadorRutasBean {
 
 	List<String> images;
 
+	private String recorridoJSON;
+
 	public BuscadorRutasBean() {
 		super();
 		this.init();
@@ -47,12 +55,13 @@ public class BuscadorRutasBean {
 		this.ordenamientos = new OrdenamientosBuscadorRutas();
 		this.resultado = new ArrayList<ResultadoBuscadorRutas>();
 		this.valoracion = new Valoracion();
+		this.ruta = new Ruta();
 	}
 
-	public void buscarRutas() {
+	public String buscarRutas() {
 		this.getFiltros().setUsuarioId(this.getUsuarioLogueado().getId());
 		this.resultado = Factory.daoRuta().buscadorRutas(this.getFiltros(), this.getOrdenamientos());
-		this.getOutcome().buscadorRutas();
+		return this.getOutcome().buscadorRutas();
 	}
 
 	public String buscadorRutas() {
@@ -60,30 +69,41 @@ public class BuscadorRutasBean {
 		return this.getOutcome().buscadorRutas();
 	}
 
-	public String detalleRuta(Long rutaId) {
-		if (rutaId != null) {
-			this.ruta = Factory.daoRuta().buscarPorId(rutaId);
-			this.images = this.ruta.getFotos().stream()
-					.map(f -> f.getUuid() + "." + FilenameUtils.getExtension(f.getNombre()))
-					.collect(Collectors.toList());
+	public String detalleRutaByAjax(Long idRuta) {
+		if (idRuta != null) {
+			Ruta ruta = Factory.daoRuta().buscarPorId(idRuta);
+			this.setRuta(ruta);
+			// Map<String, Object> result =
+			// Factory.daoValoracion().getPromedioPuntajeYCantidadVisitas(idRuta);
+			// this.setCantidadVisitas((Long) result.get("cantidadVisitas"));
+			// this.setPuntajePromedio((BigDecimal)
+			// result.get("puntajePromedio"));
+			this.recorridoJSON = "";
+			ObjectMapper objectMapper = new ObjectMapper();
+			try {
+				this.recorridoJSON = objectMapper.writeValueAsString(ruta.getRecorrido());
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 		return this.getOutcome().buscadorRutas();
 	}
 
 	public String valoracionRuta(Long usuarioId, Long rutaId) {
 		this.valoracion = Factory.daoValoracion().buscarPorUsuarioIdYRutaId(usuarioId, rutaId);
-		if(this.valoracion == null){
+		if (this.valoracion == null) {
 			Usuario usuario = Factory.daoUsuario().buscarPorId(usuarioId);
 			Ruta ruta = Factory.daoRuta().buscarPorId(rutaId);
 			this.valoracion = new Valoracion(usuario, ruta);
 		}
 		return this.getOutcome().buscadorRutas();
 	}
-	
-	public String guardarValoracion(){
+
+	public String guardarValoracion() {
 		try {
-			Valoracion valoracion = Factory.daoValoracion().buscarPorUsuarioIdYRutaId(this.getValoracion().getUsuario().getId(), this.getValoracion().getRuta().getId());
-			if(valoracion == null){
+			Valoracion valoracion = Factory.daoValoracion().buscarPorUsuarioIdYRutaId(
+					this.getValoracion().getUsuario().getId(), this.getValoracion().getRuta().getId());
+			if (valoracion == null) {
 				Factory.daoValoracion().alta(this.getValoracion());
 			} else {
 				Factory.daoValoracion().modificar(this.getValoracion());
@@ -158,5 +178,13 @@ public class BuscadorRutasBean {
 	public void setUsuarioLogueado(UsuarioLogueadoBean usuarioLogueado) {
 		this.usuarioLogueado = usuarioLogueado;
 	}
-	
+
+	public String getRecorridoJSON() {
+		return recorridoJSON;
+	}
+
+	public void setRecorridoJSON(String recorridoJSON) {
+		this.recorridoJSON = recorridoJSON;
+	}
+
 }
