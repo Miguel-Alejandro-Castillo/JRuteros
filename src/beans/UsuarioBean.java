@@ -106,6 +106,10 @@ public class UsuarioBean {
 
 	}
 	
+	public void enviarMail(String usuario){
+		
+	}
+	
 	public String nuevoUsuario(){
 		this.initialize();
 		return this.getOutcome().nuevoUsuario();

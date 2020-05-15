@@ -22,7 +22,7 @@
 
 	<ui:define name="contenido">
 		<script
-			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4">
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrDoRJcSyauu7_NKPsgXRHOOR8QJHJatA">
 		</script>
 		<script src="resources/js/maps.js">
 			
@@ -75,21 +75,21 @@
 
 					<h:outputText value="">
 						<!--  <h:form id="ruta_#{ruta.id}"> -->
-						<h:commandLink value="" action="#{RutaBean.detalleRuta(ruta.id)}">
+						<h:commandLink value="" action="#{RutaBean.detalleRutaByAjax(ruta.id)}">
 							<f:ajax render="container-detail" event="action"
 								onevent="onventdetail" onerror="onerrordetail" />
 							<img src="resources/img/vermas.png" alt="detalle ruta" />
 						</h:commandLink>
 						
-						<h:commandLink value="" action="#{RutaBean.detalleRuta(ruta.id)}">
+						<h:commandLink value="" action="#{RutaBean.detalleRutaByAjax(ruta.id)}">
 							<f:ajax render="container-images" event="action"
 								onevent="onventcarousel" onerror="onerrorcarousel" />
 							<img src="resources/img/multimedia.png" alt="detalle ruta" />
 						</h:commandLink>
 						
-						<h:commandLink value="" action="#{RutaBean.detalleRuta(ruta.id)}">
+						<h:commandLink value="" action="#{RutaBean.detalleRutaByAjax(ruta.id)}">
 							<f:ajax render="googleMap" event="action"
-								 onevent="onventmap" onerror="onerrormap" />
+								 onevent="oneventmap" onerror="onerrormap" />
 							<img src="resources/img/mapa-de-rutas.png" alt="detalle ruta" />
 						</h:commandLink>
 
@@ -119,9 +119,6 @@
 				var puntos = document.getElementById("recorridoJSON").value;
 				var puntos = JSON.parse(puntos);
 				initialize1(puntos, true);
-				/*initMap($( document
-								.getElementById('formBuscadorRutas:radioDistancia'))
-						.val());*/
 			}
 		
 			function confirmarBorrado() {
@@ -189,7 +186,7 @@
 			};
 			
 			var hasError4 = false;
-			var onventmap = function(event){
+			var oneventmap = function(event){
 				if (event.status === "success") {
 					if (hasError4)
 						alert("Ocurrio un error en el servidor");
@@ -321,7 +318,7 @@
 					<h:panelGroup layout="block" id="container-images"
 								  class="modal-body" style="width: 100%; height: 100%;">
 					<!--   <div class="modal-body" style="width: 100%; height: 100%;"> -->
-						<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<div id="myCarousel" class="carousel" data-ride="carousel">
 						
 							<!-- Indicators -->
 							<ol class="carousel-indicators">

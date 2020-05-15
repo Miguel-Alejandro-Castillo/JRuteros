@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ import utils.Factory;
 @WebServlet(name = "ImageServlet", urlPatterns = { "/ImageServlet/*" })
 public class ImageServlet extends HttpServlet {
 
-	private static String URL_REPOSITORY = "E:/images";
+	private static final String URL_REPOSITORY = System.getProperty("catalina.home") + File.separator + "images";
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -57,8 +56,7 @@ public class ImageServlet extends HttpServlet {
 
 		response.setHeader("Content-Disposition", "inline; filename=\"" + imageFileName + "\"");
 
-		File targetFile = new File(
-				URL_REPOSITORY + File.separator + foto.getUuid() + "." + FilenameUtils.getExtension(foto.getNombre()));
+		File targetFile = new File(URL_REPOSITORY + File.separator + foto.getUuid() + "." + FilenameUtils.getExtension(foto.getNombre()));
 
 		response.reset();
 		FileInputStream fin = null;

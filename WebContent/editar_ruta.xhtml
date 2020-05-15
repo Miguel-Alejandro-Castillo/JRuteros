@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml"
@@ -10,28 +11,28 @@
 	     Nueva ruta
 	</ui:define>
 
+
 	<ui:define name="navegador">
 		<ol class="breadcrumb">
 			<li><h:form>
-					<h:commandLink value="Home" action="#{OutcomeBean.home}">
-					</h:commandLink>
+					<h:link value="Home" outcome="#{OutcomeBean.home()}">
+					</h:link>
 				</h:form></li>
 			<li class="active">Editar ruta</li>
 		</ol>
 	</ui:define>
 
-	<ui:define name="navegacion">
-	</ui:define>
 	<ui:define name="contenido">
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script
-			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4">
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrDoRJcSyauu7_NKPsgXRHOOR8QJHJatA">
+			
 		</script>
-		<script src="resources/js/maps.js">		
+		<script src="resources/js/maps.js">
+			
 		</script>
-		
-		<link rel="stylesheet" type="text/css" href="style.css"/>
+
 		<h2>Editar Ruta</h2>
 		<section class="formulario">
 
@@ -95,7 +96,7 @@
 					<h:inputText id="distancia" value="#{RutaBean.distancia}"
 						maxlength="12" class="form-control" required="true"
 						validatorMessage="Valor aceptados: de 0 hacia adelante"
-						requiredMessage="La distancia no puede estar vacio"
+						requiredMessage="Este campo es obligatorio"
 						converterMessage="Se espera un numero aqui">
 						<f:validateLongRange minimum="0" />
 					</h:inputText>
@@ -132,52 +133,68 @@
 					<h:message for="actividad" styleClass="error" />
 				</div>
 
-				<div class="grupo_form ">
-					<h:outputLabel for="tiempoEstimado" value="Tiempo estimado:" />
-					<t:inputDate id="tiempoEstimado" type="time"
-						value="#{RutaBean.tiempoEstimado}"
-						requiredMessage="el tiempo estimado no puede estar vacio"
-						required="true" popupCalendar="false" />
-					<br />
-					<h:message for="tiempoEstimado" styleClass="error" />
-				</div>
+			<div class="grupo_form ">
+				<h:outputLabel for="tiempoEstimado" value="Tiempo estimado:" />
+				<t:inputDate id="tiempoEstimado" type="time"
+					value="#{RutaBean.tiempoEstimado}"
+					requiredMessage="Este campo es obligatorio" required="true"
+					popupCalendar="false" />
+				<br />
+				<h:message for="tiempoEstimado" styleClass="error" />
+			</div>
 
-				<div class="grupo_form ">
-					<h:outputLabel for="fechaRealizacion" value="Fecha de realizacion:" />
-					<t:inputDate id="fechaRealizacion"
-						value="#{RutaBean.fechaRealizacion}"
-						requiredMessage="La fecha de realizacion no puede estar vacia"
-						required="true" popupCalendar="true" />
-					<br />
-					<h:message for="fechaRealizacion" styleClass="error" />
-				</div>
-
+			<div class="grupo_form ">
+				<h:outputLabel for="fechaRealizacion" value="Fecha de realizacion:" />
+				<t:inputDate id="fechaRealizacion"
+					value="#{RutaBean.fechaRealizacion}"
+					requiredMessage="Este campo es obligatorio" required="true"
+					popupCalendar="true" />
+				<br />
+				<h:message for="fechaRealizacion" styleClass="error" />
+			</div>
+			<div class="grupo_form">
+				<h:outputLabel value="Fotos:" />
 				<div id="upload-panel">
 					<span id="upload-text">Drag and drop files here</span>
 					<h:inputFile id="inputFile">
 						<f:passThroughAttribute name="multiple" value="true" />
-						<f:ajax event="change"
-							listener="#{RutaBean.uploadFilesAction()}"
-							onevent="ajaxProcess" execute="@this" render="rutaAltaForm:upload-progress" />
+						<f:ajax event="change" listener="#{RutaBean.uploadFilesAction()}"
+							onevent="ajaxProcess"  execute="@this"
+							render="rutaAltaForm:upload-progress" />
 					</h:inputFile>
 				</div>
-				<h:commandButton value="update progres" style="display: none;" id="update-status">
+				<h:commandButton value="update progres" style="display: none;"
+					id="update-status">
 					<f:ajax render="rutaAltaForm:upload-progress" />
 				</h:commandButton>
 
-				<h:panelGroup layout="block" id="upload-progress" class="upload-progress">
-					<h:inputHidden id="uploading" value="#{RutaBean.uploading}"/>
-					<ui:repeat value="#{RutaBean.uploadFiles}" var="mf">
-						<div class="progress">#{mf.fileName} #{mf.uploadProgress}%</div>
+				<h:panelGroup layout="block" id="upload-progress"
+					class="upload-progress">
+					<h:inputHidden id="uploading" value="#{RutaBean.uploading}" />
+					<ui:repeat value="#{RutaBean.uploadFiles}" var="uf">
+						
+						<div class="progress">
+							#{uf.fileName} 
+							
+							<h:commandButton value="x" class="close" type="button"
+								action="#{RutaBean.borrarImagenAction(uf.uuid)}">
+								<f:ajax execute="@this" render="rutaAltaForm:upload-progress" event="action"
+									 />
+							</h:commandButton>
+									
+						</div>
+
 					</ui:repeat>
 				</h:panelGroup>
+			</div>
 
 				<div class="grupo_form ">
-					<h:outputLabel for="googleMap" value="Recorrido:" />
+					<h:outputLabel value="Recorrido:" />
 					<h:inputHidden id="recorrido" value="#{RutaBean.recorrido}"
 						converter="converters.PuntosConverter" />
 					<div>
-						<button onclick="limpiarMapa()">Limpiar mapa</button>
+						<button type="button" onclick="limpiarMapa()" class="btn  btn-light">Limpiar
+							mapa</button>
 					</div>
 					<div id="googleMap" style="width: 800px; height: 500px;"></div>
 				</div>
@@ -197,22 +214,28 @@
 						document.getElementById("upload-text").innerHTML = "uploading...";
 						document.getElementById("rutaAltaForm:inputFile").disabled = true;
 					} else if (status == "success") {
-						intervalID = setInterval(function() {
-							document.getElementById("rutaAltaForm:update-status").click();
-						    var uploading =  document.getElementById("rutaAltaForm:uploading").value;
-						    if(uploading == "false"){
-						    	clearInterval(intervalID);
-						    	document.getElementById("upload-text").innerHTML = "Drag and drop files here";
-						    	document.getElementById("rutaAltaForm:inputFile").disabled = false;
-						    }
-						}, 1000);
+						intervalID = setInterval(
+								function() {
+									document.getElementById(
+											"rutaAltaForm:update-status")
+											.click();
+									var uploading = document
+											.getElementById("rutaAltaForm:uploading").value;
+									if (uploading == "false") {
+										clearInterval(intervalID);
+										document.getElementById("upload-text").innerHTML = "Drag and drop files here";
+										document
+												.getElementById("rutaAltaForm:inputFile").disabled = false;
+									}
+								}, 1000);
 						//document.getElementById("upload-panel").style.display = "none";
 					}
 				}
 
 				function getRecorrido() {
-				
-					var recorrido = document.getElementById('rutaAltaForm:recorrido');
+
+					var recorrido = document
+							.getElementById('rutaAltaForm:recorrido');
 					var puntos = getPuntos()
 					recorrido.value = JSON.stringify(puntos);
 				}
@@ -233,16 +256,17 @@
 						preview.src = "";
 					}
 				}
-				$(window)
-						.load(
+				$(document)
+						.ready(
 								function() {
 									//dom not only ready, but everything is loaded
-								
+
 									//document.getElementById("rutaAltaForm:inputFile").multiple = true;
-									var puntos = document.getElementById("rutaAltaForm:recorrido").value;
+									var puntos = document
+											.getElementById("rutaAltaForm:recorrido").value;
 									var puntos = JSON.parse(puntos);
 									initialize1(puntos);
-									
+
 								});
 			</script>
 		</section>

@@ -38,19 +38,28 @@
 						<h:message for="password" styleClass="error" />
 					</div>
 					<div class="form-group">
-						<h:commandButton id="submit" class="btn btn-primary " style="width: 60%;"
-							action="#{UsuarioLogueadoBean.login}" value="Login" />
+						<h:message for="loginForm" styleClass="error" />
+						<h:commandButton id="submit" class="btn btn-primary "
+							style="width: 60%;" action="#{UsuarioLogueadoBean.login}"
+							value="Login" />
 					</div>
 				</h:form>
-				<h:message for="loginForm" styleClass="error" />
-				<h4>
-					<h:form>
-						<h:commandLink value="Registrarse"
-							action="#{UsuarioBean.nuevoUsuario}">
-						</h:commandLink>
-						<br />
-					</h:form>
-				</h4>
+				<h:form>
+				    <span> 
+					    <h:link value="Registrarse" class=""
+							outcome="#{UsuarioBean.nuevoUsuario()}">
+						</h:link>
+				    </span>
+				    <!--
+				     <span> 
+				     	<h:commandLink class="" value="Olvide mi contraseña" action="#{UsuarioBean.enviarMail(UsuarioLogueadoBean.usuario)}">
+					 	</h:commandLink>
+					</span>
+					-->
+				</h:form>
+
+				
+
 			</div>
 
 		</f:view>

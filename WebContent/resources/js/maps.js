@@ -58,10 +58,10 @@ function getMarkerAct() {
 	return markerAct;
 }
 
-function initialize1(puntos, readOnly) {
-
+function initialize1(puntos, readOnly, idMap) {
+	idMap = idMap ? idMap : "googleMap";
 	positions = [];
-	map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	map = new google.maps.Map(document.getElementById(idMap), mapProp);
 
 	if (!readOnly) {
 		map.addListener('click', function(e) {
@@ -252,21 +252,8 @@ function dibujarRecorridoCircular() {
 }
 
 function limpiarMapa() {
-	punto = {
-		id : null
-	};
-	$.ajax({
-		data : punto,
-		url : myURI,
-		type : "DELETE",
-		success : function(result) {
-			initialize();
-		}
-	});
-}
-
-function limpiarMapa1() {
-	initialize1();
+		puntos = [];
+		initialize1(puntos);
 }
 
 function borrarMarker(id) {

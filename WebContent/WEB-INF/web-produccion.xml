@@ -9,22 +9,10 @@
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
   
-      <context-param>
-            <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-            <param-value>true</param-value>
-    </context-param>
-   <context-param>
-          <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
-          <param-value>true</param-value>
-   </context-param>
    <context-param>
     <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
     <param-value>true</param-value>
   </context-param>
- 	 <!-- <context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param> -->
 
 	<!-- Time in seconds that facelets should be checked for changes since last request.
 	A value of -1 disables refresh checking. -->
@@ -42,7 +30,7 @@
 
 	<context-param>
  	 	 <param-name>javax.faces.PROJECT_STAGE</param-name>
-  		 <param-value>Development</param-value>
+  		 <param-value>Production</param-value>
 	</context-param>
 
   <context-param>

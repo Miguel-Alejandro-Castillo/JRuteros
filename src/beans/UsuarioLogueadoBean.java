@@ -172,10 +172,9 @@ public class UsuarioLogueadoBean {
 				this.roles.add(Role.USER);
 				return this.getOutcome().home();
 			} else {
-				FacesMessage message = new FacesMessage(
-						"Usted no esta habilitado, por favor contactese con el administrador");
+				FacesMessage message = new FacesMessage("Usuario inhabilitado, por favor contactese con el administrador");
 				context.addMessage("loginForm", message);
-				return "login";
+				return this.getOutcome().login();
 			}
 		} else {
 			User administrador = Factory.daoUser().buscar(this.getUsuario(), this.getPassword());
@@ -185,44 +184,16 @@ public class UsuarioLogueadoBean {
 				this.roles.add(Role.ADMIN);
 				return this.getOutcome().home();
 			} else {
-				FacesMessage message = new FacesMessage("Invalid Username and/or Password");
+				FacesMessage message = new FacesMessage("Usuario y/o contraseña invalida");
 				context.addMessage("loginForm", message);
-				return "login";
+				return this.getOutcome().login();
 			}
 		}
-
-		/*
-		 * FacesContext context = FacesContext.getCurrentInstance(); IDaoUser
-		 * daoUser=Factory.daoUser();
-		 * user=daoUser.buscar(this.getUsuario(),this.getPassword()); if(user !=
-		 * null){ this.initialize(user.getId(), user.getUsuario(),user.getDni(),
-		 * user.getApellido(),user.getNombre(),user.getDomicilio(),
-		 * user.getSexo(),user.getEmail(),user.getPassword(),user.
-		 * getFechaNacimiento()); DaoUsuario daoUsuario=Factory.daoUsuario();
-		 * Usuario usuario=daoUsuario.buscarPorId(user.getId()); if(usuario !=
-		 * null ){ if(usuario.isHabilitado()){
-		 * context.getExternalContext().getSessionMap().put("id", user.getId());
-		 * context.getExternalContext().getSessionMap().put("rol","usuario");
-		 * //context.getExternalContext().getSessionMap().put("habilitado",
-		 * usuario.isHabilitado()); return this.getOutcome().home(); } else{ return "login"; } }
-		 * else{ context.getExternalContext().getSessionMap().put("id",
-		 * user.getId());
-		 * context.getExternalContext().getSessionMap().put("rol",
-		 * "administrador");
-		 * //context.getExternalContext().getSessionMap().put("habilitado",true)
-		 * ; return this.getOutcome().home(); }
-		 * 
-		 * } else { FacesMessage message = new FacesMessage(
-		 * "Invalid Username and/or Password"); context.addMessage("loginForm",
-		 * message);
-		 * 
-		 * return "login"; }
-		 */
 	}
 
 	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "login";
+		return this.getOutcome().login();
 	}
 
 	public String editarUsuario() {

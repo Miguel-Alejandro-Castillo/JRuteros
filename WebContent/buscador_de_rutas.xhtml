@@ -28,7 +28,7 @@
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
 		<script
-			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDdWVSOjbDL4mIKRKKVcPFNsp0fMNagdZ4">
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrDoRJcSyauu7_NKPsgXRHOOR8QJHJatA">
 			
 		</script>
 		<script src="resources/js/maps.js">
@@ -159,11 +159,17 @@
 						<h:outputText value=""></h:outputText>
 					</f:facet>
 					<h:outputText value="" class="td td-usuarios ">
+									
 						<h:commandLink value=""
-							action="#{BuscadorRutasBean.detalleRuta(item.id)}">
+							action="#{RutaBean.detalleRutaByAjax(item.id)}">
 							<f:ajax render="container-images" event="action"
-								onevent="onventdetail" onerror="onerrordetail" />
-							<img src="resources/img/vermas.png" alt="detalle ruta" />
+								onevent="onventcarousel" onerror="onerrorcarousel" />
+							<img src="resources/img/multimedia.png" alt="detalle ruta" />
+						</h:commandLink>
+						<h:commandLink value="" action="#{RutaBean.detalleRutaByAjax(item.id)}">
+							<f:ajax render="googleMaps" event="action"
+								 onevent="oneventmap" onerror="onerrormap" />
+							<img src="resources/img/mapa-de-rutas.png" alt="detalle ruta" />
 						</h:commandLink>
 						<h:commandLink value=""
 							action="#{BuscadorRutasBean.valoracionRuta(UsuarioLogueadoBean.id, item.id)}">
@@ -197,9 +203,9 @@
 					<div class="modal-body" id="googleMap"
 						style="width: 100%; height: 400px;"></div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						<button type="button" class="btn btn-primary"
-							onClick="closeModal()">Save changes</button>
+							onClick="closeModal()">Seleccionar punto</button>
 					</div>
 				</div>
 			</div>
@@ -283,7 +289,7 @@
 		</div>
 		<!-- END MODAL VALORACION -->
 
-		<!-- Modal Carrousel -->
+		<!-- Modal CARROUSEL -->
 		<div class="modal fade" id="myModalCarrousel" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -291,11 +297,11 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">x</button>
-						<h4 class="modal-title" id="myModalLabel">Detalle ruta</h4>
+						<h4 class="modal-title" id="myModalLabel">Imagenes de la ruta</h4>
 					</div>
 					<div class="modal-body" id="googleMap"
 						style="width: 100%; height: 100%;">
-						<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<div id="myCarousel" class="carousel" data-ride="carousel">
 							<!-- Indicators -->
 							<ol class="carousel-indicators">
 								<c:forEach var="formato" items="#{BuscadorRutasBean.ruta.fotos}"
@@ -310,7 +316,7 @@
 							<h:panelGroup layout="block" id="container-images"
 								class="carousel-inner">
 
-								<ui:repeat value="#{BuscadorRutasBean.ruta.fotos}" var="foto"
+								<ui:repeat value="#{RutaBean.ruta.fotos}" var="foto"
 									varStatus="myVarStatus">
 									<h:panelGroup layout="block"
 										class="item #{myVarStatus.first ? 'active' : ''}">
@@ -319,21 +325,9 @@
 										</h:graphicImage>
 									</h:panelGroup>
 								</ui:repeat>
-								<!-- 
-								<div class="item active">
-									<img src="la.jpg" alt="Los Angeles" style="width: 100%;"/>
-								</div>
-
-								<div class="item">
-									<img src="chicago.jpg" alt="Chicago" style="width: 100%;"/>
-								</div>
-
-								<div class="item">
-									<img src="ny.jpg" alt="New york" style="width: 100%;"/>
-								</div>
-								-->
 							</h:panelGroup>
 							<!-- Left and right controls -->
+							
 							<a class="left carousel-control" href="#myCarousel"
 								data-slide="prev"> <span
 								class="glyphicon glyphicon-chevron-left"></span> <span
@@ -346,24 +340,42 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary"
-							onClick="closeModal()">Save changes</button>
+						<!--  <button type="button" class="btn btn-default" data-dismiss="modal"></button> -->
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		
+				<!-- BEGIN MODAL MAPA -->
+		<div class="modal fade" id="myModalMap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							x
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Mapa</h4>
+					</div>
+					<h:panelGroup layout="block" id="googleMaps"
+								  class="modal-body" style="width: 100%; height: 400px;">
+						  <h:inputHidden id="recorridoJSON" value="#{RutaBean.recorridoJSON}"></h:inputHidden>
+						  
+					</h:panelGroup>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MODAL MAPA -->
 
 		<script type="text/javascript">
 			function openMap() {
-				$('#myModal').modal({
-					backdrop : 'static',
-					keyboard : false
+				$('#myModal').modal({backdrop : 'static',keyboard : false
 				});
-				initMap($(
-						document
-								.getElementById('formBuscadorRutas:radioDistancia'))
-						.val());
+				initMap($(document.getElementById('formBuscadorRutas:radioDistancia')).val());
 			}
 			function closeModal() {
 				var markerAct = getMarkerAct();
@@ -394,7 +406,7 @@
 			};
 
 			var hasError2 = false;
-			var onventdetail = function(event) {
+			var onventcarousel = function(event) {
 				if (event.status === "success") {
 					if (hasError2)
 						alert("Ocurrio un error en el servidor");
@@ -408,7 +420,7 @@
 				}
 			}
 
-			var onerrordetail = function(error) {
+			var onerrorcarousel = function(error) {
 				if (error.type === "error")
 					hasError2 = true;
 
@@ -450,6 +462,26 @@
 				if (error.type === "error")
 					hasError4 = true;
 			};
+			
+			var hasError5 = false;
+			var oneventmap = function(event){
+				if (event.status === "success") {
+					if (hasError5)
+						alert("Ocurrio un error en el servidor");
+					else {
+							$('#myModalMap').modal({backdrop: 'static', keyboard: false}); 
+							var puntos = document.getElementById("recorridoJSON").value;
+							var puntos = JSON.parse(puntos);
+							initialize1(puntos, true, "googleMaps");
+					}
+					hasError5 = false;
+				}
+			}
+			
+			var onerrormap = function(error) {
+				if (error.type === "error")
+					hasError5 = true;
+			};
 
 			$(document).ready(function() {
 				loadDataTables("formBuscadorRutas:resultado");
@@ -460,50 +492,3 @@
 
 </ui:composition>
 
-<!-- 
-		<table
-			class="table table-striped table-bordered table-hover  tabla_mis_rutas"
-			summary="Tabla listado de rutas">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Distancia</th>
-					<th>Dificultad</th>
-					<th>Puntuacion Promedio</th>
-					<th>lo hicieron</th>
-					<th>+ info</th>
-				</tr>
-
-			</thead>
-			<tbody>
-
-				<tr>
-					<td class="td td-usuarios ">Ruta del diablo</td>
-					<td class=" td td-usuarios">666 km</td>
-					<td class="td td-usuarios ">muy dificil</td>
-					<td class="td td-usuarios ">5.0</td>
-					<td class="td td-usuarios ">666 personas</td>
-					<td class="td td-usuarios opciones "><a href="info_ruta.html"><img
-							src="imagenes/vermas.png" alt="borrar ruta" /> </a></td>
-
-				</tr>
-				<tr>
-
-					<td class="td td-usuarios ">Ruta del caballo</td>
-					<td class=" td td-usuarios">1 km</td>
-					<td class="td td-usuarios ">easy</td>
-					<td class="td td-usuarios ">2.0</td>
-					<td class="td td-usuarios ">22 personas</td>
-					<td class="td td-usuarios opciones "><a href="info_ruta.html"><img
-							src="imagenes/vermas.png" alt="borrar ruta" /> </a></td>
-				</tr>
-
-
-
-
-			</tbody>
-
-		</table>
-		
-
- -->

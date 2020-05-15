@@ -49,7 +49,7 @@ import org.apache.commons.io.FilenameUtils;
 @SessionScoped
 public class RutaBean {
 
-	private static String URL_REPOSITORY = "E:/images";
+	private static final String URL_REPOSITORY = System.getProperty("catalina.home") + File.separator + "images";
 
 	@ManagedProperty(value = "#{OutcomeBean}")
 	private OutcomeBean outcome;
@@ -96,37 +96,14 @@ public class RutaBean {
 
 	public RutaBean() {
 		super();
+		File f = new File(URL_REPOSITORY);
+		if(!f.exists())
+			f.mkdir();
 	}
 
 	@PostConstruct
 	public void init() {
 		this.uploadFiles = new ArrayList<UploadFileBean>();
-		/*
-		 * Map<String,String> params =
-		 * FacesContext.getCurrentInstance().getExternalContext().
-		 * getRequestParameterMap(); String idRuta = params.get("id"); String
-		 * viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-		 * switch (viewId) { case "/nueva_ruta.xhtml": this.fotos = new
-		 * HashSet<Foto>(); this.recorrido = new LinkedHashSet<Punto>(); break;
-		 * case "/editar_ruta.xhtml" : if (StringUtils.isNotEmpty(idRuta)) {
-		 * Ruta ruta = Factory.daoRuta().buscarPorId(new Long(idRuta));
-		 * this.setId(ruta.getId()); this.setNombre(ruta.getNombre());
-		 * this.setDescripcion(ruta.getDescripcion());
-		 * this.setActividad_id(ruta.getActividad().getId());
-		 * this.setPrivacidad_id(ruta.getPrivacidad().getId());
-		 * this.setFormato_id(ruta.getFormato().getId());
-		 * this.setDificultad_id(ruta.getDificultad().getId());
-		 * this.setPropietario_id(ruta.getPropietario().getId());
-		 * this.setDistancia(ruta.getDistancia());
-		 * this.setTiempoEstimado(ruta.getTiempoEstimado());
-		 * this.setFechaRealizacion(ruta.getFechaRealizacion());
-		 * this.setFotos(ruta.getFotos());
-		 * this.setRecorrido(ruta.getRecorrido()); } break; case
-		 * "/detalle_ruta.xhtml" : if (StringUtils.isNotEmpty(idRuta)) {
-		 * this.ruta = Factory.daoRuta().buscarPorId(new Long(idRuta)); } break;
-		 * case "/mis_rutas.xhtml": //this.misRutas =
-		 * Factory.daoRuta().listar(); break; default: break; }
-		 */
 	}
 
 	public void uploadFilesAction() {
@@ -181,6 +158,11 @@ public class RutaBean {
 			this.uploading = false;
 		}
 
+	}
+	
+	public void borrarImagenAction(String uuid){
+		this.getUploadFiles().removeIf(uf->uf.getUuid().equals(uuid));
+		this.getFotos().removeIf(f->f.getUuid().equals(uuid));
 	}
 
 	private Collection<Part> getParts() throws Exception {
@@ -240,11 +222,7 @@ public class RutaBean {
 	}
 
 	private void guardarImagenes(List<UploadFileBean> uploadFiles) throws IOException {
-
-		HttpServletRequest servletRequest = this.getServletRequest();
-		File repository = (File) servletRequest.getServletContext().getAttribute(ServletContext.TEMPDIR);
-		String urlRepository = repository.getAbsolutePath();
-
+		
 		for (UploadFileBean uf : uploadFiles) {
 			File targetFile = new File(URL_REPOSITORY + File.separator + uf.getUuid() + "."
 					+ FilenameUtils.getExtension(uf.getFileName()));
@@ -264,9 +242,6 @@ public class RutaBean {
 	}
 
 	private void eliminarImagenes(Set<Foto> fotos) {
-		HttpServletRequest servletRequest = this.getServletRequest();
-		File repository = (File) servletRequest.getServletContext().getAttribute(ServletContext.TEMPDIR);
-		String urlRepository = repository.getAbsolutePath();
 		for (Foto foto : fotos) {
 			File targetFile = new File(URL_REPOSITORY + File.separator + foto.getUuid() + "."
 					+ FilenameUtils.getExtension(foto.getNombre()));
@@ -355,7 +330,7 @@ public class RutaBean {
 		return this.getOutcome().editarRuta();
 	}
 
-	public String detalleRuta(Long idRuta) {
+	public void detalleRutaByAjax(Long idRuta) {
 		if (idRuta != null) {
 			Ruta ruta = Factory.daoRuta().buscarPorId(idRuta);
 			this.setRuta(ruta);
@@ -372,7 +347,7 @@ public class RutaBean {
 			}
 		}
 		// return this.getOutcome().detalleRuta();
-		return this.getOutcome().misRutas();
+		//return this.getOutcome().misRutas();
 	}
 
 	public String borrarRuta(Long rutaId) {
