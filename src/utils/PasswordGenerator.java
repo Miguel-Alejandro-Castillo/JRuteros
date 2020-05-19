@@ -17,12 +17,11 @@ public class PasswordGenerator {
 		return getPassword(NUMEROS + MAYUSCULAS + MINUSCULAS, length);
 	}
     
-	public static String getPassword(String key, int length) {
+	private static String getPassword(String key, int length) {
 		String pswd = "";
 		for (int i = 0; i < length; i++) {
 			pswd+=(key.charAt((int)(Math.random() * key.length())));
-		}
-      
+		}  
 		return pswd;
 	}
 

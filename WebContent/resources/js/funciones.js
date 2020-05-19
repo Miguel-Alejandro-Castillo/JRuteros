@@ -20,5 +20,12 @@ function loadDataTables(idTable, onlyRefresh){
 	        }
 	    } );
 	}
+}
 
+function openModal(idModal){
+	$("#" + idModal).modal({backdrop : 'static',keyboard : false});
+}
+
+function closeModal(idModal){
+	$("#" + idModal).modal('hide');
 }

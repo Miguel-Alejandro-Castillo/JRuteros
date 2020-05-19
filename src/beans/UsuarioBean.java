@@ -106,8 +106,40 @@ public class UsuarioBean {
 
 	}
 	
-	public void enviarMail(String usuario){
+	public String enviarMail(){
+		this.facesMessage = new FacesMessage();
+		User user = Factory.daoUser().buscar(this.getUsuario());
+		if(user != null){
+			String actualPassword = user.getContrasenia();
+			String nuevaPassword = PasswordGenerator.getPassword(8);
+			user.setContrasenia(nuevaPassword);
+			try {
+				Factory.daoUser().modificacion(user);
+				String subject = "Restablecer contraseña";
+				String body = "Hola señor/a " + user.getNombre() + " " + user.getApellido() + "\n" +
+						"Le informamos que su contraseña ha sido restablecida exitosamente \n" +
+						"Su nueva contraseña es: " + nuevaPassword + "\n" +
+						"Saludos cordiales";
+				MailerApp.sendMail(subject, body, user.getEmail());
+				this.facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "usuario.successSendMail", "Contraseña restablecida.\n Por favor, revise su correo electronico" );
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+				this.facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "usuario.errorSendMail", "Ocurrio un error en el servidor.\n No se pudo enviar el correo electronico" );
+				try {
+					user.setContrasenia(actualPassword);
+					Factory.daoUser().modificacion(user);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+
+		} else {
+			this.facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "usuario.notExist", "El usuario no existe" );
+		}
 		
+		return this.getOutcome().login();
+
 	}
 	
 	public String nuevoUsuario(){

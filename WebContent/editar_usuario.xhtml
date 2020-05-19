@@ -1,148 +1,134 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          template="/WEB-INF/templates/template.xhtml"
-          	xmlns:h="http://java.sun.com/jsf/html" 
-	       xmlns:f="http://java.sun.com/jsf/core"
-            xmlns:t="http://myfaces.apache.org/tomahawk">
-<ui:define name="titulo">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:define name="titulo">
      Editar Usuario
 </ui:define>
 
-<ui:define name="navegador">
-              <ol class="breadcrumb">
-				<li>
-					<h:form>
-						<h:link value="Home" outcome="#{OutcomeBean.home()}" />
-					</h:form>
-				</li>
-                <li class="active">Editar usuario</li>
-             </ol>
-</ui:define>      
-   
-<ui:define name="contenido">
-	<h2>Editar Usuario</h2>
-    <section  class="formulario">
-			 	
-				<h:message for="formEditUsuario" styleClass="error"/>	
-               <h:form id="formEditUsuario">
-                 
-   	
-			 		<div class="grupo_form ">
-			 		    <h:outputLabel for="nick" value="Nick:"/>
-                           <h:inputText class="form-control"  id="nick" value="#{UsuarioLogueadoBean.usuario}" size="30" maxlength="30"
-                              required="true" validatorMessage="Minimo 1 caracter!"
-                              requiredMessage="El nick no puede estar vacio"
-                              placeholder="nick" >
-                             <f:validateLength minimum="1" />
-                          </h:inputText><br/>
-                           <h:message for="nick" styleClass="error"/>		   				
-	   				</div>
-	   			
-                   <div class="grupo_form ">
-                       <h:outputLabel for="dni" value="Dni:"/>
-                       <h:inputText id="dni" value="#{UsuarioLogueadoBean.dni}"  maxlength="12"
-                         class="form-control"
-                         required="true" validatorMessage="Valor aceptados: de 1 hacia adelante"
-                         requiredMessage="El dni no puede estar vacio"
-                         converterMessage="Se espera un numero de dni  aqui" >
-                         <f:validateLongRange minimum="1"  />
-                       </h:inputText><br/>
-                       <h:message for="dni" styleClass="error"/>
+	<ui:define name="navegador">
+		<ol class="breadcrumb">
+			<li><h:form>
+					<h:link value="Home" outcome="#{OutcomeBean.home()}" />
+				</h:form></li>
+			<li class="active">Editar usuario</li>
+		</ol>
+	</ui:define>
 
-	   				  		   				
-	   				</div>
-	   				<div class="grupo_form ">
-	   				   <h:outputLabel for="apellido" value="Apellido:"/>
-                       <h:inputText id="apellido" value="#{UsuarioLogueadoBean.apellido}" size="30" maxlength="30"
-                          class="form-control"
-                          placeholder="apellido"
-                         required="true" validatorMessage="Minimo 1 caracter"
-                         requiredMessage="El apellido no puede estar vacio" >
-                       <f:validateLength minimum="1" /></h:inputText><br/>
-                       <h:message for="apellido" styleClass="error"/>
-                       
-	   				  		
-	   				</div>
-	   				<div class="grupo_form ">
-	   				  <h:outputLabel for="nombre" value="Nombre:"/>
-                       <h:inputText id="nombre" value="#{UsuarioLogueadoBean.nombre}" size="30" maxlength="30"
-                          class="form-control"
-                          placeholder="nombre"
-                         required="true" validatorMessage="Minimo 1 caracter"
-                         requiredMessage="El nombre no puede estar vacio" >
-                       <f:validateLength minimum="1" /></h:inputText><br/>
-                       <h:message for="nombre" styleClass="error"/>
-                       
-	   				  
-					  
-	   				</div>
-	   				<div class="grupo_form ">
-	   				  <h:outputLabel for="domicilio" value="Domicilio:"/>
-                       <h:inputText id="domicilio" value="#{UsuarioLogueadoBean.domicilio}" 
-                          class="form-control"
-                          placeholder="domicilio"
-                         required="true" validatorMessage="Minimo 1 caracter"
-                         requiredMessage="El domicilio no puede estar vacio" >
-                       <f:validateLength minimum="1" /></h:inputText><br/>
-                       <h:message for="domicilio" styleClass="error"/>
-                       
-	   				 	   				
-	   				</div>
-	   				<div class="grupo_form ">
-	   				  <h:outputLabel for="fecha" value="Fecha de nacimiento:"/>
-	   				  <t:inputDate   id="fecha" value="#{UsuarioLogueadoBean.fechaNacimiento}"
-	   				           requiredMessage="La fecha de nacimiento no puede estar vacia"
-	   				           required="true"
-                               popupCalendar="true"/><br/>
-                       <h:message for="fecha" styleClass="error"/>
-                             
-                            		
-	   				</div>
-	   				
-	   				<div class="grupo_form">
-	   				     <h:outputLabel for="sexo" value="Sexo:"/>
-                        <h:selectOneListbox id="sexo" title="Selecciona el sexo del usuario"
-                            value="#{UsuarioLogueadoBean.sexo}" size="1" required="true" >
-                            <f:selectItem itemValue="m" itemLabel="Masculino"/>
-                            <f:selectItem itemValue="f" itemLabel="Feminino"/>
-                         </h:selectOneListbox><br/>
+	<ui:define name="contenido">
+		<h2>Editar Usuario</h2>
+		<section class="formulario">
 
-				 		
-				 	</div>
-				 	<div class="grupo_form ">
-				 	  <h:outputLabel for="email" value="Email:"/>
-                       <h:inputText id="email" value="#{UsuarioLogueadoBean.email}" 
-                          class="form-control"
-                          requiredMessage="La email no puede estar vacio"
-                         required="true" >
-                         <t:validateEmail message="Invalid email address" /> 
-                       </h:inputText><br/>
-                       <h:message for="email" styleClass="error"/>
-	   				  		
-	   				</div>
-	   				
-	   				<div class="grupo_form ">
-	   				  <h:outputLabel for="password1" value="Ingrese password actual(ingreso opcional):"/>
-                       <h:inputSecret id="password1" value="#{UsuarioLogueadoBean.passwordAnt}" 
-                          class="form-control"></h:inputSecret><br/>
-                       <h:message for="password1" styleClass="error"/>	   				
-	   				</div>
-	   				<div class="grupo_form ">
-	   				  <h:outputLabel for="password2" value="Ingrese nueva password(ingreso opcional):"/>
-                       <h:inputSecret id="password2" value="#{UsuarioLogueadoBean.passwordNew}" 
-                          class="form-control" ></h:inputSecret><br/>
-                          				
-	   				</div>
-	   				<h:message for="password2" styleClass="error"/>	
-	   				 
-				 	
-			 			 
-				 <div class="footer-panel">		
-				         <h:commandButton value="Modificar datos" class="btn  btn-primary"  type="submit" action="#{UsuarioLogueadoBean.editarUsuario}" />		 			
+			<h:form id="formEditUsuario">
+
+
+				<div class="grupo_form ">
+					<h:outputLabel for="usuario" value="Usuario:" />
+					<h:inputText class="form-control" id="usuario"
+						value="#{UsuarioLogueadoBean.usuario}" size="30" maxlength="30"
+						required="true" validatorMessage="Minimo 1 caracter!"
+						requiredMessage="Este campo es obligatorio" placeholder="nick">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="usuario" styleClass="error" />
 				</div>
-	     
-			    </h:form>
-			 	</section>
 
-</ui:define>
+				<div class="grupo_form ">
+					<h:outputLabel for="dni" value="Dni:" />
+					<h:inputText id="dni" value="#{UsuarioLogueadoBean.dni}"
+						maxlength="12" class="form-control" required="true"
+						validatorMessage="Valor aceptados: de 1 hacia adelante"
+						requiredMessage="Este campo es obligatorio"
+						converterMessage="Se espera un numero de dni">
+						<f:validateLongRange minimum="1" />
+					</h:inputText>
+					<h:message for="dni" styleClass="error" />
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="apellido" value="Apellido:" />
+					<h:inputText id="apellido" value="#{UsuarioLogueadoBean.apellido}"
+						size="30" maxlength="30" class="form-control"
+						placeholder="apellido" required="true"
+						validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="apellido" styleClass="error" />
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="nombre" value="Nombre:" />
+					<h:inputText id="nombre" value="#{UsuarioLogueadoBean.nombre}"
+						size="30" maxlength="30" class="form-control" placeholder="nombre"
+						required="true" validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="nombre" styleClass="error" />
+
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="domicilio" value="Domicilio:" />
+					<h:inputText id="domicilio"
+						value="#{UsuarioLogueadoBean.domicilio}" class="form-control"
+						placeholder="domicilio" required="true"
+						validatorMessage="Minimo 1 caracter"
+						requiredMessage="Este campo es obligatorio">
+						<f:validateLength minimum="1" />
+					</h:inputText>
+					<h:message for="domicilio" styleClass="error" />
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="fecha" value="Fecha de nacimiento:" />
+					<t:inputDate id="fecha"
+						value="#{UsuarioLogueadoBean.fechaNacimiento}"
+						requiredMessage="Este campo es obligatorio" required="true"
+						popupCalendar="true" />
+					<br />
+					<h:message for="fecha" styleClass="error" />
+
+
+				</div>
+
+				<div class="grupo_form">
+					<h:outputLabel for="sexo" value="Sexo:" />
+					<h:selectOneListbox id="sexo"
+						title="Selecciona el sexo del usuario"
+						value="#{UsuarioLogueadoBean.sexo}" size="1" required="true">
+						<f:selectItem itemValue="m" itemLabel="Masculino" />
+						<f:selectItem itemValue="f" itemLabel="Feminino" />
+					</h:selectOneListbox>
+					<br />
+
+
+				</div>
+				<div class="grupo_form ">
+					<h:outputLabel for="email" value="Email:" />
+					<h:inputText id="email" value="#{UsuarioLogueadoBean.email}"
+						class="form-control" requiredMessage="Este campo es obligatorio"
+						required="true">
+						<t:validateEmail message="Invalid email address" />
+					</h:inputText>
+					<h:message for="email" styleClass="error" />
+
+				</div>
+
+				<div class="footer-panel">
+					<h:commandButton value="Modificar datos" class="btn  btn-primary"
+						type="submit" action="#{UsuarioLogueadoBean.editarUsuario}" />
+				</div>
+				<h:message for="formEditUsuario" styleClass="error" />
+			</h:form>
+		</section>
+
+	</ui:define>
 </ui:composition>
