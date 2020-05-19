@@ -3,13 +3,17 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <head>
 
 <title>Login</title>
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/estilo.css" />
+<script src="resources/js/funciones.js" />
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+<script src="resources/js/bootstrap-3.3.7.min.js"></script>
 
 </head>
 <body id="containerBody">
@@ -45,25 +49,103 @@
 					</div>
 				</h:form>
 				<h:form>
-				    <span> 
-					    <h:link value="Registrarse" class=""
+					<span> <h:link value="Registrarse" class=""
 							outcome="#{UsuarioBean.nuevoUsuario()}">
 						</h:link>
-				    </span>
-				    <!--
-				     <span> 
-				     	<h:commandLink class="" value="Olvide mi contraseña" action="#{UsuarioBean.enviarMail(UsuarioLogueadoBean.usuario)}">
-					 	</h:commandLink>
 					</span>
-					-->
+					<span> <a class="" value="Olvide mi contraseña"
+						onclick="openModal('myModal')"> Olvide mi contraseña </a>
+					</span>
 				</h:form>
-
-				
 
 			</div>
 
 		</f:view>
 	</div>
+
+	<!-- BEGIN MODAL MAP -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body" style="width: 100%; height: 100%;">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">x</button>
+					<div class="card login-form">
+						<div class="card-body">
+							<h3 class="card-title text-center">Restablecer la contraseña</h3>
+
+							<div class="card-text">
+								<h:form id="formResetPassword">
+									<div class="form-group">
+										<h:inputText id="u" value="#{UsuarioBean.usuario}"
+											class="form-control form-control-sm"
+											a:placeholder="Ingrese su usuario"
+											required="true"
+											requiredMessage="Por favor, ingrese un usuario">
+										</h:inputText>
+										<h:message for="u" styleClass="error"></h:message>
+									</div>
+
+									<h:commandButton class="btn btn-primary btn-block"
+										value="Enviar
+										correo electrónico"
+										action="#{UsuarioBean.enviarMail()}">
+										<f:ajax execute="formResetPassword" render="formResetPassword"
+											event="action" onevent="oneventsendmail"
+											onerror="onerrorsendmail" />
+									</h:commandButton>
+									<h:inputHidden id="summary"
+										value="#{UsuarioBean.facesMessage.summary}" />
+									<h:inputHidden id="detail"
+										value="#{UsuarioBean.facesMessage.detail}" />
+								</h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MODAL MAP -->
+
+	<script type="text/javascript">
+			var hasError = false;
+			var oneventsendmail = function(event) {
+				var ajaxstatus = event.status;
+				if(ajaxstatus === "begin"){
+					$("#overlay").fadeIn(300);
+				}
+				if(ajaxstatus === "complete"){
+					$("#overlay").fadeOut(300);
+				}
+				if (ajaxstatus === "success") {
+					var summary = $(document.getElementById('formResetPassword:summary')).val();
+					var detail = $(document.getElementById('formResetPassword:detail')).val();
+					if (hasError){
+						var messageError = detail ? detail : "Ocurrio un error en el servidor";
+						alert(messageError);	
+					} else {
+						if(summary &amp;&amp; detail){
+							alert(detail);
+							if(summary == "usuario.successSendMail"){
+							      closeModal("myModal");
+							}
+						}
+					}
+					hasError = false;
+				}
+			};
+			var onerrorsendmail = function(error) {
+				if (error.type === "error")
+					hasError = true;
+			};
+		</script>
 </body>
 
 </html>

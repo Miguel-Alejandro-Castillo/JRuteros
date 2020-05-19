@@ -1,11 +1,135 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html">
-  
-     <span>
-        <h:form id="link_logout" style="text-align: right;">
-        	<h:commandLink action="#{UsuarioLogueadoBean.logout()}"> <span style="padding-right:1%;"><h:outputText value="#{'usuario '.concat(UsuarioLogueadoBean.usuario)}"/></span><img src="resources/img/logout.png" alt="logout" /></h:commandLink>		
-        </h:form> 
-     </span>
-          
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	<h:form id="formLogout">
+	<div class="dropdown" style="float: right;">
+		<a class="dropdown-toggle" data-toggle="dropdown"> 
+			<span><h:outputText value="#{'usuario '.concat(UsuarioLogueadoBean.usuario)}" /></span> 
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" style="min-width: 100%; text-align: right;">
+			<li>
+					<h:commandLink action="#{UsuarioLogueadoBean.inicializarPasswords()}">
+						<f:ajax execute="@form" render="formChangePassword" event="action"
+							onevent="onevent" onerror="onerror" />
+						<span>Cambiar contraseña</span>
+						<img src="resources/img/passkey.png" alt="cambiar contraseña" style="width: 20px; heigth: 20px;" />
+					</h:commandLink>
+			</li>
+			<li>
+				<h:commandLink id="linkLogout" action="#{UsuarioLogueadoBean.logout()}">
+						<span>Salir</span>
+						<img src="resources/img/logout.png" alt="logout" style="width: 20px; heigth: 20px;" />
+				</h:commandLink>
+			</li>
+		</ul>
+	</div>
+	</h:form>
+	
+		<!-- BEGIN MODAL MAP -->
+	<div class="modal fade" id="myModalChangePassword" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body" style="width: 100%; height: 100%;">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">x</button>
+					<div class="card login-form">
+						<div class="card-body">
+							<h3 class="card-title text-center">Cambiar la contraseña</h3>
+
+							<div class="card-text">
+								<h:form id="formChangePassword">
+									<div class="form-group">						
+										<h:inputSecret id="passwordActual" value="#{UsuarioLogueadoBean.passwordActual}"
+											class="form-control form-control-sm"
+											a:placeholder="Contraseña actual"
+											required="true"
+											requiredMessage="Este campo es obligatorio">
+										</h:inputSecret>
+										<h:message for="passwordActual" styleClass="error"></h:message>
+									</div>
+									
+									<div class="form-group">						
+										<h:inputSecret id="passwordNueva" value="#{UsuarioLogueadoBean.passwordNueva}"
+											class="form-control form-control-sm"
+											a:placeholder="Nueva contraseña"
+											required="true"
+											requiredMessage="Este campo es obligatorio">
+										</h:inputSecret>
+										<h:message for="passwordNueva" styleClass="error"></h:message>
+									</div>
+							
+									<h:commandButton class="btn btn-primary btn-block"
+										value="Cambiar contraseña"
+										action="#{UsuarioLogueadoBean.cambiarPassword()}">
+										<f:ajax execute="formChangePassword" render="formChangePassword"
+											event="action" onevent="oneventchangepassword"
+											onerror="onerrorchangepassword" />
+									</h:commandButton>
+									<h:inputHidden id="summary"
+										value="#{UsuarioLogueadoBean.facesMessage.summary}" />
+									<h:inputHidden id="detail"
+										value="#{UsuarioLogueadoBean.facesMessage.detail}" />
+								</h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MODAL MAP -->
+	
+		<script type="text/javascript">
+			var onevent = function(event){
+				var ajaxstatus = event.status;
+				if (ajaxstatus === "success") {
+					openModal("myModalChangePassword");
+				}
+			}
+		
+		
+			var hasError = false;
+			var oneventchangepassword = function(event) {
+				var ajaxstatus = event.status;
+				/*
+				if(ajaxstatus === "begin"){
+					$("#overlay").fadeIn(300);
+				}
+				if(ajaxstatus === "complete"){
+					$("#overlay").fadeOut(300);
+				}
+				*/
+				if (ajaxstatus === "success") {
+					var summary = $(document.getElementById('formChangePassword:summary')).val();
+					var detail = $(document.getElementById('formChangePassword:detail')).val();
+					if (hasError){
+						var messageError = detail ? detail : "Ocurrio un error en el servidor";
+						alert(messageError);	
+					} else {
+						if(summary &amp;&amp; detail){
+							alert(detail);
+							if(summary == "user.changePassword.succes"){
+							      closeModal("myModalChangePassword");
+							      $(document.getElementById("formLogout:linkLogout")).click();
+							}
+						}
+					}
+					hasError = false;
+				}
+			};
+			var onerrorchangepassword = function(error) {
+				if (error.type === "error")
+					hasError = true;
+			};
+		</script>
+
 </ui:composition>

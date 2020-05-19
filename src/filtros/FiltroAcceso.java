@@ -59,13 +59,7 @@ public class FiltroAcceso implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req=(HttpServletRequest)request;
 		HttpServletResponse res=(HttpServletResponse)response;
-	    this.reqActual=req;
-		/*System.out.println("objeto request ="+req.toString());
-		System.out.println("QueryString ="+req.getQueryString());
-		System.out.println("requestURI ="+req.getRequestURI());
-		System.out.println("requestURL ="+req.getRequestURL());
-		System.out.println("contextPATH ="+req.getContextPath() );
-		*/
+	    this.reqActual = req;
 	    System.out.println("--------------------------------");
 	    System.out.println("requestURI ="+req.getRequestURI());
 	    System.out.println("--------------------------------");
@@ -73,7 +67,6 @@ public class FiltroAcceso implements Filter {
 			if(isURILogin() &&(this.estaLogueado())){
 				res.sendRedirect(req.getContextPath() + "/home.xhtml");
 			} else {
-			   System.out.println("la uri es publica");
 			   chain.doFilter(request,response);
 			}
 		}

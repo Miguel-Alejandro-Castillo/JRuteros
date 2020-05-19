@@ -1,6 +1,5 @@
 /jruteros/index.xhtml all
 /jruteros/nuevo_usuario.xhtml all
-/jruteros/mapa.html all
 /jruteros/home.xhtml administrador=true usuario=true
 /jruteros/editar_usuario.xhtml administrador=false usuario=true
 /jruteros/usuarios.xhtml administrador=true usuario=false
@@ -8,5 +7,3 @@
 /jruteros/nueva_ruta.xhtml administrador=false usuario=true
 /jruteros/mis_rutas.xhtml administrador=false usuario=true
 /jruteros/editar_ruta.xhtml administrador=false usuario=true
-
-
